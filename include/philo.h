@@ -1,19 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: castorga <castorga@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/28 15:54:06 by castorga          #+#    #+#             */
-/*   Updated: 2023/12/28 15:54:09 by castorga         ###   ########.fr       */
+/*   Created: 2024/01/03 16:53:47 by castorga          #+#    #+#             */
+/*   Updated: 2024/01/03 16:53:49 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-memset, printf, malloc, free, write,
-usleep, gettimeofday, pthread_create,
-pthread_detach, pthread_join, pthread_mutex_init,
-pthread_mutex_destroy, pthread_mutex_lock,
-pthread_mutex_unlock	
+#ifndef PHILO_H
+# define PHILO_H
+
+# include <limits.h>
+# include <stdlib.h>
+# include <unistd.h>
+
+// ------------------------ Structs ------------------------ //
+/*typedef struct s_stack
+{
+	int				num;
+	struct s_stack	*next;
+}	t_stack;
 */
+#endif
