@@ -40,16 +40,16 @@ with a mutex for each of them.*/
 
 int	main(int ac, char *av[])
 {
-	int	i;
-	(void)av;
-	i = 0;
-	if (ac > 1)
+	if (ac == 5 || ac == 6)
 	{
-		/*if (ft_check_argv_are_valid(ac, av))
-			return (1);*/
+		if (parsing(ac, av))
+			return (1);
 		//philo(ac - 1, av + 1);
-		printf("test\n");
-		printf("test2\n");
+	}
+	else
+	{
+		printf("Incorrect number of arguments!\n");
+		printf("Ex: 1 200 250 100 5");
 	}
 	return (0);
 }

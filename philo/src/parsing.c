@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_argv.c                                       :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: castorga <castorga@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/04 17:43:54 by castorga          #+#    #+#             */
-/*   Updated: 2023/09/04 17:43:56 by castorga         ###   ########.fr       */
+/*   Created: 2024/01/03 19:27:04 by castorga          #+#    #+#             */
+/*   Updated: 2024/01/03 19:27:05 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "../include/philo.h"
+#include "../include/philo.h"
+/* 
+number_of_philosophers 		time_to_die 		time_to_eat 		time_to_sleep[number_of_times_each_philosopher_must_eat]
+		1 200 250 100 5 
+*/
 
-//---------- CHECK DIGITS ----------
-/*int	ft_check_digits(int ac, char *av[])
+/*---------- CHECK DIGITS ----------*/
+int	ft_check_digits(int ac, char *av[])
 {
 	int	i;
 	int	j;
@@ -33,7 +37,7 @@
 	return (0);
 }
 
-//---------- CHECK RANGE AV ----------
+/*---------- CHECK RANGE AV ----------*/
 int	ft_check_range(int ac, char *av[])
 {
 	int	i;
@@ -48,7 +52,7 @@ int	ft_check_range(int ac, char *av[])
 	return (0);
 }
 
-//---------- CHECK DUPLICATES ----------
+/*---------- CHECK DUPLICATES ----------*/
 int	ft_check_duplic(int ac, char *av[])
 {
 	int	i;
@@ -70,28 +74,23 @@ int	ft_check_duplic(int ac, char *av[])
 	return (0);
 }
 
-int	ft_check_argv_are_valid(int ac, char *av[])
+/*------------------ CHECKS ------------------*/
+int	parsing(int ac, char *av[])
 {
-	if (av[1][0] == '\0' || av[1][0] == ' ')
+	if (check_digits(ac, av))
 	{
 		write (2, "Error\n", 6);
 		return (1);
 	}
-	if (ft_check_digits(ac, av) == 1)
+	else if (check_range(ac, av))
 	{
 		write (2, "Error\n", 6);
 		return (1);
 	}
-	else if (ft_check_range(ac, av) == 1)
-	{
-		write (2, "Error\n", 6);
-		return (1);
-	}
-	else if (ft_check_duplic(ac, av) == 1)
+	else if (check_negative(ac, av))
 	{
 		write (2, "Error\n", 6);
 		return (1);
 	}
 	return (0);
 }
-*/

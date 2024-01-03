@@ -24,4 +24,7 @@
 	struct s_stack	*next;
 }	t_stack;
 */
+
+int	parsing(int ac, char *av[]);
+
 #endif
