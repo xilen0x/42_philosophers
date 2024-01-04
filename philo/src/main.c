@@ -40,16 +40,9 @@ with a mutex for each of them.*/
 
 int	main(int ac, char *av[])
 {
-	if (ac == 5 || ac == 6)
-	{
-		if (parsing(ac, av))
-			return (1);
-		//philo(ac - 1, av + 1);
-	}
-	else
-	{
-		printf("Incorrect number of arguments!\n");
-		printf("Ex: 1 200 250 100 5");
-	}
+	struct s_crono	crono;
+
+	parsing(ac, av);
+	init_crono(&crono, *av);
 	return (0);
 }

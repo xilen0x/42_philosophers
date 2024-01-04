@@ -11,10 +11,6 @@
 /* ************************************************************************** */
 
 #include "../include/philo.h"
-/* 
-number_of_philosophers 		time_to_die 		time_to_eat 		time_to_sleep[number_of_times_each_philosopher_must_eat]
-		1 200 250 100 5 
-*/
 
 /*---------- CHECK if DIGITS ----------*/
 int	check_digits(int ac, char *av[])
@@ -29,7 +25,10 @@ int	check_digits(int ac, char *av[])
 		while (av[i][j])
 		{
 			if (!(av[i][j] >= '0' && av[i][j] <= '9'))
+			{
+				printf("Digito no valido!\n");
 				return (1);
+			}
 			j++;
 		}
 		i++;
@@ -37,7 +36,7 @@ int	check_digits(int ac, char *av[])
 	return (0);
 }
 
-//---------- CHECK RANGE AV ----------
+//---------- CHECK RANGE ----------
 int	check_range(int ac, char *av[])
 {
 	int		i;
@@ -55,18 +54,26 @@ int	check_range(int ac, char *av[])
 	return (0);
 }
 
-/*------------------ CHECKS ------------------*/
+/*------------------ PARSING ------------------*/
 int	parsing(int ac, char *av[])
 {
-	if (check_digits(ac, av))
+	if (ac == 5 || ac == 6)
 	{
-		write (2, "Error\n", 6);
-		return (1);
+		if (check_digits(ac, av))
+		{
+			write (2, "Error\n", 6);
+			return (1);
+		}
+		else if (check_range(ac, av))
+		{
+			write (2, "Error\n", 6);
+			return (1);
+		}
 	}
-	else if (check_range(ac, av))
+	else
 	{
-		write (2, "Error\n", 6);
-		return (1);
+		printf("Incorrect number of arguments!\n");
+		printf("Ex: 1 200 250 100 5");
 	}
 	return (0);
 }

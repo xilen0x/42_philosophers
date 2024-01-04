@@ -17,18 +17,24 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
+# include <pthread.h>
+# include <sys/time.h>
 
 // ------------------------ Structs ------------------------ //
-/*typedef struct s_stack
+struct s_crono
 {
-	int				num;
-	struct s_stack	*next;
-}	t_stack;
-*/
+	int	num_ph;
+	int	time_to_die;
+	int	time_to_eat;
+	int	time_to_sleep;
+	int	num_x_ph_must_eat;
+	long long	start;
+};
+
 
 int		parsing(int ac, char *av[]);
-//int	ft_isdigit(int num);
+void	init_crono(struct s_crono *crono, char *av);
 long	ft_atol(const char *str);
 int		contains_digit(char *c);
-
+long long	get_time(void);
 #endif
