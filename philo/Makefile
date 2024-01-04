@@ -12,8 +12,8 @@ OBJ_FILES = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_FILES))
 DEP_FILES = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.d, $(SRC_FILES))
 
 # Compilador y opciones
-CC = gcc
-CFLAGS = -Wall -Wextra -I$(INC_DIR)
+CC = clang -g
+CFLAGS = -Wall -Wextra -Werror -I$(INC_DIR)
 
 # Regla por defecto
 all: $(NAME)

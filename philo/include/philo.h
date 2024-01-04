@@ -16,6 +16,7 @@
 # include <limits.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdio.h>
 
 // ------------------------ Structs ------------------------ //
 /*typedef struct s_stack
@@ -25,6 +26,9 @@
 }	t_stack;
 */
 
-int	parsing(int ac, char *av[]);
+int		parsing(int ac, char *av[]);
+//int	ft_isdigit(int num);
+long	ft_atol(const char *str);
+int		contains_digit(char *c);
 
 #endif
