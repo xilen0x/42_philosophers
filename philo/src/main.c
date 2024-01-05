@@ -38,9 +38,10 @@ with a mutex for each of them.*/
 
 int	main(int ac, char *av[])
 {
-	struct s_crono	crono;
+	struct s_crono	*crono;
 
 	parsing(ac, av);
 	init_crono(&crono, av);
+	free(crono);
 	return (0);
 }

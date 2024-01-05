@@ -27,16 +27,22 @@ void	print_struct(struct s_crono *crono)
 }
 
 /*Inicializacion de la estructura*/
-void	init_crono(struct s_crono *crono, char *av[])
+void	init_crono(struct s_crono **crono, char *av[])
 {
-	crono->num_ph = ft_atol(av[1]);
-	crono->time_to_die = ft_atol(av[2]);
-	crono->time_to_eat = ft_atol(av[3]);
-	crono->time_to_sleep = ft_atol(av[4]);
+	*crono = (struct s_crono *)malloc(sizeof(struct s_crono));
+	if (!crono)
+	{
+		printf("Error al reservar memoria!\n");
+		return ;
+	}
+	(*crono)->num_ph = ft_atol(av[1]);
+	(*crono)->time_to_die = ft_atol(av[2]);
+	(*crono)->time_to_eat = ft_atol(av[3]);
+	(*crono)->time_to_sleep = ft_atol(av[4]);
 	if (av[5])
-		crono->num_x_ph_must_eat = ft_atol(av[5]);
+		(*crono)->num_x_ph_must_eat = ft_atol(av[5]);
 	else
-		crono->num_x_ph_must_eat = 0;
-	crono->start = get_time();
-	print_struct(crono);
+		(*crono)->num_x_ph_must_eat = 0;
+	(*crono)->start = get_time();
+	print_struct(*crono);
 }
