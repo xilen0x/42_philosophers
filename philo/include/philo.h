@@ -33,7 +33,7 @@ struct s_crono
 
 
 int		parsing(int ac, char *av[]);
-void	init_crono(struct s_crono *crono, char *av);
+void	init_crono(struct s_crono *crono, char *av[]);
 long	ft_atol(const char *str);
 int		contains_digit(char *c);
 long long	get_time(void);

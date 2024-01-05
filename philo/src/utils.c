@@ -34,9 +34,9 @@ long	ft_atol(const char *str)
 		if (res > (LONG_MAX - (str[i] - '0')) / 10)
 		{
 			if (sign == 1)
-				return LONG_MAX;
+				return (LONG_MAX);
 			else
-				return LONG_MIN;
+				return (LONG_MIN);
 		}
 		res = (res * 10) + (str[i] - '0');
 		i++;
@@ -65,10 +65,11 @@ int	contains_digit(char *c)
 	return (0);
 }
 
+/*obtener el tiempo total en milisegundos*/
 long long	get_time(void)
 {
-	struct timeval	tv;
+	struct timeval	info_time;
 
-	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+	gettimeofday(&info_time, NULL);
+	return (info_time.tv_sec * 1000 + info_time.tv_usec / 1000);
 }

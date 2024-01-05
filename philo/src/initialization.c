@@ -23,18 +23,18 @@ void	print_struct(struct s_crono *crono)
 	printf("time_to_eat: %d\n", crono->time_to_eat);
 	printf("time_to_sleep: %d\n", crono->time_to_sleep);
 	printf("num_x_ph_must_eat: %d\n", crono->num_x_ph_must_eat);
-	printf("num_x_ph_must_eat: %lld\n", crono->start);//aqui voy
+	printf("num_x_ph_must_eat: %lld\n", crono->start);
 }
 
 /*Inicializacion de la estructura*/
-void	init_crono(struct s_crono *crono, char *av)
+void	init_crono(struct s_crono *crono, char *av[])
 {
-	crono->num_ph = ft_atol(&av[1]);
-	crono->time_to_die = ft_atol(&av[2]);
-	crono->time_to_eat = ft_atol(&av[3]);
-	crono->time_to_sleep = ft_atol(&av[4]);
-	if (&av[5])
-		crono->num_x_ph_must_eat = ft_atol(&av[5]);
+	crono->num_ph = ft_atol(av[1]);
+	crono->time_to_die = ft_atol(av[2]);
+	crono->time_to_eat = ft_atol(av[3]);
+	crono->time_to_sleep = ft_atol(av[4]);
+	if (av[5])
+		crono->num_x_ph_must_eat = ft_atol(av[5]);
 	else
 		crono->num_x_ph_must_eat = 0;
 	crono->start = get_time();

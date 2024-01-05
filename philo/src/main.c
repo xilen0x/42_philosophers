@@ -36,13 +36,11 @@ with a mutex for each of them.*/
 
 #include "../include/philo.h"
 
-#include <stdio.h>
-
 int	main(int ac, char *av[])
 {
 	struct s_crono	crono;
 
 	parsing(ac, av);
-	init_crono(&crono, *av);
+	init_crono(&crono, av);
 	return (0);
 }
