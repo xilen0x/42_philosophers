@@ -36,10 +36,11 @@ typedef struct s_philo
 	unsigned int	left_i_ph;
 	long long		last_eat;
 	unsigned int	num_ph_eaten;
+	struct s_crono	*crono_ph;
 	//pthread_mutex_t	fork;
 }	t_philo;
 
-struct s_crono
+typedef struct s_crono
 {
 	unsigned int	num_ph;
 	unsigned int	time_to_die;
@@ -51,10 +52,10 @@ struct s_crono
 	//pthread_mutex_t	writing;
 	//pthread_mutex_t	eat_check;
 	t_philo			*ph;
-};
+} t_crono;
 
 int			parsing(int ac, char *av[]);
-void		init_crono(struct s_crono **crono, char *av[]);
+void		init_crono(t_crono *crono, char *av[]);
 long		ft_atol(const char *str);
 int			contains_digit(char *c);
 long long	get_time(void);
