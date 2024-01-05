@@ -21,14 +21,36 @@
 # include <sys/time.h>
 
 // ------------------------ Structs ------------------------ //
+typedef enum e_ph_status
+{
+	THINKING,
+	HUNGRY,
+	EATING,
+	SLEEPING
+}	t_ph_status;
+
+typedef struct s_philo
+{
+	unsigned int	num_ph;
+	unsigned int	rigth_i_ph;
+	unsigned int	left_i_ph;
+	long long		last_eat;
+	unsigned int	num_ph_eaten;
+	//pthread_mutex_t	fork;
+}	t_philo;
+
 struct s_crono
 {
-	int			num_ph;
-	int			time_to_die;
-	int			time_to_eat;
-	int			time_to_sleep;
-	int			num_x_ph_must_eat;
-	long long	start;
+	unsigned int	num_ph;
+	unsigned int	time_to_die;
+	unsigned int	time_to_eat;
+	unsigned int	time_to_sleep;
+	unsigned int	num_x_ph_must_eat;
+	long long		start;
+	//int			everyone_alive;
+	//pthread_mutex_t	writing;
+	//pthread_mutex_t	eat_check;
+	t_philo			*ph;
 };
 
 int			parsing(int ac, char *av[]);

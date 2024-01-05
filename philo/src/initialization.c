@@ -26,6 +26,20 @@ void	print_struct(struct s_crono *crono)
 	printf("num_x_ph_must_eat: %lld\n", crono->start);
 }
 
+/*Inicializacion de mis philosofos(threads)*/
+void	init_ph(struct s_crono **crono, int q_philos)
+{
+	(void)crono;
+	int	i;
+
+	i = 0;
+	while (i < q_philos)
+	{
+		printf("philo N: %d\n", i + 1);
+		i++;
+	}
+}
+
 /*Inicializacion de la estructura*/
 void	init_crono(struct s_crono **crono, char *av[])
 {
@@ -44,5 +58,6 @@ void	init_crono(struct s_crono **crono, char *av[])
 	else
 		(*crono)->num_x_ph_must_eat = 0;
 	(*crono)->start = get_time();
-	print_struct(*crono);
+	//print_struct(*crono);
+	init_ph(crono, (*crono)->num_ph);
 }
