@@ -27,12 +27,20 @@ void	print_struct(struct s_crono *crono)
 }
 
 /*Inicializacion de mis philosofos(threads)*/
-void	init_ph(t_crono *crono, int q_philos)
+void	init_ph(t_crono *crono)
 {
-	int	i;
+	unsigned int	i;
 
 	i = 0;
-	while (i < q_philos)
+	crono->ph = NULL;
+	crono->ph = malloc(sizeof(t_philo) * crono->num_ph);
+	if (!crono)
+	{
+		printf("Error reserving memory!\n");
+		free(crono);
+		return ;
+	}
+	while (i < crono->num_ph)
 	{
 		crono->ph[i].num_ph = i + 1;
 		crono->ph[i].rigth_i_ph = i + 1;
@@ -41,22 +49,11 @@ void	init_ph(t_crono *crono, int q_philos)
 		crono->ph[i].crono_ph = crono;
 		i++;
 	}
-	//aaki voy...
-	/*
-		./philo 1 800 200 250 1
-		[1]    70008 segmentation fault  ./philo 1 800 200 250 1
-	*/
 }
 
 /*Inicializacion de la estructura*/
 void	init_crono(t_crono *crono, char *av[])
 {
-	crono = (t_crono *)malloc(sizeof(t_crono));
-	if (!crono)
-	{
-		printf("Error al reservar memoria!\n");
-		return ;
-	}
 	crono->num_ph = ft_atol(av[1]);
 	crono->time_to_die = ft_atol(av[2]);
 	crono->time_to_eat = ft_atol(av[3]);
@@ -67,5 +64,5 @@ void	init_crono(t_crono *crono, char *av[])
 		crono->num_x_ph_must_eat = 0;
 	crono->start = get_time();
 	//print_struct(*crono);
-	init_ph(crono, crono->num_ph);
+	init_ph(crono);
 }
