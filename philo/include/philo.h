@@ -31,31 +31,32 @@ typedef enum e_ph_status
 
 typedef struct s_philo
 {
-	unsigned int	num_ph;
-	unsigned int	rigth_i_ph;
-	unsigned int	left_i_ph;
+	size_t			num_ph;
+	size_t			rigth_fork;
+	size_t			left_fork;
 	long long		last_eat;
-	unsigned int	num_ph_eaten;
-	struct s_crono	*crono_ph;
-	//pthread_mutex_t	fork;
+	size_t			times_ate;
+	pthread_mutex_t	fork;
+	struct s_chrono	*chrono_ph;
 }	t_philo;
 
-typedef struct s_crono
+typedef struct s_chrono
 {
-	unsigned int	num_ph;
-	unsigned int	time_to_die;
-	unsigned int	time_to_eat;
-	unsigned int	time_to_sleep;
-	unsigned int	num_x_ph_must_eat;
-	long long		start;
-	//int			everyone_alive;
-	//pthread_mutex_t	writing;
-	//pthread_mutex_t	eat_check;
+	long long		start_time;
+	size_t			num_ph;
+	size_t			time_to_die;
+	size_t			time_to_eat;
+	size_t			time_to_sleep;
+	size_t			num_x_ph_must_eat;
+	size_t			are_all_alive;
+	pthread_mutex_t	writing;
+	pthread_mutex_t	eat_check;
 	t_philo			*ph;
-} t_crono;
+}	t_chrono;
 
+// ------------------------ Prototypes ------------------------ //
 int			parsing(int ac, char *av[]);
-void		init_crono(t_crono *crono, char *av[]);
+void		init_chrono(t_chrono *chrono, char *av[]);
 long		ft_atol(const char *str);
 int			contains_digit(char *c);
 long long	get_time(void);

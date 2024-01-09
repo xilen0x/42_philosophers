@@ -38,10 +38,10 @@ with a mutex for each of them.*/
 
 int	main(int ac, char *av[])
 {
-	t_crono	crono;
+	t_chrono	chrono;
 
 	parsing(ac, av);
-	init_crono(&crono, av);
-	//free(crono);
+	init_chrono(&chrono, av);
+	free(&chrono);
 	return (0);
 }

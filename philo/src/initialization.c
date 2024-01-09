@@ -27,42 +27,42 @@ void	print_struct(struct s_crono *crono)
 }
 
 /*Inicializacion de mis philosofos(threads)*/
-void	init_ph(t_crono *crono)
+void	init_ph(t_chrono *chrono)
 {
 	unsigned int	i;
 
 	i = 0;
-	crono->ph = NULL;
-	crono->ph = malloc(sizeof(t_philo) * crono->num_ph);
-	if (!crono)
+	chrono->ph = NULL;
+	chrono->ph = malloc(sizeof(t_philo) * chrono->num_ph);
+	if (!chrono)
 	{
 		printf("Error reserving memory!\n");
-		free(crono);
+		free(chrono);
 		return ;
 	}
-	while (i < crono->num_ph)
+	while (i < chrono->num_ph)
 	{
-		crono->ph[i].num_ph = i + 1;
-		crono->ph[i].rigth_i_ph = i + 1;
-		crono->ph[i].left_i_ph = i;
-		crono->ph[i].last_eat = 0;
-		crono->ph[i].crono_ph = crono;
+		chrono->ph[i].chrono_ph = chrono;
+		chrono->ph[i].num_ph = i + 1;
+		chrono->ph[i].last_eat = 0;
+		chrono->ph[i].rigth_fork = i + 1;
+		chrono->ph[i].left_fork = i;
 		i++;
 	}
 }
 
 /*Inicializacion de la estructura*/
-void	init_crono(t_crono *crono, char *av[])
+void	init_chrono(t_chrono *chrono, char *av[])
 {
-	crono->num_ph = ft_atol(av[1]);
-	crono->time_to_die = ft_atol(av[2]);
-	crono->time_to_eat = ft_atol(av[3]);
-	crono->time_to_sleep = ft_atol(av[4]);
+	chrono->num_ph = ft_atol(av[1]);
+	chrono->time_to_die = ft_atol(av[2]);
+	chrono->time_to_eat = ft_atol(av[3]);
+	chrono->time_to_sleep = ft_atol(av[4]);
 	if (av[5])
-		crono->num_x_ph_must_eat = ft_atol(av[5]);
+		chrono->num_x_ph_must_eat = ft_atol(av[5]);
 	else
-		crono->num_x_ph_must_eat = 0;
-	crono->start = get_time();
-	//print_struct(*crono);
-	init_ph(crono);
+		chrono->num_x_ph_must_eat = 0;
+	chrono->start_time = get_time();
+	print_struct(chrono);
+	init_ph(chrono);
 }

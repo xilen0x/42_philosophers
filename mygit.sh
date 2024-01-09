@@ -1,9 +1,8 @@
 #!/bin/bash
 # by castorga
 
-# Verificar si existe un repositorio en el directorio actual
 if [ ! -d .git ]; then
-    echo "No se encontró un repositorio en este directorio. Saliendo."
+    echo "Repo not found!"
     exit 1
 fi
 

@@ -73,7 +73,8 @@ int	parsing(int ac, char *av[])
 	else
 	{
 		printf("Incorrect number of arguments!\n");
-		printf("Ex: 1 200 250 100 5");
+		printf("Ex: 1 200 250 100 5\n");
+		return (1);
 	}
 	return (0);
 }
