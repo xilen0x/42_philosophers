@@ -31,6 +31,7 @@ typedef enum e_ph_status
 
 typedef struct s_philo
 {
+	pthread_t		id_thread;
 	size_t			num_ph;
 	size_t			rigth_fork;
 	size_t			left_fork;

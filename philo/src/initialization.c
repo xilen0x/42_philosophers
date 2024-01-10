@@ -16,14 +16,14 @@ number_of_philosophers 		time_to_die 		time_to_eat 		time_to_sleep[number_of_tim
 		1 200 250 100 5   */
 
 /*print struct - borrar luego*/
-void	print_struct(struct s_crono *crono)
+void	print_struct(t_chrono *chrono)
 {
-	printf("num_ph: %d\n", crono->num_ph);
-	printf("time_to_die: %d\n", crono->time_to_die);
-	printf("time_to_eat: %d\n", crono->time_to_eat);
-	printf("time_to_sleep: %d\n", crono->time_to_sleep);
-	printf("num_x_ph_must_eat: %d\n", crono->num_x_ph_must_eat);
-	printf("num_x_ph_must_eat: %lld\n", crono->start);
+	printf("num_ph: %zu\n", chrono->num_ph);
+	printf("time_to_die: %zu\n", chrono->time_to_die);
+	printf("time_to_eat: %zu\n", chrono->time_to_eat);
+	printf("time_to_sleep: %zu\n", chrono->time_to_sleep);
+	printf("num_x_ph_must_eat: %zu\n", chrono->num_x_ph_must_eat);
+	printf("num_x_ph_must_eat: %lld\n", chrono->start_time);
 }
 
 /*Inicializacion de mis philosofos(threads)*/

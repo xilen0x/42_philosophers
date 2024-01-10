@@ -32,7 +32,9 @@ The specific rules for the mandatory part are:
 	philosophers, each philosopher has a fork on their left side and a fork on their right
 	side. If there is only one philosopher, there should be only one fork on the table.
 • To prevent philosophers from duplicating forks, you should protect the forks state
-with a mutex for each of them.*/
+with a mutex for each of them.
+https://www.figma.com/file/KG3b82Ss33nnkI1j3b5y4r/Untitled?type=whiteboard&node-id=11%3A8&t=cCpQ6EutW4RmbLa4-1
+*/
 
 #include "../include/philo.h"
 
@@ -40,8 +42,9 @@ int	main(int ac, char *av[])
 {
 	t_chrono	chrono;
 
-	parsing(ac, av);
+	if (parsing(ac, av))
+		return (1);
 	init_chrono(&chrono, av);
-	free(&chrono);
+	free(chrono.ph);
 	return (0);
 }
