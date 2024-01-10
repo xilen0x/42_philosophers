@@ -42,9 +42,18 @@ int	main(int ac, char *av[])
 {
 	t_chrono	chrono;
 
+	//parsing
 	if (parsing(ac, av))
 		return (1);
+	//initializing structs (chrono y ph)
 	init_chrono(&chrono, av);
+
+	//threads creation
+	philos_creation(&chrono);
+
+	//monitor
+
+	//release resources
 	free(chrono.ph);
 	return (0);
 }

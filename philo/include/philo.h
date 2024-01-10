@@ -31,8 +31,7 @@ typedef enum e_ph_status
 
 typedef struct s_philo
 {
-	pthread_t		id_thread;
-	size_t			num_ph;
+	unsigned int	num_ph;
 	size_t			rigth_fork;
 	size_t			left_fork;
 	long long		last_eat;
@@ -44,7 +43,6 @@ typedef struct s_philo
 typedef struct s_chrono
 {
 	long long		start_time;
-	size_t			num_ph;
 	size_t			time_to_die;
 	size_t			time_to_eat;
 	size_t			time_to_sleep;
@@ -52,6 +50,7 @@ typedef struct s_chrono
 	size_t			are_all_alive;
 	pthread_mutex_t	writing;
 	pthread_mutex_t	eat_check;
+	unsigned int	q_philos;
 	t_philo			*ph;
 }	t_chrono;
 
@@ -61,5 +60,6 @@ void		init_chrono(t_chrono *chrono, char *av[]);
 long		ft_atol(const char *str);
 int			contains_digit(char *c);
 long long	get_time(void);
+int			philos_creation(t_chrono *chrono);
 
 #endif
