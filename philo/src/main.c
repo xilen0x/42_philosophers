@@ -42,9 +42,10 @@ int	main(int ac, char *av[])
 {
 	t_chrono	chrono;
 
-	//parsing
+	//parsing arguments
 	if (parsing(ac, av))
 		return (1);
+
 	//initializing structs (chrono y ph)
 	init_chrono(&chrono, av);
 

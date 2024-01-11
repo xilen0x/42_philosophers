@@ -18,7 +18,7 @@ number_of_philosophers 		time_to_die 		time_to_eat 		time_to_sleep[number_of_tim
 /*print struct - borrar luego*/
 void	print_struct(t_chrono *chrono)
 {
-	printf("num_ph: %u\n", chrono->ph->num_ph);
+	printf("num_ph: %u\n", chrono->q_philos);
 	printf("time_to_die: %zu\n", chrono->time_to_die);
 	printf("time_to_eat: %zu\n", chrono->time_to_eat);
 	printf("time_to_sleep: %zu\n", chrono->time_to_sleep);
@@ -26,14 +26,14 @@ void	print_struct(t_chrono *chrono)
 	printf("num_x_ph_must_eat: %lld\n", chrono->start_time);
 }
 
-/*Inicializacion de philosofos(threads)*/
+/*Inicializacion de la estructura philosofos(ph)*/
 void	init_ph(t_chrono *chrono)
 {
 	unsigned int	i;
 
 	i = 0;
 	chrono->ph = NULL;
-	chrono->ph = malloc(sizeof(t_philo) * chrono->ph->num_ph);
+	chrono->ph = (t_philo *)malloc(sizeof(t_philo) * chrono->q_philos);
 	if (!chrono)
 	{
 		printf("Error reserving memory!\n");
@@ -57,7 +57,7 @@ void	init_chrono(t_chrono *chrono, char *av[])
 {
 	pthread_mutex_init(&chrono->writing, NULL);
 	pthread_mutex_init(&chrono->eat_check, NULL);
-	chrono->ph->num_ph = ft_atol(av[1]);
+	chrono->q_philos = ft_atol(av[1]);
 	chrono->time_to_die = ft_atol(av[2]);
 	chrono->time_to_eat = ft_atol(av[3]);
 	chrono->time_to_sleep = ft_atol(av[4]);

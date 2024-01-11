@@ -12,26 +12,29 @@
 
 #include "../include/philo.h"
 
-void	functionx(t_chrono *chrono)
+void	picking_up_forks(t_chrono *chrono)
 {
-	(void)chrono;
-	pthread_mutex_lock(&mutex);
-//aki voy!!!!!!!!
-	pthread_mutex_unlock(&mutex);
+	pthread_mutex_lock(&chrono->ph->fork);
+	printf("%lld %d is eating\n", chrono->start_time, chrono->ph->num_ph);
+	pthread_mutex_unlock(&chrono->ph->fork);
 }
 
 int	philos_creation(t_chrono *chrono)
 {
-	pthread_t		*ph_ptr;
+	pthread_t		*philosopher;
 	unsigned int	i;
 
 	i = 0;
-	ph_ptr = (pthread_t *)malloc(sizeof(pthread_t) * chrono->q_philos);
-	if (!ph_ptr)
+	philosopher = (pthread_t *)malloc(sizeof(pthread_t) * chrono->q_philos);
+	if (!philosopher)
 		return (1);
 	while (i < chrono->q_philos)
 	{
-		pthread_create(&ph_ptr[i], NULL, (void *(*)(void *))functionx, &chrono->ph[i]);
+		if (pthread_create(&philosopher[i], NULL, (void *)picking_up_forks, &chrono->ph[i]))
+		{
+			printf("Error creating thread\n");
+			return (1);
+		}
 		chrono->ph[i].last_eat = get_time();
 		i++;
 	}
