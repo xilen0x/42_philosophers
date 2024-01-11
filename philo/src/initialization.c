@@ -42,7 +42,11 @@ void	init_ph(t_chrono *chrono)
 	}
 	while (i < chrono->ph->num_ph)
 	{
-		pthread_mutex_init(&chrono->ph[i].fork, NULL);
+		if (pthread_mutex_init(&chrono->ph[i].fork, NULL))
+		{
+			fprintf(stderr, "Error initializing mutex\n");
+			return ;
+		}
 		chrono->ph[i].chrono_ph = chrono;
 		chrono->ph[i].num_ph = i + 1;
 		chrono->ph[i].last_eat = 0;
@@ -55,8 +59,6 @@ void	init_ph(t_chrono *chrono)
 /*Inicializacion de la estructura t_chrono*/
 void	init_chrono(t_chrono *chrono, char *av[])
 {
-	pthread_mutex_init(&chrono->writing, NULL);
-	pthread_mutex_init(&chrono->eat_check, NULL);
 	chrono->q_philos = ft_atol(av[1]);
 	chrono->time_to_die = ft_atol(av[2]);
 	chrono->time_to_eat = ft_atol(av[3]);

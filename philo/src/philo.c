@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "../include/philo.h"
-
+//aki voy - problema: no imprime este printf!!!!!!!!!!
 void	picking_up_forks(t_chrono *chrono)
 {
 	pthread_mutex_lock(&chrono->ph->fork);
