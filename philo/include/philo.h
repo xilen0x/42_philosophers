@@ -37,6 +37,7 @@ typedef struct s_chrono
 	t_philo			*ph;
 }	t_chrono;
 
+// --------- PHILOSOPHER STRUCT -----------
 struct s_philo
 {
 	unsigned int	num_ph;//id del ph

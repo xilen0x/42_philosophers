@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialization.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: castorga <castorga@student.42barcel>       +#+  +:+       +#+        */
+/*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 18:59:15 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/04 18:59:17 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/12 17:36:39 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ number_of_philosophers 		time_to_die 		time_to_eat 		time_to_sleep[number_of_tim
 /*print struct - borrar luego*/
 void	print_struct(t_chrono *chrono)
 {
-	printf("num_ph: %u\n", chrono->q_philos);
+	printf("q_philos: %u\n", chrono->q_philos);
 	printf("time_to_die: %zu\n", chrono->time_to_die);
 	printf("time_to_eat: %zu\n", chrono->time_to_eat);
 	printf("time_to_sleep: %zu\n", chrono->time_to_sleep);
@@ -34,15 +34,15 @@ void	init_ph(t_chrono *chrono)
 	i = 0;
 	chrono->ph = NULL;
 	chrono->ph = (t_philo *)malloc(sizeof(t_philo) * chrono->q_philos);
-	if (!chrono)
+	if (!chrono->ph)
 	{
 		printf("Error reserving memory!\n");
 		free(chrono);
 		return ;
 	}
-	while (i < chrono->ph->num_ph)
+	while (i < chrono->q_philos)
 	{
-		if (pthread_mutex_init(&chrono->ph[i].fork, NULL))
+		if (pthread_mutex_init(&chrono->ph->mutex_ph, NULL))
 		{
 			fprintf(stderr, "Error initializing mutex\n");
 			return ;
@@ -59,6 +59,11 @@ void	init_ph(t_chrono *chrono)
 /*Inicializacion de la estructura t_chrono*/
 void	init_chrono(t_chrono *chrono, char *av[])
 {
+	if (pthread_mutex_init(&chrono->mutex_chrono, NULL))
+	{
+		fprintf(stderr, "Error initializing mutex\n");
+		return ;
+	}
 	chrono->q_philos = ft_atol(av[1]);
 	chrono->time_to_die = ft_atol(av[2]);
 	chrono->time_to_eat = ft_atol(av[3]);
