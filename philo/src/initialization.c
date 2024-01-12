@@ -69,6 +69,6 @@ void	init_chrono(t_chrono *chrono, char *av[])
 		chrono->num_x_ph_must_eat = 0;
 	chrono->are_all_alive = 1;
 	chrono->start_time = get_time();
-	print_struct(chrono);//
+	//print_struct(chrono);//
 	init_ph(chrono);
 }

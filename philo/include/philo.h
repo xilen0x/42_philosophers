@@ -32,9 +32,8 @@ typedef struct s_chrono
 	size_t			time_to_sleep;
 	size_t			num_x_ph_must_eat;
 	size_t			are_all_alive;
-	pthread_mutex_t	writing;
-	pthread_mutex_t	eat_check;
 	unsigned int	q_philos;//cant.total phs
+	pthread_mutex_t	mutex_chrono;
 	t_philo			*ph;
 }	t_chrono;
 
@@ -45,7 +44,7 @@ struct s_philo
 	size_t			left_fork;
 	long long		last_eat;
 	size_t			times_ate;
-	pthread_mutex_t	fork;
+	pthread_mutex_t	mutex_ph;
 	t_chrono		*chrono_ph;
 };
 

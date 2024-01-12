@@ -11,12 +11,20 @@
 /* ************************************************************************** */
 
 #include "../include/philo.h"
-//aki voy - problema: no imprime este printf!!!!!!!!!!
-void	picking_up_forks(t_chrono *chrono)
+
+void	monitor(t_chrono *chrono)
 {
-	pthread_mutex_lock(&chrono->ph->fork);
-	printf("%lld %d is eating\n", chrono->start_time, chrono->ph->num_ph);
-	pthread_mutex_unlock(&chrono->ph->fork);
+	//fn x check si alguno muere
+		//fn x hacer q c/philo coma
+		//fn x saber el status de c/philo
+		
+	//usleep(100);
+	//pthread_mutex_lock(&chrono);
+
+	printf("testeeeee\n");
+	//printf("%lld %d is eating\n", chrono->start_time, chrono->ph->num_ph);
+
+	//pthread_mutex_unlock(&chrono);
 }
 
 int	philos_creation(t_chrono *chrono)
@@ -30,7 +38,7 @@ int	philos_creation(t_chrono *chrono)
 		return (1);
 	while (i < chrono->q_philos)
 	{
-		if (pthread_create(&philosopher[i], NULL, (void *)picking_up_forks, &chrono->ph[i]))
+		if (pthread_create(&philosopher[i], NULL, (void *)monitor, &chrono->ph[i]))
 		{
 			printf("Error creating thread\n");
 			return (1);
