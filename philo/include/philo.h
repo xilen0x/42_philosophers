@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: castorga <castorga@student.42barcel>       +#+  +:+       +#+        */
+/*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:53:47 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/03 16:53:49 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/15 13:34:11 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,14 @@
 
 typedef struct s_philo	t_philo;
 
+// --------- CHRONOGRAM STRUCT -----------
 typedef struct s_chrono
 {
 	long long		start_time;
 	size_t			time_to_die;
 	size_t			time_to_eat;
 	size_t			time_to_sleep;
-	size_t			num_x_ph_must_eat;
+	size_t			num_x_eat;
 	size_t			are_all_alive;
 	unsigned int	q_philos;//cant.total phs
 	pthread_mutex_t	mutex_chrono;

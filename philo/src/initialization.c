@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 18:59:15 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/12 17:36:39 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/15 13:34:34 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	print_struct(t_chrono *chrono)
 	printf("time_to_die: %zu\n", chrono->time_to_die);
 	printf("time_to_eat: %zu\n", chrono->time_to_eat);
 	printf("time_to_sleep: %zu\n", chrono->time_to_sleep);
-	printf("num_x_ph_must_eat: %zu\n", chrono->num_x_ph_must_eat);
-	printf("num_x_ph_must_eat: %lld\n", chrono->start_time);
+	printf("num_x_eat: %zu\n", chrono->num_x_eat);
+	printf("num_x_eat: %lld\n", chrono->start_time);
 }
 
 /*Inicializacion de la estructura philosofos(ph)*/
@@ -52,6 +52,7 @@ void	init_ph(t_chrono *chrono)
 		chrono->ph[i].last_eat = 0;
 		chrono->ph[i].rigth_fork = i + 1;
 		chrono->ph[i].left_fork = i;
+		chrono->ph[i].times_ate = 0;
 		i++;
 	}
 }
@@ -69,9 +70,9 @@ void	init_chrono(t_chrono *chrono, char *av[])
 	chrono->time_to_eat = ft_atol(av[3]);
 	chrono->time_to_sleep = ft_atol(av[4]);
 	if (av[5])
-		chrono->num_x_ph_must_eat = ft_atol(av[5]);
+		chrono->num_x_eat = ft_atol(av[5]);
 	else
-		chrono->num_x_ph_must_eat = 0;
+		chrono->num_x_eat = 0;
 	chrono->are_all_alive = 1;
 	chrono->start_time = get_time();
 	//print_struct(chrono);//
