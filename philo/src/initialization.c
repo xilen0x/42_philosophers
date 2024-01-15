@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 18:59:15 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/15 13:34:34 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/15 19:03:51 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	init_ph(t_chrono *chrono)
 		chrono->ph[i].last_eat = 0;
 		chrono->ph[i].rigth_fork = i + 1;
 		chrono->ph[i].left_fork = i;
-		chrono->ph[i].times_ate = 0;
+		chrono->ph[i].number_of_meals = 0;
 		i++;
 	}
 }
