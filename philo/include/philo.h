@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:53:47 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/15 19:03:18 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/16 12:10:09 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ struct s_philo
 	unsigned int	num_ph;//id del ph
 	size_t			rigth_fork;
 	size_t			left_fork;
-	long long		last_eat;
+	size_t			last_eat;
 	size_t			number_of_meals;
 	pthread_mutex_t	mutex_ph;
 	t_chrono		*chrono_ph;

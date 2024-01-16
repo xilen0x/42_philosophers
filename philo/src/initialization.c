@@ -6,28 +6,14 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 18:59:15 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/15 19:03:51 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/16 12:50:21 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
-/* 
-number_of_philosophers 		time_to_die 		time_to_eat 		time_to_sleep[number_of_times_each_philosopher_must_eat]
-		1 200 250 100 5   */
 
-/*print struct - borrar luego*/
-void	print_struct(t_chrono *chrono)
-{
-	printf("q_philos: %u\n", chrono->q_philos);
-	printf("time_to_die: %zu\n", chrono->time_to_die);
-	printf("time_to_eat: %zu\n", chrono->time_to_eat);
-	printf("time_to_sleep: %zu\n", chrono->time_to_sleep);
-	printf("num_x_eat: %zu\n", chrono->num_x_eat);
-	printf("num_x_eat: %lld\n", chrono->start_time);
-}
-
-/*Inicializacion de la estructura philosofos(ph)*/
-void	init_ph(t_chrono *chrono)
+/*Initialization of the philosophers structure(t_philo)*/
+static void	init_ph(t_chrono *chrono)
 {
 	unsigned int	i;
 
@@ -57,7 +43,7 @@ void	init_ph(t_chrono *chrono)
 	}
 }
 
-/*Inicializacion de la estructura t_chrono*/
+/*Initialization of the chronogram structure(t_chrono)*/
 void	init_chrono(t_chrono *chrono, char *av[])
 {
 	if (pthread_mutex_init(&chrono->mutex_chrono, NULL))

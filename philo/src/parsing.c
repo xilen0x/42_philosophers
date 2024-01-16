@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: castorga <castorga@student.42barcel>       +#+  +:+       +#+        */
+/*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 19:27:04 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/03 19:27:05 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/16 12:50:57 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
 /*---------- CHECK if DIGITS ----------*/
-int	check_digits(int ac, char *av[])
+static int	check_digits(int ac, char *av[])
 {
 	int	i;
 	int	j;
@@ -37,7 +37,7 @@ int	check_digits(int ac, char *av[])
 }
 
 //---------- CHECK RANGE ----------
-int	check_range(int ac, char *av[])
+static int	check_range(int ac, char *av[])
 {
 	int		i;
 

@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:33:50 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/15 19:26:52 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/16 12:34:06 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@ void	are_all_alive(t_philo *ph)
 	while ((ph->chrono_ph->are_all_alive) && i < ph->chrono_ph->q_philos)
 	{
 		pthread_mutex_lock(&ph->chrono_ph->mutex_chrono);
-		//num q has comido - tpo actual
-		if (ph->chrono_ph->time_to_eat < (ph->chrono_ph->time_to_die - get_time()))//aki voy!!!!!!!!!!!!!!!!!!!!!
+		if ((ph->last_eat - get_time()) < ph->chrono_ph->time_to_die)
 		{
 			printf("%lld %u died\n", get_time() - ph->chrono_ph->start_time, ph->num_ph);
 			ph->chrono_ph->are_all_alive = 0;
@@ -30,7 +29,6 @@ void	are_all_alive(t_philo *ph)
 		if (!(ph->chrono_ph->are_all_alive))
 			break ;
 	}
-
 }
 
 void	go_to_sleep(t_philo *ph)
@@ -42,13 +40,13 @@ void	go_to_sleep(t_philo *ph)
 void	ph_eats(t_philo *ph)
 {
 	pthread_mutex_lock(&ph[ph->left_fork].mutex_ph);
-	printf("%lld %u has taken a fork A\n", get_time() - ph->chrono_ph->start_time, ph->num_ph);//modif. luego el msg
+	printf("%lld %u has taken a fork\n", get_time() - ph->chrono_ph->start_time, ph->num_ph);
 
 	pthread_mutex_lock(&ph[ph->rigth_fork].mutex_ph);
-	printf("%lld %u has taken a fork B\n", get_time() - ph->chrono_ph->start_time, ph->num_ph);
+	printf("%lld %u has taken a fork\n", get_time() - ph->chrono_ph->start_time, ph->num_ph);
 
 	pthread_mutex_lock(&ph->chrono_ph->mutex_chrono);
-	printf("%lld %u  is eating\n", get_time() - ph->chrono_ph->start_time, ph->num_ph);
+	printf("%lld %u is eating\n", get_time() - ph->chrono_ph->start_time, ph->num_ph);
 
 	ph->number_of_meals++;
 	ph->last_eat = get_time();
@@ -57,7 +55,7 @@ void	ph_eats(t_philo *ph)
 	pthread_mutex_unlock(&ph[ph->left_fork].mutex_ph);
 }
 
-//function monitor - Manage the threads
+//Function monitor - Manage the threads
 void	*monitor(t_philo *ph)
 {
 	if (ph->num_ph % 2)
@@ -74,6 +72,7 @@ void	*monitor(t_philo *ph)
 	return (NULL);
 }
 
+//Function to create threads
 int	philos_creation(t_chrono *chrono)
 {
 	pthread_t		*philosopher;
@@ -95,10 +94,10 @@ int	philos_creation(t_chrono *chrono)
 		i++;
 	}
 	i = 0;
-	/*while (i < chrono->q_philos)
+	while (i < chrono->q_philos)
 	{
 		pthread_join(philosopher[i], NULL);
 		i++;
-	}*/
+	}
 	return (0);
 }
