@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:53:47 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/16 12:10:09 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/16 19:47:58 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ typedef struct s_chrono
 	size_t			num_x_eat;//num por comer(arg. opcional)
 	size_t			are_all_alive;
 	unsigned int	q_philos;//cant.total phs
-	pthread_mutex_t	mutex_chrono;
+	pthread_mutex_t	mutex_meal;
+	pthread_mutex_t	mutex_iter;
+	pthread_mutex_t	*forks;
 	t_philo			*ph;
 }	t_chrono;
 
@@ -42,8 +44,8 @@ typedef struct s_chrono
 struct s_philo
 {
 	unsigned int	num_ph;//id del ph
-	size_t			rigth_fork;
-	size_t			left_fork;
+	pthread_mutex_t	*right_fork;
+	pthread_mutex_t	*left_fork;
 	size_t			last_eat;
 	size_t			number_of_meals;
 	pthread_mutex_t	mutex_ph;
@@ -56,7 +58,8 @@ int			parsing(int ac, char *av[]);
 void		init_chrono(t_chrono *chrono, char *av[]);
 long		ft_atol(const char *str);
 int			contains_digit(char *c);
-long long	get_time(void);
 int			philos_creation(t_chrono *chrono);
+long long	get_time(t_chrono *ch);
+int			ft_free(t_chrono *ch);
 
 #endif

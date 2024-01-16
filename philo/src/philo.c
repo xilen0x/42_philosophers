@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:33:50 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/16 12:34:06 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/16 19:26:25 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ void	are_all_alive(t_philo *ph)
 	i = 0;
 	while ((ph->chrono_ph->are_all_alive) && i < ph->chrono_ph->q_philos)
 	{
-		pthread_mutex_lock(&ph->chrono_ph->mutex_chrono);
-		if ((ph->last_eat - get_time()) < ph->chrono_ph->time_to_die)
+		pthread_mutex_lock(&ph->chrono_ph->mutex_meal);
+		if ((ph->last_eat - get_time(ph->chrono_ph)) < ph->chrono_ph->time_to_die)
 		{
-			printf("%lld %u died\n", get_time() - ph->chrono_ph->start_time, ph->num_ph);
+			printf("%lld %u died\n", get_time(ph->chrono_ph) - ph->chrono_ph->start_time, ph->num_ph);
 			ph->chrono_ph->are_all_alive = 0;
 		}
-		pthread_mutex_unlock(&ph->chrono_ph->mutex_chrono);
+		pthread_mutex_unlock(&ph->chrono_ph->mutex_meal);
 		if (!(ph->chrono_ph->are_all_alive))
 			break ;
 	}
@@ -34,41 +34,53 @@ void	are_all_alive(t_philo *ph)
 void	go_to_sleep(t_philo *ph)
 {
 	usleep(100);
-	printf("%lld %u  is sleeping\n", get_time() - ph->chrono_ph->start_time, ph->num_ph);
+	printf("%lld %u  is sleeping\n", get_time(ph->chrono_ph) - ph->chrono_ph->start_time, ph->num_ph);
+}
+
+static void	set_last(t_philo *ph)
+{
+	pthread_mutex_lock(&ph->chrono_ph->mutex_meal);
+	ph->last_eat = get_time(ph->chrono_ph) - ph->chrono_ph->start_time;
+	pthread_mutex_unlock(&ph->chrono_ph->mutex_meal);	
+}
+
+static void	set_iter(t_philo *ph)
+{
+	pthread_mutex_lock(&ph->chrono_ph->mutex_iter);
+	ph->number_of_meals++;
+	pthread_mutex_unlock(&ph->chrono_ph->mutex_iter);
 }
 
 void	ph_eats(t_philo *ph)
 {
-	pthread_mutex_lock(&ph[ph->left_fork].mutex_ph);
-	printf("%lld %u has taken a fork\n", get_time() - ph->chrono_ph->start_time, ph->num_ph);
-
-	pthread_mutex_lock(&ph[ph->rigth_fork].mutex_ph);
-	printf("%lld %u has taken a fork\n", get_time() - ph->chrono_ph->start_time, ph->num_ph);
-
-	pthread_mutex_lock(&ph->chrono_ph->mutex_chrono);
-	printf("%lld %u is eating\n", get_time() - ph->chrono_ph->start_time, ph->num_ph);
-
-	ph->number_of_meals++;
-	ph->last_eat = get_time();
-	pthread_mutex_unlock(&ph->chrono_ph->mutex_chrono);
-	pthread_mutex_unlock(&ph[ph->rigth_fork].mutex_ph);
-	pthread_mutex_unlock(&ph[ph->left_fork].mutex_ph);
+	//printf("ST: %lld\n", ph->chrono_ph->start_time);
+	//printf("GT: %lld\n", get_time(ph->chrono_ph));
+	pthread_mutex_lock(ph->left_fork);
+	printf("%lld %u has taken a fork\n", get_time(ph->chrono_ph) - ph->chrono_ph->start_time, ph->num_ph);
+	
+	pthread_mutex_lock(ph->right_fork);
+	printf("%lld %u has taken a fork\n", get_time(ph->chrono_ph) - ph->chrono_ph->start_time, ph->num_ph);
+	set_last(ph);
+	set_iter(ph);
+	printf("%lld %u is eating\n", get_time(ph->chrono_ph) - ph->chrono_ph->start_time, ph->num_ph);
+	//usleep(ph->chrono_ph->time_to_die);
+	pthread_mutex_unlock(ph->left_fork);
+	pthread_mutex_unlock(ph->right_fork);
+	go_to_sleep(ph);
 }
 
 //Function monitor - Manage the threads
 void	*monitor(t_philo *ph)
 {
-	if (ph->num_ph % 2)
+	(void)ph;
+	/*if (ph->num_ph % 2)
 		usleep(100);
 	while (ph->chrono_ph->are_all_alive)
 	{
 		ph_eats(ph);
-		if ((ph->chrono_ph->ph->number_of_meals == ph->chrono_ph->num_x_eat) || !(ph->chrono_ph->are_all_alive))
-			break ;
-		go_to_sleep(ph);
-		printf("%lld %u  is thinking\n", get_time() - ph->chrono_ph->start_time, ph->num_ph);
-	}
-	are_all_alive(ph);
+		ph_sleep(ph);
+		ph_think(ph);
+	}*/
 	return (NULL);
 }
 
@@ -89,11 +101,12 @@ int	philos_creation(t_chrono *chrono)
 			printf("Error creating thread\n");
 			return (1);
 		}
-		chrono->ph[i].last_eat = get_time();
+		//chrono->ph[i].last_eat = get_time();
 		//pthread_join(philosopher[i], NULL);
 		i++;
 	}
 	i = 0;
+	monitor(chrono->ph);
 	while (i < chrono->q_philos)
 	{
 		pthread_join(philosopher[i], NULL);

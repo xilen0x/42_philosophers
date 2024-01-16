@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:54:09 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/16 12:40:58 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/16 17:55:28 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	main(int ac, char *av[])
 	philos_creation(&chrono);
 
 	//release resources
-	pthread_mutex_destroy(&chrono.mutex_chrono);
+	pthread_mutex_destroy(&chrono.mutex_meal);
 	pthread_mutex_destroy(&chrono.ph->mutex_ph);
 	free(chrono.ph);
 	return (0);
