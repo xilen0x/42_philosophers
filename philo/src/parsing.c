@@ -55,7 +55,7 @@ static int	check_range(int ac, char *av[])
 }
 
 //---------- CHECK negative ----------
-static int	check_negative(int ac, char *av[])
+/*static int	check_negative(int ac, char *av[])
 {
 	int	i;
 	int	j;
@@ -76,7 +76,7 @@ static int	check_negative(int ac, char *av[])
 		i++;
 	}
 	return (0);
-}
+}*/
 
 /*------------------ PARSING ------------------*/
 int	parsing(int ac, char *av[])
@@ -93,11 +93,11 @@ int	parsing(int ac, char *av[])
 			write (2, "Error\n", 6);
 			return (1);
 		}
-		else if (check_negative(ac, av))
+		/*else if (check_negative(ac, av))
 		{
 			write (2, "Error\n", 6);
 			return (1);
-		}
+		}*/
 	}
 	else
 	{

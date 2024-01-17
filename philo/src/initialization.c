@@ -24,31 +24,30 @@
 }*/
 
 /*Initialization of the philosophers structure(t_philo)*/
-static int	init_ph(t_chrono *chrono)//aki voy!!!!!!!!!!!... creo q esta funcion ya esta....creo
+static int	init_ph(t_chrono *ch)
 {
 	unsigned int	i;
 
 	i = 0;
-	chrono->ph = NULL;
-	chrono->forks = NULL;
-	chrono->ph = (t_philo *)malloc(sizeof(t_philo) * chrono->q_philos);
-	chrono->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * chrono->q_philos);
-	if (!chrono->ph || !chrono->forks)
-		ft_free(chrono);
-	while (i < chrono->q_philos)
-		pthread_mutex_init(&chrono->forks[i], NULL);
+	ch->ph = (t_philo *)malloc(sizeof(t_philo) * ch->q_philos);
+	ch->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) \
+												* ch->q_philos);
+	if (!ch->ph || !ch->forks)
+		ft_free(ch);
+	while (i < ch->q_philos)
+		pthread_mutex_init(&ch->forks[i], NULL);
 	i = 0;
-	while (i < chrono->q_philos)
+	while (i < ch->q_philos)
 	{
-		chrono->ph[i].chrono_ph = chrono;
-		chrono->ph[i].num_ph = i + 1;
-		chrono->ph[i].last_eat = 0;
-		chrono->ph[i].left_fork = &chrono->forks[i];
-		if (i == chrono->q_philos)
-			chrono->ph[i].right_fork = &chrono->forks[0];
+		ch->ph[i].chrono_ph = ch;
+		ch->ph[i].num_ph = i + 1;
+		ch->ph[i].last_eat = 0;
+		ch->ph[i].left_fork = &ch->forks[i];
+		if (i == ch->q_philos)//si es el ultimo ph
+			ch->ph[i].right_fork = &ch->forks[0];
 		else
-			chrono->ph[i].right_fork = &chrono->forks[i + 1];
-		chrono->ph[i].number_of_meals = 0;
+			ch->ph[i].right_fork = &ch->forks[i + 1];
+		ch->ph[i].number_of_meals = 0;
 		i++;
 	}
 	return (0);
@@ -59,12 +58,12 @@ void	init_chrono(t_chrono *chrono, char *av[])
 {
 	if (pthread_mutex_init(&chrono->mutex_meal, NULL))
 	{
-		fprintf(stderr, "Error initializing mutex\n");
+		printf("Error initializing mutex\n");
 		return ;
 	}
 	if (pthread_mutex_init(&chrono->mutex_iter, NULL))
 	{
-		fprintf(stderr, "Error initializing mutex\n");
+		printf("Error initializing mutex\n");
 		return ;
 	}
 	chrono->q_philos = ft_atol(av[1]);
@@ -75,8 +74,9 @@ void	init_chrono(t_chrono *chrono, char *av[])
 		chrono->num_x_eat = ft_atol(av[5]);
 	else
 		chrono->num_x_eat = 0;
-	chrono->are_all_alive = 1;
+	chrono->its_alive = 1;
 	chrono->start_time = get_time(chrono);
-	//print_struct(chrono);
+	chrono->ph = NULL;
+	chrono->forks = NULL;
 	init_ph(chrono);
 }

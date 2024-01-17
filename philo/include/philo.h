@@ -32,7 +32,7 @@ typedef struct s_chrono
 	size_t			time_to_eat;
 	size_t			time_to_sleep;
 	size_t			num_x_eat;//num por comer(arg. opcional)
-	size_t			are_all_alive;
+	char			its_alive;
 	unsigned int	q_philos;//cant.total phs
 	pthread_mutex_t	mutex_meal;
 	pthread_mutex_t	mutex_iter;
@@ -44,11 +44,11 @@ typedef struct s_chrono
 struct s_philo
 {
 	unsigned int	num_ph;//id del ph
+	pthread_mutex_t	mutex_ph;
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*left_fork;
 	size_t			last_eat;
 	size_t			number_of_meals;
-	pthread_mutex_t	mutex_ph;
 	t_chrono		*chrono_ph;
 };
 
@@ -61,5 +61,11 @@ int			contains_digit(char *c);
 int			philos_creation(t_chrono *chrono);
 long long	get_time(t_chrono *ch);
 int			ft_free(t_chrono *ch);
+void		ph_eats(t_philo *ph);
 
+# define EAT 1
+# define SLEEP 2
+# define THINK 3
+# define DIE 4
+# define FORK 5
 #endif
