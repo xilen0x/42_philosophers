@@ -6,29 +6,30 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:33:50 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/18 13:11:16 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/18 15:04:13 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-static void	did_anyone_die(t_philo *ph)
+int	did_anyone_die(t_chrono *ch)
 {
 	size_t	i;
 
 	i = 0;
-	while ((ph->chrono_ph->its_alive) && i < ph->chrono_ph->q_philos)
+	while ((ch->its_alive))
 	{
-		pthread_mutex_lock(&ph->chrono_ph->mutex_meal);
-		if ((ph->last_eat - get_time(ph->chrono_ph)) < ph->chrono_ph->time_to_die)
+		pthread_mutex_lock(&ch->mutex_last_eat);
+		if ((ch->ph->last_eat - get_time(ch)) < ch->time_to_die)
 		{
-			ph_msgs(ph, DIE);
-			ph->chrono_ph->its_alive = 0;
+			ph_msgs(ch->ph, DIE);
+			ch->its_alive = 0;
 		}
-		pthread_mutex_unlock(&ph->chrono_ph->mutex_meal);
-		if (!(ph->chrono_ph->its_alive))
-			break ;
+		pthread_mutex_unlock(&ch->mutex_last_eat);
+		if (ch->its_alive == 0)
+			return (1);
 	}
+	return (0);
 }
 
 static void	*th_fnctn(t_philo *ph)
@@ -63,9 +64,9 @@ int	philos_creation(t_chrono *ch)
 		}
 		i++;
 	}
-	//-----------de aqui en adelante, continúa el hilo principal----------
+	//-----------de aqui en adelante, continúa el hilo inicial----------
 	i = 0;
-	did_anyone_die(ch->ph);//funcion monitor
+	did_anyone_die(ch);
 	while (i < ch->q_philos)
 	{
 		pthread_join(thread_ids[i], NULL);

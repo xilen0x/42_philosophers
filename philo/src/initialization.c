@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 18:59:15 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/16 19:49:49 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/18 14:33:18 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,10 @@ static int	init_ph(t_chrono *ch)
 	if (!ch->ph || !ch->forks)
 		ft_free(ch);
 	while (i < ch->q_philos)
+	{
 		pthread_mutex_init(&ch->forks[i], NULL);
+		i++;
+	}
 	i = 0;
 	while (i < ch->q_philos)
 	{
@@ -56,12 +59,12 @@ static int	init_ph(t_chrono *ch)
 /*Initialization of the chronogram structure(t_chrono)*/
 void	init_chrono(t_chrono *chrono, char *av[])
 {
-	if (pthread_mutex_init(&chrono->mutex_meal, NULL))
+	if (pthread_mutex_init(&chrono->mutex_last_eat, NULL))
 	{
 		printf("Error initializing mutex\n");
 		return ;
 	}
-	if (pthread_mutex_init(&chrono->mutex_iter, NULL))
+	if (pthread_mutex_init(&chrono->mutex_nbr_of_meals, NULL))
 	{
 		printf("Error initializing mutex\n");
 		return ;

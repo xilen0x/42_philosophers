@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:53:47 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/18 12:39:58 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/18 15:01:40 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 
 typedef struct s_philo	t_philo;
 
-// --------- CHRONOGRAM STRUCT -----------
+// ------------------------ CHRONOGRAM STRUCT ----------- //
 typedef struct s_chrono
 {
 	long long		start_time;
@@ -40,13 +40,13 @@ typedef struct s_chrono
 	size_t			num_x_eat;//num por comer(arg. opcional)
 	char			its_alive;
 	unsigned int	q_philos;//cant.total phs
-	pthread_mutex_t	mutex_meal;
-	pthread_mutex_t	mutex_iter;
+	pthread_mutex_t	mutex_last_eat;
+	pthread_mutex_t	mutex_nbr_of_meals;
 	pthread_mutex_t	*forks;
 	t_philo			*ph;
 }	t_chrono;
 
-// --------- PHILOSOPHER STRUCT -----------
+// ------------------------ PHILOSOPHER STRUCT ----------- //
 struct s_philo
 {
 	unsigned int	num_ph;//id del ph
@@ -58,7 +58,7 @@ struct s_philo
 	t_chrono		*chrono_ph;
 };
 
-// ------------------------ Prototypes ------------------------ //
+// ------------------------ Prototypes -------------------- //
 int			parsing(int ac, char *av[]);
 void		init_chrono(t_chrono *chrono, char *av[]);
 long		ft_atol(const char *str);
@@ -68,5 +68,6 @@ long long	get_time(t_chrono *ch);
 int			ft_free(t_chrono *ch);
 void		ph_eats(t_philo *ph);
 void		ph_msgs(t_philo *ph, int n);
+int			did_anyone_die(t_chrono *chrono);
 
 #endif
