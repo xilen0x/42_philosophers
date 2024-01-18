@@ -6,9 +6,10 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:33:50 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/16 19:26:25 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/18 13:11:16 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../include/philo.h"
 
 static void	did_anyone_die(t_philo *ph)
@@ -21,7 +22,7 @@ static void	did_anyone_die(t_philo *ph)
 		pthread_mutex_lock(&ph->chrono_ph->mutex_meal);
 		if ((ph->last_eat - get_time(ph->chrono_ph)) < ph->chrono_ph->time_to_die)
 		{
-			printf("%lld %u died\n", get_time(ph->chrono_ph) - ph->chrono_ph->start_time, ph->num_ph);
+			ph_msgs(ph, DIE);
 			ph->chrono_ph->its_alive = 0;
 		}
 		pthread_mutex_unlock(&ph->chrono_ph->mutex_meal);
@@ -36,9 +37,9 @@ static void	*th_fnctn(t_philo *ph)
 		usleep(100);
 	while (ph->chrono_ph->its_alive)
 	{
-		ph_eats(ph);//aki voy, -> solucionar esto pues estas fn ahora estan concentradas en ph_msgs
-		ph_sleep(ph);
-		ph_think(ph);
+		ph_eats(ph);
+		ph_msgs(ph, SLEEP);
+		ph_msgs(ph, THINK);
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@ SRC_DIR = src
 INC_DIR = include
 OBJ_DIR = objs
 
-# Listas de archivos (*********************VERIFICAR ESTA PARTE CON LA NORMA ANTES DE ENTREGAR!!!!!!!!!!!!!!!!!)
+# Listas de archivos (*********************CAMBIAR ESTA PARTE POR Q LA NORMA NO LO PERMITE!!!!!!!!!!!!!!!!!)
 SRC_FILES = $(wildcard $(SRC_DIR)/*.c)
 OBJ_FILES = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_FILES))
 DEP_FILES = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.d, $(SRC_FILES))

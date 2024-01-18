@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:53:47 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/16 19:47:58 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/18 12:39:58 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,13 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-// ------------------------ Structs ------------------------ //
+// ------------------------ Macros ------------------------ //
+# define EAT 1
+# define SLEEP 2
+# define THINK 3
+# define DIE 4
+# define FORK 5
+
 
 typedef struct s_philo	t_philo;
 
@@ -52,7 +58,6 @@ struct s_philo
 	t_chrono		*chrono_ph;
 };
 
-
 // ------------------------ Prototypes ------------------------ //
 int			parsing(int ac, char *av[]);
 void		init_chrono(t_chrono *chrono, char *av[]);
@@ -62,10 +67,6 @@ int			philos_creation(t_chrono *chrono);
 long long	get_time(t_chrono *ch);
 int			ft_free(t_chrono *ch);
 void		ph_eats(t_philo *ph);
+void		ph_msgs(t_philo *ph, int n);
 
-# define EAT 1
-# define SLEEP 2
-# define THINK 3
-# define DIE 4
-# define FORK 5
 #endif
