@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:47:45 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/16 19:43:53 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/18 16:29:00 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,16 +72,16 @@ int	contains_digit(char *c)
 	return (0);
 }
 
-/*Return time in miliseconds*/
-static long long	get_current_time(void)
+long long	difference_of_time(long long start, long long current)
 {
-	struct timeval	info_time;
-
-	gettimeofday(&info_time, NULL);
-	return (info_time.tv_sec * 1000 + info_time.tv_usec / 1000);
+	return (current - start);
 }
 
-long long	get_time(t_chrono *ch)
+/*Return time in miliseconds*/
+long long	get_time(void)
 {
-	return (get_current_time() - ch->start_time);
+	struct timeval	tv;
+
+	gettimeofday(&tv, NULL);
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }

@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 19:27:04 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/16 18:42:37 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/18 18:42:54 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,30 +54,6 @@ static int	check_range(int ac, char *av[])
 	return (0);
 }
 
-//---------- CHECK negative ----------
-/*static int	check_negative(int ac, char *av[])
-{
-	int	i;
-	int	j;
-
-	i = 1;
-	while (i < ac)
-	{
-		j = 0;
-		while (av[i][j])
-		{
-			if ((av[i][j] == '-' || ft_atol(av[i]) < 0))
-			{
-				printf("Negative number not valid!\n");
-				return (1);
-			}
-			j++;
-		}
-		i++;
-	}
-	return (0);
-}*/
-
 /*------------------ PARSING ------------------*/
 int	parsing(int ac, char *av[])
 {
@@ -88,16 +64,11 @@ int	parsing(int ac, char *av[])
 			write (2, "Error\n", 6);
 			return (1);
 		}
-		else if (check_range(ac, av))
+		if (check_range(ac, av))
 		{
 			write (2, "Error\n", 6);
 			return (1);
 		}
-		/*else if (check_negative(ac, av))
-		{
-			write (2, "Error\n", 6);
-			return (1);
-		}*/
 	}
 	else
 	{
