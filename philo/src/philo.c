@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:33:50 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/19 12:55:50 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/19 14:56:35 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	philos_creation(t_chrono *ch)
 		if (pthread_create(&thread_ids[i], NULL, (void *)th_fnctn, &ch->ph[i]))
 		{
 			printf("Error creating thread\n");
+			free(thread_ids);
 			return (1);
 		}
 		i++;
@@ -69,7 +70,11 @@ int	philos_creation(t_chrono *ch)
 	//----------hilo inicial----------
 	i = 0;
 	if (did_anyone_die(ch) == 1)
+	{
+		//llamar a fnc x liberar recursos
+		free(thread_ids);
 		return (0);
+	}
 	while (i < ch->q_philos)
 	{
 		pthread_join(thread_ids[i], NULL);

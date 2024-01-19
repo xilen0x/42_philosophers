@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 18:59:15 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/19 13:07:16 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/19 14:26:05 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,18 @@
 	printf("time_to_sleep: %zu\n", chrono->time_to_sleep);
 	printf("num_x_eat: %zu\n", chrono->num_x_eat);
 }*/
+
+/*Initialization of all mutexes*/
+void	init_other_mutexes(t_chrono *ch)
+{
+	if (pthread_mutex_init(&ch->mutex_last_eat, NULL) && \
+		pthread_mutex_init(&ch->mutex_nbr_of_meals, NULL) && \
+		pthread_mutex_init(&ch->ph->mutex_msgs, NULL))
+	{
+		printf("Error initializing mutex\n");
+		return ;
+	}
+}
 
 /*Initialization of the philosophers structure(t_philo)*/
 static int	init_ph(t_chrono *ch)
@@ -53,19 +65,8 @@ static int	init_ph(t_chrono *ch)
 		ch->ph[i].number_of_meals = 0;
 		i++;
 	}
+	init_other_mutexes(ch);
 	return (0);
-}
-
-/*Initialization of all mutexes*/
-void	init_all_mutex(t_chrono *ch)
-{
-	if (pthread_mutex_init(&ch->mutex_last_eat, NULL) && \
-		pthread_mutex_init(&ch->mutex_nbr_of_meals, NULL) && \
-		pthread_mutex_init(&ch->ph->mutex_msgs, NULL))
-	{
-		printf("Error initializing mutex\n");
-		return ;
-	}
 }
 
 /*Initialization of the chronogram structure(t_chrono)*/
