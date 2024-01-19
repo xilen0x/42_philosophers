@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:54:09 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/18 16:41:30 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/19 13:21:04 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,10 @@ int	main(int ac, char *av[])
 	//parsing arguments
 	if (parsing(ac, av))
 		return (1);
+
+	//initializing mutexes
+	init_all_mutex(&chrono);
+
 	//initializing structs (chrono y ph)
 	init_chrono(&chrono, av);
 
@@ -53,6 +57,7 @@ int	main(int ac, char *av[])
 	//release resources
 	pthread_mutex_destroy(&chrono.mutex_last_eat);
 	pthread_mutex_destroy(&chrono.ph->mutex_msgs);
+	pthread_mutex_destroy(&chrono.mutex_nbr_of_meals);
 	free(chrono.ph);
 	return (0);
 }

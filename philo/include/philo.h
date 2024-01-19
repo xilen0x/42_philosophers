@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:53:47 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/18 19:04:34 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/19 12:47:23 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ struct s_philo
 // ------------------------ Prototypes -------------------- //
 int			parsing(int ac, char *av[]);
 void		init_chrono(t_chrono *chrono, char *av[]);
+void		init_all_mutex(t_chrono *ch);
 long		ft_atol(const char *str);
 int			contains_digit(char *c);
 int			philos_creation(t_chrono *chrono);

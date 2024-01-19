@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:47:45 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/18 16:29:00 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/19 13:12:33 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 int	ft_free(t_chrono *ch)
 {
 	printf("Error reserving memory!\n");
-	free(ch);
+	free(ch->ph);
+	free(ch->forks);
 	return (1);
 }
 
@@ -70,18 +71,4 @@ int	contains_digit(char *c)
 		c++;
 	}
 	return (0);
-}
-
-long long	difference_of_time(long long start, long long current)
-{
-	return (current - start);
-}
-
-/*Return time in miliseconds*/
-long long	get_time(void)
-{
-	struct timeval	tv;
-
-	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }

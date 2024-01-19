@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:33:50 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/18 18:36:23 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/19 12:55:50 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,16 @@ int	did_anyone_die(t_chrono *ch)
 	i = 0;
 	while ((ch->its_alive))
 	{
-		pthread_mutex_lock(&ch->mutex_last_eat);
-		if ((ch->ph->last_eat - get_time()) < ch->time_to_die)
+		pthread_mutex_lock(&ch->ph[i].chrono_ph->mutex_last_eat);
+		if ((ch->ph[i].last_eat - get_time()) < ch->time_to_die)
 		{
-			ph_msgs(ch->ph, DIE);
+			ph_msgs(&ch->ph[i], DIE);
 			ch->its_alive = 0;
 		}
-		pthread_mutex_unlock(&ch->mutex_last_eat);
+		pthread_mutex_unlock(&ch->ph[i].chrono_ph->mutex_last_eat);
 		if (ch->its_alive == 0)
 			return (1);
+		i++;
 	}
 	return (0);
 }

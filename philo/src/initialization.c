@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 18:59:15 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/18 19:05:24 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/19 13:07:16 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,36 +56,32 @@ static int	init_ph(t_chrono *ch)
 	return (0);
 }
 
-/*Initialization of the chronogram structure(t_chrono)*/
-void	init_chrono(t_chrono *ch, char *av[])
+/*Initialization of all mutexes*/
+void	init_all_mutex(t_chrono *ch)
 {
 	if (pthread_mutex_init(&ch->mutex_last_eat, NULL) && \
-		pthread_mutex_init(&ch->mutex_nbr_of_meals, NULL))
+		pthread_mutex_init(&ch->mutex_nbr_of_meals, NULL) && \
+		pthread_mutex_init(&ch->ph->mutex_msgs, NULL))
 	{
 		printf("Error initializing mutex\n");
 		return ;
 	}
-	if (ft_atol(av[1]) > 1 && ft_atol(av[1]) < INT_MAX)
-	{
-		ch->q_philos = ft_atol(av[1]);
-		ch->time_to_die = ft_atol(av[2]);
-		ch->time_to_eat = ft_atol(av[3]);
-		ch->time_to_sleep = ft_atol(av[4]);
-		if (av[5])
-			ch->num_x_eat = ft_atol(av[5]);
-		else
-			ch->num_x_eat = 0;
-		ch->its_alive = 1;
-		ch->start_time = get_time();
-		ch->ph = NULL;
-		ch->forks = NULL;
-		init_ph(ch);
-	}
+}
+
+/*Initialization of the chronogram structure(t_chrono)*/
+void	init_chrono(t_chrono *ch, char *av[])
+{
+	ch->q_philos = ft_atol(av[1]);
+	ch->time_to_die = ft_atol(av[2]);
+	ch->time_to_eat = ft_atol(av[3]);
+	ch->time_to_sleep = ft_atol(av[4]);
+	if (av[5])
+		ch->num_x_eat = ft_atol(av[5]);
 	else
-	{
-		ch->ph->num_ph = 1;
-		ch->start_time = get_time();
-		ph_msgs(ch->ph, DIE);
-		return ;
-	}
+		ch->num_x_eat = 0;
+	ch->its_alive = 1;
+	ch->start_time = get_time();
+	ch->ph = NULL;
+	ch->forks = NULL;
+	init_ph(ch);
 }

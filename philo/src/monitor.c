@@ -6,19 +6,14 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 12:37:53 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/18 19:07:38 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/19 13:28:05 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
 void	ph_msgs(t_philo *ph, int n)
-{	
-	if (pthread_mutex_init(&ph->mutex_msgs, NULL))
-	{
-		printf("Error initializing mutex\n");
-		return ;
-	}
+{
 	pthread_mutex_lock(&ph->mutex_msgs);
 	if (n == FORK)
 	{
@@ -74,9 +69,12 @@ static void	set_number_of_meals(t_philo *ph)
 
 void	ph_eats(t_philo *ph)
 {
-	pthread_mutex_lock(ph->left_fork);
+	int	i;
+
+	i = 0;
+	pthread_mutex_lock(ph[i].left_fork);
 	ph_msgs(ph, FORK);
-	pthread_mutex_lock(ph->right_fork);
+	pthread_mutex_lock(ph[i].right_fork);
 	ph_msgs(ph, FORK);
 	ph_msgs(ph, EAT);
 	set_last_eat(ph);
