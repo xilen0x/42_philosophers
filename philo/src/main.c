@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:54:09 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/22 14:27:21 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/22 18:49:23 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ Makefile
 NAME, all, clean, fclean, re
 
 Arguments 
-number_of_philosophers time_to_die time_to_eat time_to_sleep[number_of_times_each_philosopher_must_eat]
+num_ph	 ttd   tte  tts  num_x_eat
+	1	 800  250   100    1
 
 External functs. 
 memset, printf, malloc, free, write, usleep, gettimeofday, 
@@ -55,7 +56,7 @@ int	main(int ac, char *av[])
 	}
 
 	//release resources
-	pthread_mutex_destroy(&chrono.mutex_last_eat);
+	pthread_mutex_destroy(&chrono.ph->mutex_last_eat);
 	pthread_mutex_destroy(&chrono.ph->mutex_msgs);
 	//pthread_mutex_destroy(&chrono.mutex_nbr_of_meals);
 	//printf("testX\n");

@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:53:47 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/22 16:36:16 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/22 19:09:13 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,8 @@ typedef struct s_chrono
 	int				time_to_sleep;
 	int				num_x_eat;//num por comer(arg. opcional)
 	int				its_alive;
+	pthread_mutex_t	mutex_its_alive;
 	int				q_philos;//cant.total phs
-	pthread_mutex_t	mutex_last_eat;
-	pthread_mutex_t	mutex_nbr_of_meals;
 	pthread_mutex_t	*forks;
 	t_philo			*ph;
 }	t_chrono;
@@ -56,6 +55,8 @@ struct s_philo
 	pthread_mutex_t	*left_fork;
 	long long		last_eat;
 	int				number_of_meals;
+	pthread_mutex_t	mutex_last_eat;
+	pthread_mutex_t	mutex_nbr_of_meals;
 	t_chrono		*chrono_ph;
 };
 
@@ -66,7 +67,6 @@ void		init_other_mutexes(t_chrono *ch);
 long		ft_atol(const char *str);
 int			contains_digit(char *c);
 int			philos_creation(t_chrono *chrono);
-//long long	get_time(t_chrono *ch);
 long long	get_time(void);
 int			ft_free(t_chrono *ch);
 void		ph_eats(t_philo *ph);
@@ -75,5 +75,5 @@ int			did_anyone_die(t_chrono *chrono);
 long long	difference_of_time(long long start, long long current);
 void		ph_sleep(long long time);
 void		print_struct(t_chrono *chrono);
-void		ph_eats_1ph(t_philo *ph);
+
 #endif

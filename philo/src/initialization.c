@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 18:59:15 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/22 16:21:36 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/22 18:48:54 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@ void	print_struct(t_chrono *chrono)
 /*Initialization of all mutexes*/
 void	init_other_mutexes(t_chrono *ch)
 {
-	if (pthread_mutex_init(&ch->mutex_last_eat, NULL) || \
-		pthread_mutex_init(&ch->mutex_nbr_of_meals, NULL))
+	if (pthread_mutex_init(&ch->ph->mutex_last_eat, NULL) && \
+		pthread_mutex_init(&ch->ph->mutex_nbr_of_meals, NULL) && \
+		pthread_mutex_init(&ch->ph->mutex_msgs, NULL))
 	{
 		printf("Error initializing mutex\n");
 		return ;
@@ -79,7 +80,5 @@ void	init_chrono(t_chrono *ch, char *av[])
 	ch->its_alive = 1;
 	ch->ph = NULL;
 	ch->forks = NULL;
-	//printf("\n1p %d\n", ch->its_alive);
-	//print_struct(ch);
 	init_ph(ch);
 }
