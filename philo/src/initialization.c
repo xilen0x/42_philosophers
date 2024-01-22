@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 18:59:15 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/19 14:26:05 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/22 12:58:28 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	init_other_mutexes(t_chrono *ch)
 /*Initialization of the philosophers structure(t_philo)*/
 static int	init_ph(t_chrono *ch)
 {
-	unsigned int	i;
+	int	i;
 
 	i = 0;
 	ch->ph = (t_philo *)malloc(sizeof(t_philo) * ch->q_philos);
@@ -46,14 +46,10 @@ static int	init_ph(t_chrono *ch)
 												* ch->q_philos);
 	if (!ch->ph || !ch->forks)
 		ft_free(ch);
-	while (i < ch->q_philos)
-	{
-		pthread_mutex_init(&ch->forks[i], NULL);
-		i++;
-	}
 	i = 0;
 	while (i < ch->q_philos)
 	{
+		pthread_mutex_init(&ch->forks[i], NULL);
 		ch->ph[i].chrono_ph = ch;
 		ch->ph[i].num_ph = i + 1;
 		ch->ph[i].last_eat = 0;
@@ -72,6 +68,7 @@ static int	init_ph(t_chrono *ch)
 /*Initialization of the chronogram structure(t_chrono)*/
 void	init_chrono(t_chrono *ch, char *av[])
 {
+	ch->start_time = get_time();
 	ch->q_philos = ft_atol(av[1]);
 	ch->time_to_die = ft_atol(av[2]);
 	ch->time_to_eat = ft_atol(av[3]);
@@ -81,7 +78,6 @@ void	init_chrono(t_chrono *ch, char *av[])
 	else
 		ch->num_x_eat = 0;
 	ch->its_alive = 1;
-	ch->start_time = get_time();
 	ch->ph = NULL;
 	ch->forks = NULL;
 	init_ph(ch);

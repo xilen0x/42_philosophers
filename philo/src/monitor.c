@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 12:37:53 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/19 15:01:28 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/22 13:03:43 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ph_sleep(long long time)
 		{
 			break ;
 		}
-		usleep(150);
+		usleep(100);
 	}
 }
 
@@ -64,17 +64,14 @@ static void	set_number_of_meals(t_philo *ph)
 
 void	ph_eats(t_philo *ph)
 {
-	int	i;
-
-	i = 0;
-	pthread_mutex_lock(ph[i].left_fork);
+	pthread_mutex_lock(ph[ph->num_ph].left_fork);
 	ph_msgs(ph, FORK);
-	pthread_mutex_lock(ph[i].right_fork);
+	pthread_mutex_lock(ph[ph->num_ph].right_fork);
 	ph_msgs(ph, FORK);
 	ph_msgs(ph, EAT);
 	set_last_eat(ph);
 	ph_sleep(ph->chrono_ph->time_to_eat);
 	set_number_of_meals(ph);
-	pthread_mutex_unlock(ph->left_fork);
-	pthread_mutex_unlock(ph->right_fork);
+	pthread_mutex_unlock(ph[ph->num_ph].left_fork);
+	pthread_mutex_unlock(ph[ph->num_ph].right_fork);
 }

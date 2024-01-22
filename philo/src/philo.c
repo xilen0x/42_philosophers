@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:33:50 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/19 14:56:35 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/22 13:12:10 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	*th_fnctn(t_philo *ph)
 {
 	if (ph->num_ph % 2)
 		usleep(1000);
-	while (ph->chrono_ph->its_alive)
+	while (ph->chrono_ph->its_alive && tiempo_actual <= ph->chrono_ph->time_to_die)
 	{
 		ph_eats(ph);
 		ph_sleep(ph->chrono_ph->time_to_sleep);
@@ -50,8 +50,8 @@ static void	*th_fnctn(t_philo *ph)
 //Function to create the threads
 int	philos_creation(t_chrono *ch)
 {
-	pthread_t		*thread_ids;
-	unsigned int	i;
+	pthread_t	*thread_ids;
+	int			i;
 
 	i = 0;
 	thread_ids = (pthread_t *)malloc(sizeof(pthread_t) * ch->q_philos);
