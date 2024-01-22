@@ -6,29 +6,28 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 18:59:15 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/22 12:58:28 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/22 16:21:36 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
 /*print struct - borrar luego*/
-/*void	print_struct(t_chrono *chrono)
+void	print_struct(t_chrono *chrono)
 {
 	printf("start_time: %lld\n", chrono->start_time);
 	printf("q_philos: %u\n", chrono->q_philos);
-	printf("time_to_die: %zu\n", chrono->time_to_die);
-	printf("time_to_eat: %zu\n", chrono->time_to_eat);
-	printf("time_to_sleep: %zu\n", chrono->time_to_sleep);
-	printf("num_x_eat: %zu\n", chrono->num_x_eat);
-}*/
+	printf("time_to_die: %d\n", chrono->time_to_die);
+	printf("time_to_eat: %d\n", chrono->time_to_eat);
+	printf("time_to_sleep: %d\n", chrono->time_to_sleep);
+	printf("num_x_eat: %d\n", chrono->num_x_eat);
+}
 
 /*Initialization of all mutexes*/
 void	init_other_mutexes(t_chrono *ch)
 {
-	if (pthread_mutex_init(&ch->mutex_last_eat, NULL) && \
-		pthread_mutex_init(&ch->mutex_nbr_of_meals, NULL) && \
-		pthread_mutex_init(&ch->ph->mutex_msgs, NULL))
+	if (pthread_mutex_init(&ch->mutex_last_eat, NULL) || \
+		pthread_mutex_init(&ch->mutex_nbr_of_meals, NULL))
 	{
 		printf("Error initializing mutex\n");
 		return ;
@@ -80,5 +79,7 @@ void	init_chrono(t_chrono *ch, char *av[])
 	ch->its_alive = 1;
 	ch->ph = NULL;
 	ch->forks = NULL;
+	//printf("\n1p %d\n", ch->its_alive);
+	//print_struct(ch);
 	init_ph(ch);
 }

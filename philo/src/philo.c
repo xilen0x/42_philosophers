@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:33:50 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/22 13:12:10 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/22 16:53:12 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,13 @@ int	did_anyone_die(t_chrono *ch)
 
 static void	*th_fnctn(t_philo *ph)
 {
+	/*if (ph->chrono_ph->q_philos == 1)
+		ph_eats_1ph(ph);
+	else if (ph->num_ph % 2)
+		usleep(1000);*/
 	if (ph->num_ph % 2)
 		usleep(1000);
-	while (ph->chrono_ph->its_alive && tiempo_actual <= ph->chrono_ph->time_to_die)
+	while (ph->chrono_ph->its_alive) //&& ph->chrono_ph->start_time <= ph->chrono_ph->time_to_die)
 	{
 		ph_eats(ph);
 		ph_sleep(ph->chrono_ph->time_to_sleep);
