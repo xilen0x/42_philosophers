@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:53:47 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/22 19:09:13 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/23 10:42:55 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 # define THINK 3
 # define DIE 4
 # define FORK 5
-
 
 typedef struct s_philo	t_philo;
 
