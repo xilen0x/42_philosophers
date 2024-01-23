@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 12:37:53 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/22 18:50:16 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/23 19:07:23 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,23 +60,16 @@ static void	set_number_of_meals(t_philo *ph)
 	pthread_mutex_unlock(&ph->mutex_nbr_of_meals);
 }
 
-/*void	ph_eats_1ph(t_philo *ph)
-{
-	pthread_mutex_lock(ph->left_fork);
-	ph_msgs(ph, FORK);
-	pthread_mutex_unlock(ph->left_fork);
-}*/
-
 void	ph_eats(t_philo *ph)
 {
-	pthread_mutex_lock(ph->left_fork);
-	ph_msgs(ph, FORK);
-	pthread_mutex_lock(ph->right_fork);
+	pthread_mutex_lock(ph->mutex_left_fork);
+	ph_msgs(ph, FORK);//aki voy... rama dev - Cuando es un philosofo, Como sabe si hay o no un fork disponible? 
+	pthread_mutex_lock(ph->mutex_right_fork);
 	ph_msgs(ph, FORK);
 	ph_msgs(ph, EAT);
 	set_last_eat(ph);
 	ph_sleep(ph->chrono_ph->time_to_eat);
 	set_number_of_meals(ph);
-	pthread_mutex_unlock(ph->left_fork);
-	pthread_mutex_unlock(ph->right_fork);
+	pthread_mutex_unlock(ph->mutex_left_fork);
+	pthread_mutex_unlock(ph->mutex_right_fork);
 }
