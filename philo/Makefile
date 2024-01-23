@@ -20,10 +20,10 @@ all: $(NAME)
 
 # Regla para el ejecutable
 $(NAME): $(OBJ_FILES)
-	$(CC) $^ -o $@
+	$(CC) $^ -o $@ -fsanitize=address
 
 # Regla para los archivos objeto
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c Makefile
 	@mkdir -p $(OBJ_DIR)
 	$(CC) $(CFLAGS) -MMD -c $< -o $@
 

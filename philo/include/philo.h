@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:53:47 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/23 12:43:13 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/23 18:36:07 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ typedef struct s_chrono
 	int				time_to_sleep;
 	int				num_x_eat;//num por comer(arg. opcional)
 	int				its_alive;
-	pthread_mutex_t	mutex_its_alive;
 	int				q_philos;//cant.total phs
+	pthread_mutex_t	mutex_its_alive;
+	pthread_mutex_t	*forks;
 	t_philo			*ph;
 }	t_chrono;
 
@@ -49,31 +50,32 @@ typedef struct s_chrono
 struct s_philo
 {
 	int				num_ph;//id del ph
-	pthread_mutex_t	fork;
-	pthread_mutex_t	mutex_msgs;
-	int				right_fork;
-	int				left_fork;
 	long long		last_eat;
 	int				number_of_meals;
+	pthread_mutex_t	mutex_msgs;
 	pthread_mutex_t	mutex_last_eat;
 	pthread_mutex_t	mutex_nbr_of_meals;
+	pthread_mutex_t	*mutex_right_fork;
+	pthread_mutex_t	*mutex_left_fork;
+	pthread_t		thread;//var q almacenará a c/hilo
 	t_chrono		*chrono_ph;
 };
 
 // ------------------------ Prototypes -------------------- //
 int			parsing(int ac, char *av[]);
 void		init_chrono(t_chrono *chrono, char *av[]);
-void		init_other_mutexes(t_chrono *ch);
-long		ft_atol(const char *str);
-int			contains_digit(char *c);
-int			philos_creation(t_chrono *chrono);
 long long	get_time(void);
+long long	difference_of_time(long long start, long long current);
+long		ft_atol(const char *str);
+int			ft_atoi(const char *str);
+int			contains_digit(char *c);
 int			ft_free(t_chrono *ch);
+void		print_struct(t_chrono *chrono);
+void		init_other_mutexes(t_chrono *ch);
+int			philos_creation(t_chrono *chrono);
 void		ph_eats(t_philo *ph);
 void		ph_msgs(t_philo *ph, int n);
 int			did_anyone_die(t_chrono *chrono);
-long long	difference_of_time(long long start, long long current);
 void		ph_sleep(long long time);
-void		print_struct(t_chrono *chrono);
 
 #endif

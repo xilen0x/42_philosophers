@@ -6,11 +6,11 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 13:12:52 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/19 13:13:34 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/23 18:32:50 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../include/philo.h"
+#include "../include/philo.h"
 
 long long	difference_of_time(long long start, long long current)
 {

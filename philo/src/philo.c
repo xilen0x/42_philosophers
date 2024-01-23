@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:33:50 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/23 12:08:49 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/23 18:47:41 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,6 @@ int	get_its_alive(t_chrono *ch)
 	return (ch->its_alive);
 	pthread_mutex_unlock(&ch->mutex_its_alive);
 }
-
-/*por aqui voy...
-*he creado la funcion getter get_its_alive
-*falta corregir el tiempo, 1 ph debe morir en 800 y esta muriendo en 0
-*/
 
 int	did_anyone_die(t_chrono *ch)
 {
@@ -45,21 +40,18 @@ int	did_anyone_die(t_chrono *ch)
 	return (0);
 }
 
-static void	*philo(void *ph)
+static void	*philo(t_philo *ph)
 {
-	t_philo *phi;
-
-	phi = (t_philo *)ph;
-	printf("its_alive: %d\n", phi->chrono_ph->its_alive);
-	if (phi->num_ph % 2)
+	//printf("its_alive: %d\n", phi->chrono_ph->its_alive);
+	if (ph->num_ph % 2)
 		usleep(100);
-	while (get_its_alive(phi->chrono_ph))
+	while (get_its_alive(ph->chrono_ph))
 	{
 		printf("llega aqui?\n");
-		ph_eats(phi);
-		ph_sleep(phi->chrono_ph->time_to_sleep);
-		ph_msgs(phi, SLEEP);
-		ph_msgs(phi, THINK);
+		ph_eats(ph);
+		ph_sleep(ph->chrono_ph->time_to_sleep);
+		ph_msgs(ph, SLEEP);
+		ph_msgs(ph, THINK);
 	}
 	return (NULL);
 }
@@ -67,19 +59,15 @@ static void	*philo(void *ph)
 //Function to create the threads
 int	philos_creation(t_chrono *ch)
 {
-	pthread_t	*thread_ids;
 	int			i;
 
 	i = 0;
-	thread_ids = (pthread_t *)malloc(sizeof(pthread_t) * ch->q_philos);
-	if (!thread_ids)
-		return (1);
 	while (i < ch->q_philos)
 	{
-		if (pthread_create(&thread_ids[i], NULL, (void *(*)(void *))philo, &ch->ph[i]))
+		if (pthread_create(&ch->ph[i].thread, NULL, (void *(*)(void *))philo, &ch->ph[i]))
 		{
 			printf("Error creating thread\n");
-			free(thread_ids);
+			free(ch->ph);
 			return (1);
 		}
 		i++;
@@ -89,7 +77,7 @@ int	philos_creation(t_chrono *ch)
 	did_anyone_die(ch);
 	while (i < ch->q_philos)
 	{
-		pthread_join(thread_ids[i], NULL);
+		pthread_join(ch->ph[i].thread, NULL);
 		i++;
 	}
 	return (0);

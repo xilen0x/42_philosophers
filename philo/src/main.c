@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:54:09 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/23 11:10:03 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/23 18:33:56 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,28 +40,25 @@ https://www.figma.com/file/KG3b82Ss33nnkI1j3b5y4r/Untitled?type=whiteboard&node-
 
 int	main(int ac, char *av[])
 {
-	t_chrono	*chrono;
+	t_chrono	chrono;
 
-	//parsing arguments
 	if (parsing(ac, av))
 		return (1);
-	chrono = (t_chrono *)malloc(sizeof(t_chrono));
-	if (!chrono)
-		ft_free(chrono);
+
 	//initializing structs (chrono y ph)
-	init_chrono(chrono, av);
+	init_chrono(&chrono, av);
 
 	//threads creation
-	if (philos_creation(chrono))
+	if (philos_creation(&chrono))
 	{
 		//llamar a fnc x liberar recursos
 	}
 
 	//release resources
-	pthread_mutex_destroy(chrono.ph->mutex_last_eat);
-	pthread_mutex_destroy(chrono.ph->mutex_msgs);
+	//pthread_mutex_destroy(chrono->ph->last_eat);
+	//pthread_mutex_destroy(chrono->ph->mutex_msgs);
 	//pthread_mutex_destroy(&chrono.mutex_nbr_of_meals);
 	//printf("testX\n");
-	free(chrono.ph);
+	//free(&chrono);
 	return (0);
 }
