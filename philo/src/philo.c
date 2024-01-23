@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:33:50 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/22 19:18:29 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/23 12:08:49 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	philos_creation(t_chrono *ch)
 		return (1);
 	while (i < ch->q_philos)
 	{
-		if (pthread_create(&thread_ids[i], NULL, &philo, &ch->ph[i]))
+		if (pthread_create(&thread_ids[i], NULL, (void *(*)(void *))philo, &ch->ph[i]))
 		{
 			printf("Error creating thread\n");
 			free(thread_ids);

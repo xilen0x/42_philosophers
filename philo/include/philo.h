@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:53:47 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/22 19:09:13 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/23 12:43:13 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ typedef struct s_chrono
 	int				its_alive;
 	pthread_mutex_t	mutex_its_alive;
 	int				q_philos;//cant.total phs
-	pthread_mutex_t	*forks;
 	t_philo			*ph;
 }	t_chrono;
 
@@ -50,9 +49,10 @@ typedef struct s_chrono
 struct s_philo
 {
 	int				num_ph;//id del ph
+	pthread_mutex_t	fork;
 	pthread_mutex_t	mutex_msgs;
-	pthread_mutex_t	*right_fork;
-	pthread_mutex_t	*left_fork;
+	int				right_fork;
+	int				left_fork;
 	long long		last_eat;
 	int				number_of_meals;
 	pthread_mutex_t	mutex_last_eat;
