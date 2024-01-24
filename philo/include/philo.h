@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:53:47 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/23 19:09:51 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/24 18:19:22 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ typedef struct s_chrono
 	int				its_alive;
 	int				q_philos;//cant.total phs
 	pthread_mutex_t	mutex_its_alive;
-	pthread_mutex_t	*forks;
-	t_philo			*ph;
+	pthread_mutex_t	*pforks;
+	t_philo			*pph;
 }	t_chrono;
 
 // ------------------------ PHILOSOPHER STRUCT ----------- //
@@ -54,10 +54,10 @@ struct s_philo
 	pthread_mutex_t	mutex_msgs;
 	pthread_mutex_t	mutex_last_eat;
 	pthread_mutex_t	mutex_nbr_of_meals;
-	pthread_mutex_t	*mutex_right_fork;
-	pthread_mutex_t	*mutex_left_fork;
+	pthread_mutex_t	*pmutex_right_fork;
+	pthread_mutex_t	*pmutex_left_fork;
 	pthread_t		thread;//var q almacenará a c/hilo
-	t_chrono		*chrono_ph;
+	t_chrono		*pchrono_ph;
 };
 
 // ------------------------ Prototypes -------------------- //
@@ -76,5 +76,6 @@ void		ph_eats(t_philo *ph);
 void		ph_msgs(t_philo *ph, int n);
 int			did_anyone_die(t_chrono *chrono);
 void		ph_sleep(long long time);
+void		set_last_eat(t_philo *ph);
 
 #endif

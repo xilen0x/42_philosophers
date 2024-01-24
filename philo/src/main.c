@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:54:09 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/23 18:33:56 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/24 14:26:17 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ int	main(int ac, char *av[])
 	}
 
 	//release resources
-	//pthread_mutex_destroy(chrono->ph->last_eat);
-	//pthread_mutex_destroy(chrono->ph->mutex_msgs);
+	//pthread_mutex_destroy(chrono->pPh->last_eat);
+	//pthread_mutex_destroy(chrono->pPh->mutex_msgs);
 	//pthread_mutex_destroy(&chrono.mutex_nbr_of_meals);
 	//printf("testX\n");
 	//free(&chrono);

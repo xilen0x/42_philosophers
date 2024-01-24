@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:47:45 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/23 18:33:08 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/24 16:30:52 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 int	ft_free(t_chrono *ch)
 {
 	printf("Error reserving memory!\n");
-	free(ch->ph);
-	free(ch->forks);
+	free(ch->pph);
+	free(ch->pforks);
 	return (1);
 }
 

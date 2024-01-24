@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 18:59:15 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/23 19:09:18 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/24 17:31:34 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,12 @@ void	print_struct(t_chrono *chrono)
 /*Initialization of all mutexes*/
 void	init_other_mutexes(t_chrono *ch)
 {
-	if (pthread_mutex_init(&ch->ph->mutex_last_eat, NULL) && \
-		pthread_mutex_init(&ch->ph->mutex_nbr_of_meals, NULL) && \
-		pthread_mutex_init(&ch->ph->mutex_msgs, NULL))
+	if (pthread_mutex_init(&ch->pph->mutex_last_eat, NULL) && \
+		pthread_mutex_init(&ch->pph->mutex_nbr_of_meals, NULL) && \
+		pthread_mutex_init(&ch->pph->mutex_msgs, NULL) && \
+		pthread_mutex_init(ch->pph->pmutex_right_fork, NULL) && \
+		pthread_mutex_init(ch->pph->pmutex_left_fork, NULL) && \
+		pthread_mutex_init(&ch->mutex_its_alive, NULL))
 	{
 		printf("Error initializing mutex\n");
 		return ;
@@ -41,25 +44,25 @@ static int	init_ph(t_chrono *ch)
 	int	i;
 
 	i = 0;
-	ch->ph = NULL;
-	ch->forks = NULL;
-	ch->ph = (t_philo *)malloc(sizeof(t_philo) * ch->q_philos);
-	ch->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * ch->q_philos);
-	if (!(ch->ph) || !(ch->forks))
+	ch->pph = NULL;
+	ch->pforks = NULL;
+	ch->pph = (t_philo *)malloc(sizeof(t_philo) * ch->q_philos);
+	ch->pforks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * ch->q_philos);
+	if (!(ch->pph) || !(ch->pforks))
 		ft_free(ch);
-	pthread_mutex_init(ch->forks, NULL);
+	pthread_mutex_init(ch->pforks, NULL);
 	while (i < ch->q_philos)
 	{
-		ch->ph[i].chrono_ph = ch;
-		ch->ph[i].num_ph = i + 1;
-		ch->ph[i].last_eat = 0;
-		ch->ph->mutex_left_fork = &ch->forks[i];
+		ch->pph[i].pchrono_ph = ch;
+		ch->pph[i].num_ph = i + 1;
+		ch->pph[i].last_eat = 0;
+		ch->pph->pmutex_left_fork = &ch->pforks[i];
 
-		if (i == ch->q_philos)//si es el ultimo ph
-			ch->ph->mutex_right_fork = &ch->forks[0];
+		if (i == ch->q_philos)//si es el ultimo Ph
+			ch->pph->pmutex_right_fork = &ch->pforks[0];
 		else
-			ch->ph->mutex_right_fork = &ch->forks[i + 1];
-		ch->ph[i].number_of_meals = 0;
+			ch->pph->pmutex_right_fork = &ch->pforks[i + 1];
+		ch->pph[i].number_of_meals = 0;
 		i++;
 	}
 	init_other_mutexes(ch);
