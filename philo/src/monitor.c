@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 12:37:53 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/25 13:19:42 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/25 17:53:52 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,16 @@ void	ph_sleep(long long time)//threads access
 	long long	cu_time;
 
 	cu_time = get_time();
+	difference_of_time(cu_time, get_time());
+		usleep(1000);
+	
 	while (1)
 	{
 		if (difference_of_time(cu_time, get_time()) >= time)
 			break ;
 		usleep(1000);
 	}
+	dprintf(2, "---****---\n");
 }
 
 void	set_last_eat(t_philo *ph)//threads access
@@ -63,6 +67,7 @@ void	set_number_of_meals(t_philo *ph)//threads access
 void	ph_eats(t_philo *ph)//threads access
 {
 	pthread_mutex_lock(ph->pmutex_left_fork);
+	printf("ftftftftftftft\n");
 	ph_msgs(ph, FORK);
 	pthread_mutex_lock(ph->pmutex_right_fork);
 	ph_msgs(ph, FORK);
