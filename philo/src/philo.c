@@ -6,17 +6,18 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:33:50 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/24 18:40:35 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/25 13:22:31 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-int	get_its_alive(t_chrono *ch)
+int	get_its_alive(t_chrono *ch)//main thread access
 {
 	int	alive;
 
 	pthread_mutex_lock(&ch->mutex_its_alive);
+	printf("teste\n");
 	if (ch->its_alive)
 		alive = 1;
 	else
@@ -25,41 +26,53 @@ int	get_its_alive(t_chrono *ch)
 	return (alive);
 }
 
-int	did_anyone_die(t_chrono *ch)
+int	did_anyone_die(t_chrono *ch)//main thread access
 {
 	size_t	i;
 
 	i = 0;
 	while (get_its_alive(ch))
 	{
-		pthread_mutex_lock(&ch->mutex_its_alive);
-		if ((get_time() - ch->start_time - ch->pph[i].last_eat) > ch->time_to_die)
+		i = 0;
+		pthread_mutex_lock(&ch->pph->mutex_last_eat);
+		if ((get_time() - ch->pph[i].last_eat) > ch->time_to_die)
 		{
 			ch->its_alive = 0;
 			ph_msgs(&ch->pph[i], DIE);
 		}
-		pthread_mutex_unlock(&ch->mutex_its_alive);
+		pthread_mutex_unlock(&ch->pph->mutex_last_eat);
 		if (ch->its_alive == 0)
 			return (0);
-		//i++;
+		i++;
 	}
 	return (1);
 }
 
-static void	*philo(t_philo *ph)
+static void	*philo(t_philo *ph)//threads section
 {
-	printf("its_alive: %d\n", ph->pchrono_ph->its_alive);
-	// if (ph->num_ph > 1 && ph->num_ph % 2)
-		// usleep(100);
-	while (get_its_alive(ph->pchrono_ph))
+	int			i;
+
+	i = 0;
+	if (ph->pchrono_ph->q_philos == 1)
 	{
-		printf("llega aqui?\n");
-		ph_eats(ph);
-		ph_sleep(ph->pchrono_ph->time_to_sleep);
-		ph_msgs(ph, SLEEP);
-		ph_msgs(ph, THINK);
+		pthread_mutex_lock(ph->pmutex_left_fork);
+		ph_msgs(ph, FORK);
+		return (0);
+		pthread_mutex_unlock(ph->pmutex_left_fork);
 	}
-	printf("its_alive: %d\n", ph->pchrono_ph->its_alive);
+	else
+	{
+		if (ph->num_ph % 2)
+			usleep(100);
+		while (i < ph->pchrono_ph->q_philos)
+		{
+			ph_eats(ph);
+			ph_sleep(ph->pchrono_ph->time_to_sleep);
+			ph_msgs(ph, SLEEP);
+			ph_msgs(ph, THINK);
+			i++;
+		}
+	}
 	return (NULL);
 }
 
@@ -77,12 +90,9 @@ int	philos_creation(t_chrono *ch)
 			free(ch->pph);
 			return (1);
 		}
-		//set_last_eat(ch->pph);
-		//ph_msgs(ch->pph, SLEEP);
-		//ph_msgs(ch->pph, THINK);
 		i++;
 	}
-	//----------hilo inicial----------
+	//----------contin. thread inicial----*** main thread  access ***
 	i = 0;
 	did_anyone_die(ch);
 	while (i < ch->q_philos)

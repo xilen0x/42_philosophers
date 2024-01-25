@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:54:09 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/24 14:26:17 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/25 12:31:41 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	main(int ac, char *av[])
 
 	//initializing structs (chrono y ph)
 	init_chrono(&chrono, av);
-
 	//threads creation
 	if (philos_creation(&chrono))
 	{
