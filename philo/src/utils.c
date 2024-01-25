@@ -19,7 +19,7 @@ int	ft_free(t_chrono *ch)
 	printf("Error reserving memory!\n");
 	free(ch->pph);
 	free(ch->pforks);
-	return (1);
+	return (0);
 }
 
 static char	*ft_isspace(char *str)

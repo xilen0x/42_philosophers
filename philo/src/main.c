@@ -51,7 +51,7 @@ int	main(int ac, char *av[])
 	//threads creation
 	if (philos_creation(&chrono))
 	{
-		free(&chrono);
+		ft_free(&chrono);
 	}
 
 	// //release resources

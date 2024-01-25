@@ -18,8 +18,6 @@ void	init_other_mutexes(t_chrono *ch)
 	if (pthread_mutex_init(&ch->pph->mutex_last_eat, NULL) && \
 		pthread_mutex_init(&ch->pph->mutex_nbr_of_meals, NULL) && \
 		pthread_mutex_init(&ch->pph->mutex_msgs, NULL) && \
-		pthread_mutex_init(ch->pph->pmutex_right_fork, NULL) && \
-		pthread_mutex_init(ch->pph->pmutex_left_fork, NULL) && \
 		pthread_mutex_init(&ch->mutex_its_alive, NULL))
 	{
 		printf("Error initializing mutex\n");
@@ -40,19 +38,19 @@ static int	init_ph(t_chrono *ch)
 		ft_free(ch);
 	i = 0;
 	while (i < ch->q_philos)
-		pthread_mutex_init(&(ch->pforks[i++]), NULL);
+		pthread_mutex_init(&ch->pforks[i++], NULL);
 	i = 0;
 	while (i < ch->q_philos)
 	{
 		ch->pph[i].pchrono_ph = ch;
 		ch->pph[i].num_ph = i + 1;
 		ch->pph[i].last_eat = 0;
-		ch->pph->pmutex_left_fork = &(ch->pforks[i]);
+		ch->pph[i].pmutex_left_fork = &ch->pforks[i];
 
 		if (i == (ch->q_philos) - 1)//si es el ultimo Ph
-			ch->pph->pmutex_right_fork = &(ch->pforks[0]);
+			ch->pph[i].pmutex_right_fork = &ch->pforks[0];
 		else
-			ch->pph->pmutex_right_fork = &(ch->pforks[i + 1]);
+			ch->pph[i].pmutex_right_fork = &ch->pforks[i + 1];
 		ch->pph[i].number_of_meals = 0;
 		i++;
 	}
