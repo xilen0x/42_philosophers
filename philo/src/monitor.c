@@ -67,11 +67,12 @@ void	ph_eats(t_philo *ph)//threads access
 	pthread_mutex_lock(ph->pmutex_right_fork);
 	ph_msgs(ph, FORK);
 
+	ph_msgs(ph, EAT);
 	set_last_eat(ph);
 	set_number_of_meals(ph);
 	ph_sleep(ph->pchrono_ph->time_to_eat);
-	ph_msgs(ph, EAT);
 
 	pthread_mutex_unlock(ph->pmutex_right_fork);
 	pthread_mutex_unlock(ph->pmutex_left_fork);
+	printf("tenedores libres\n");
 }

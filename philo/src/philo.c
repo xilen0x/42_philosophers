@@ -16,8 +16,8 @@ int	get_its_alive(t_chrono *ch)//main thread access
 {
 	int	alive;
 
+	printf("its_alive 1: %d\n", ch->its_alive);
 	pthread_mutex_lock(&ch->mutex_its_alive);
-	//printf("teste\n");
 	if (ch->its_alive)
 		alive = 1;
 	else
@@ -31,13 +31,13 @@ int	did_anyone_die(t_chrono *ch)//main thread access
 	size_t	i;
 
 	i = 0;
-	while (get_its_alive(ch))
+	while (1)//(get_its_alive(ch))
 	{
+		//printf("its_alive 2: %d\n", ch->its_alive);
 		i = 0;
 		pthread_mutex_lock(&ch->pph->mutex_last_eat);
 		if ((get_time() - ch->start_time - ch->pph[i].last_eat) > ch->time_to_die)
 		{
-	dprintf(2, "testxxxxxxxx\n");
 			ch->its_alive = 0;
 			ph_msgs(&ch->pph[i], DIE);
 		}
@@ -56,24 +56,29 @@ void	*philo(void *arg)//threads section
 
 	ph = (t_philo *)arg;
 	i = 0;
-	if (ph->pchrono_ph->q_philos == 1)
+	if (ph->num_ph % 2)
+		usleep(1000);
+	while (i < ph->pchrono_ph->q_philos)// (get_its_alive(ph->pchrono_ph))
 	{
-		pthread_mutex_lock(ph->pmutex_left_fork);
+		//ph_eats(ph);
+		pthread_mutex_lock(ph[i].pmutex_left_fork);
 		ph_msgs(ph, FORK);
-		pthread_mutex_unlock(ph->pmutex_left_fork);
-	}
-	else
-	{
-		if (ph->num_ph % 2)
-			usleep(100);
-		while (i < ph->pchrono_ph->q_philos)
-		{
-			ph_eats(ph);
-			ph_sleep(ph->pchrono_ph->time_to_sleep);
-			ph_msgs(ph, SLEEP);
-			ph_msgs(ph, THINK);
-			i++;
-		}
+		pthread_mutex_lock(ph[i].pmutex_right_fork);
+		ph_msgs(ph, FORK);
+
+		ph_msgs(ph, EAT);
+		set_last_eat(ph);
+		set_number_of_meals(ph);
+		ph_sleep(ph->pchrono_ph->time_to_eat);
+
+		pthread_mutex_unlock(ph[i].pmutex_right_fork);
+		pthread_mutex_unlock(ph[i].pmutex_left_fork);
+		printf("tenedores libres\n");
+		
+		ph_sleep(ph->pchrono_ph->time_to_sleep);
+		ph_msgs(ph, SLEEP);
+		ph_msgs(ph, THINK);
+		i++;
 	}
 	return (NULL);
 }
@@ -96,7 +101,7 @@ int	philos_creation(t_chrono *ch)
 	}
 	//----------contin. thread inicial----*** main thread  access ***
 	i = 0;
-	did_anyone_die(ch);
+	//did_anyone_die(ch);
 	while (i < ch->q_philos)
 	{
 		pthread_join(ch->pph[i].thread, NULL);

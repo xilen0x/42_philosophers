@@ -18,6 +18,8 @@ void	init_other_mutexes(t_chrono *ch)
 	if (pthread_mutex_init(&ch->pph->mutex_last_eat, NULL) && \
 		pthread_mutex_init(&ch->pph->mutex_nbr_of_meals, NULL) && \
 		pthread_mutex_init(&ch->pph->mutex_msgs, NULL) && \
+		//pthread_mutex_init(ch->pph->pmutex_left_fork, NULL) && 
+		//pthread_mutex_init(ch->pph->pmutex_right_fork, NULL) && 
 		pthread_mutex_init(&ch->mutex_its_alive, NULL))
 	{
 		printf("Error initializing mutex\n");
