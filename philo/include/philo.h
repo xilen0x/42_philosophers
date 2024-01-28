@@ -64,7 +64,7 @@ struct s_philo
 int			parsing(int ac, char *av[]);
 void		init_chrono(t_chrono *chrono, char *av[]);
 long long	get_time(void);
-long long	difference_of_time(long long start, long long current);
+long long	diff_time(long long start, long long current);
 long		ft_atol(const char *str);
 int			ft_atoi(const char *str);
 int			contains_digit(char *c);
@@ -74,9 +74,9 @@ void		init_other_mutexes(t_chrono *ch);
 int			philos_creation(t_chrono *chrono);
 void		ph_eats(t_philo *ph);
 void		ph_msgs(t_philo *ph, int n);
-int			did_anyone_die(t_chrono *chrono);
-void		ph_sleep(long long time);
-void		set_last_eat(t_philo *ph);
-void	set_number_of_meals(t_philo *ph);
-void	set_last_eat(t_philo *ph);
+int			monitor(t_chrono *chrono);
+void		ph_sleep(t_philo *ph);
+//void		set_number_of_meals(t_philo *ph);
+//void		set_last_eat(t_philo *ph);
+
 #endif

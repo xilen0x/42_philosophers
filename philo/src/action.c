@@ -17,32 +17,35 @@ void	ph_msgs(t_philo *ph, int n)//threads access
 	pthread_mutex_lock(&ph->mutex_msgs);
 	if (n == FORK)
 		printf("%lld %u has taken a fork\n", \
-		difference_of_time(ph->pchrono_ph->start_time, get_time()), ph->num_ph);
+		diff_time(ph->pchrono_ph->start_time, get_time()), ph->num_ph);
 	else if (n == EAT)
 		printf("%lld %u is eating\n", \
-		difference_of_time(ph->pchrono_ph->start_time, get_time()), ph->num_ph);
+		diff_time(ph->pchrono_ph->start_time, get_time()), ph->num_ph);
 	else if (n == SLEEP)
 		printf("%lld %u is sleeping\n", \
-		difference_of_time(ph->pchrono_ph->start_time, get_time()), ph->num_ph);
+		diff_time(ph->pchrono_ph->start_time, get_time()), ph->num_ph);
 	else if (n == THINK)
 		printf("%lld %u is thinking\n", \
-		difference_of_time(ph->pchrono_ph->start_time, get_time()), ph->num_ph);
+		diff_time(ph->pchrono_ph->start_time, get_time()), ph->num_ph);
 	else if (n == DIE)
 		printf("%lld %u died\n", \
-		difference_of_time(ph->pchrono_ph->start_time, get_time()), ph->num_ph);
+		diff_time(ph->pchrono_ph->start_time, get_time()), ph->num_ph);
 	pthread_mutex_unlock(&ph->mutex_msgs);
 }
 
-void	ph_sleep(long long time)//threads access
+void	ph_sleep(t_philo *ph)//threads access
 {
 	long long	cu_time;
+	long long	tts;
 
+	tts = ph->pchrono_ph->time_to_sleep;
 	cu_time = get_time();
+	ph_msgs(ph, SLEEP);
 	while (1)
 	{
-		if (difference_of_time(cu_time, get_time()) >= time)
+		if (diff_time(cu_time, get_time()) >= tts)
 			break ;
-		usleep(1000);
+		usleep(100);
 	}
 }
 
@@ -66,13 +69,11 @@ void	ph_eats(t_philo *ph)//threads access
 	ph_msgs(ph, FORK);
 	pthread_mutex_lock(ph->pmutex_right_fork);
 	ph_msgs(ph, FORK);
-
+	//aki posible mutex?
 	ph_msgs(ph, EAT);
 	set_last_eat(ph);
 	set_number_of_meals(ph);
-	ph_sleep(ph->pchrono_ph->time_to_eat);
-
 	pthread_mutex_unlock(ph->pmutex_right_fork);
 	pthread_mutex_unlock(ph->pmutex_left_fork);
-	printf("tenedores libres\n");
+	//printf("tenedores libres\n");
 }

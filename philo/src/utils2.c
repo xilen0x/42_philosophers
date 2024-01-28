@@ -23,7 +23,7 @@ void	print_struct(t_chrono *chrono)
 	printf("num_x_eat: %d\n", chrono->num_x_eat);
 }
 
-long long	difference_of_time(long long start, long long current)
+long long	diff_time(long long start, long long current)
 {
 	return (current - start);
 }

@@ -35,8 +35,10 @@ static int	init_ph(t_chrono *ch)
 	ch->pph = NULL;
 	ch->pforks = NULL;
 	ch->pph = (t_philo *)malloc(sizeof(t_philo) * ch->q_philos);
+	if (!(ch->pph))
+		ft_free(ch);
 	ch->pforks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * ch->q_philos);
-	if (!(ch->pph) || !(ch->pforks))
+	if (!(ch->pforks))
 		ft_free(ch);
 	i = 0;
 	while (i < ch->q_philos)
