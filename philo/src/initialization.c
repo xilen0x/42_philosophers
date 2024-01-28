@@ -18,8 +18,6 @@ void	init_other_mutexes(t_chrono *ch)
 	if (pthread_mutex_init(&ch->pph->mutex_last_eat, NULL) && \
 		pthread_mutex_init(&ch->pph->mutex_nbr_of_meals, NULL) && \
 		pthread_mutex_init(&ch->pph->mutex_msgs, NULL) && \
-		//pthread_mutex_init(ch->pph->pmutex_left_fork, NULL) && 
-		//pthread_mutex_init(ch->pph->pmutex_right_fork, NULL) && 
 		pthread_mutex_init(&ch->mutex_its_alive, NULL))
 	{
 		printf("Error initializing mutex\n");
@@ -36,10 +34,10 @@ static int	init_ph(t_chrono *ch)
 	ch->pforks = NULL;
 	ch->pph = (t_philo *)malloc(sizeof(t_philo) * ch->q_philos);
 	if (!(ch->pph))
-		ft_free(ch);
+		free(ch->pph);
 	ch->pforks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * ch->q_philos);
 	if (!(ch->pforks))
-		ft_free(ch);
+		free(ch->pforks);
 	i = 0;
 	while (i < ch->q_philos)
 		pthread_mutex_init(&ch->pforks[i++], NULL);

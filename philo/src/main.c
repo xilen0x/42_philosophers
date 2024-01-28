@@ -42,6 +42,7 @@ int	main(int ac, char *av[])
 {
 	t_chrono	chrono;
 
+	//parsing args
 	if (parsing(ac, av))
 		return (1);
 
@@ -50,14 +51,6 @@ int	main(int ac, char *av[])
 
 	//threads creation
 	if (philos_creation(&chrono))
-	{
-		ft_free(&chrono);
-	}
-
-	// //release resources
-	// pthread_mutex_destroy(&chrono.pph->mutex_last_eat);
-	// pthread_mutex_destroy(&chrono.pph->mutex_msgs);
-	// pthread_mutex_destroy(&chrono.pph->mutex_nbr_of_meals);
-	//free(&chrono);
+		return (destroy(&chrono));
 	return (0);
 }

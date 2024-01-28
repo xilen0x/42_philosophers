@@ -14,11 +14,25 @@
 
 #include <limits.h>
 
-int	ft_free(t_chrono *ch)
+int	destroy(t_chrono *ch)
 {
-	printf("Error reserving memory!\n");
-	free(ch->pph);
-	free(ch->pforks);
+	int	i;
+
+	if (ch->pph)
+	{
+		i = 0;
+		while (i < ch->q_philos)
+		{
+			pthread_mutex_destroy(ch->pph[i].pmutex_right_fork);
+			pthread_mutex_destroy(ch->pph[i].pmutex_left_fork);
+			i++;
+		}
+		free(ch->pph);
+	}
+	pthread_mutex_destroy(&ch->pph->mutex_last_eat);
+	pthread_mutex_destroy(&ch->pph->mutex_msgs);
+	pthread_mutex_destroy(&ch->pph->mutex_nbr_of_meals);
+	free(ch);
 	return (0);
 }
 

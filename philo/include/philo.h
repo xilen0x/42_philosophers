@@ -78,5 +78,6 @@ int			monitor(t_chrono *chrono);
 void		ph_sleep(t_philo *ph);
 //void		set_number_of_meals(t_philo *ph);
 //void		set_last_eat(t_philo *ph);
+int			destroy(t_chrono *ch);
 
 #endif
