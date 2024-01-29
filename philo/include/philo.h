@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:53:47 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/25 12:29:10 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/29 16:09:28 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ struct s_philo
 	long long		last_eat;
 	int				number_of_meals;
 	pthread_mutex_t	mutex_msgs;
+	pthread_mutex_t	actions;
 	pthread_mutex_t	mutex_last_eat;
 	pthread_mutex_t	mutex_nbr_of_meals;
 	pthread_mutex_t	*pmutex_left_fork;
@@ -79,5 +80,6 @@ void		ph_sleep(t_philo *ph);
 //void		set_number_of_meals(t_philo *ph);
 //void		set_last_eat(t_philo *ph);
 int			destroy(t_chrono *ch);
+void		ph_eats_time(t_philo *ph);
 
 #endif

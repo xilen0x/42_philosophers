@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   monitor.c                                          :+:      :+:    :+:   */
+/*   action.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 12:37:53 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/25 17:53:52 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/29 16:14:02 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,26 @@ void	ph_sleep(t_philo *ph)//threads access
 
 	tts = ph->pchrono_ph->time_to_sleep;
 	cu_time = get_time();
-	ph_msgs(ph, SLEEP);
 	while (1)
 	{
 		if (diff_time(cu_time, get_time()) >= tts)
 			break ;
-		usleep(100);
+		//usleep(100);
+	}
+}
+
+void	ph_eats_time(t_philo *ph)//threads access
+{
+	long long	cu_time;
+	long long	tte;
+
+	tte = ph->pchrono_ph->time_to_eat;
+	cu_time = get_time();
+	while (1)
+	{
+		if (diff_time(cu_time, get_time()) >= tte)
+			break ;
+		//usleep(100);
 	}
 }
 
@@ -69,11 +83,14 @@ void	ph_eats(t_philo *ph)//threads access
 	ph_msgs(ph, FORK);
 	pthread_mutex_lock(ph->pmutex_right_fork);
 	ph_msgs(ph, FORK);
-	//aki posible mutex?
 	ph_msgs(ph, EAT);
+	ph_eats_time(ph);
 	set_last_eat(ph);
 	set_number_of_meals(ph);
+	ph_msgs(ph, SLEEP);
+	ph_sleep(ph);
+	ph_msgs(ph, THINK);
+
 	pthread_mutex_unlock(ph->pmutex_right_fork);
 	pthread_mutex_unlock(ph->pmutex_left_fork);
-	//printf("tenedores libres\n");
 }
