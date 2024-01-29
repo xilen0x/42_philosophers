@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 13:12:52 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/25 16:01:15 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/29 19:29:22 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	print_struct(t_chrono *chrono)
 
 long long	diff_time(long long start, long long current)
 {
+	// printf("STARTS %lld CURRENT %lld\n", start, current);
+	// printf("RES %lld\n",  current - start);
 	return (current - start);
 }
 

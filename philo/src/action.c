@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 12:37:53 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/29 16:14:02 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/29 19:28:39 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ph_msgs(t_philo *ph, int n)//threads access
 	pthread_mutex_unlock(&ph->mutex_msgs);
 }
 
-void	ph_sleep(t_philo *ph)//threads access
+void	ph_sleep_time(t_philo *ph)//threads access
 {
 	long long	cu_time;
 	long long	tts;
@@ -77,20 +77,37 @@ void	set_number_of_meals(t_philo *ph)//threads access
 	pthread_mutex_unlock(&ph->mutex_nbr_of_meals);
 }
 
-void	ph_eats(t_philo *ph)//threads access
+int	ph_eats(t_philo *ph)//threads access
 {
-	pthread_mutex_lock(ph->pmutex_left_fork);
-	ph_msgs(ph, FORK);
-	pthread_mutex_lock(ph->pmutex_right_fork);
-	ph_msgs(ph, FORK);
-	ph_msgs(ph, EAT);
-	ph_eats_time(ph);
-	set_last_eat(ph);
-	set_number_of_meals(ph);
-	ph_msgs(ph, SLEEP);
-	ph_sleep(ph);
-	ph_msgs(ph, THINK);
+	if (ph->pchrono_ph->q_philos > 1)
+	{
+		//pthread_mutex_lock(ph->pchrono_ph->pforks);
+		pthread_mutex_lock(ph->pmutex_left_fork);
+		ph_msgs(ph, FORK);
+		pthread_mutex_lock(ph->pmutex_right_fork);
+		ph_msgs(ph, FORK);
+		ph_msgs(ph, EAT);
+		ph_eats_time(ph);
+		set_last_eat(ph);
+		set_number_of_meals(ph);
+		pthread_mutex_unlock(ph->pmutex_right_fork);
+		pthread_mutex_unlock(ph->pmutex_left_fork);
+		ph_msgs(ph, SLEEP);
+		ph_sleep_time(ph);
+		ph_msgs(ph, THINK);
 
-	pthread_mutex_unlock(ph->pmutex_right_fork);
-	pthread_mutex_unlock(ph->pmutex_left_fork);
+		pthread_mutex_unlock(ph->pchrono_ph->pforks);
+	}
+	else
+	{
+		pthread_mutex_lock(ph->pmutex_left_fork);
+		ph_msgs(ph, FORK);
+		pthread_mutex_unlock(ph->pmutex_left_fork);
+		ph_msgs(ph, DIE);
+		pthread_mutex_lock(&ph->pchrono_ph->mutex_its_alive);
+		ph->pchrono_ph->its_alive = 0;
+		pthread_mutex_unlock(&ph->pchrono_ph->mutex_its_alive);
+		return (0);
+	}
+	return (0);
 }

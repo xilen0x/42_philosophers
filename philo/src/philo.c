@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:33:50 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/29 16:35:26 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/29 19:42:01 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,32 +31,34 @@ int	monitor(t_chrono *ch)//main thread access
 	int	i;
 
 	i = 0;
-	while (ch->its_alive)
+	pthread_mutex_lock(&ch->mutex_its_alive);
+	while (i < ch->q_philos && ch->its_alive)
 	{
-		i = 0;
-		while (i < ch->q_philos && ch->its_alive)
+		pthread_mutex_lock(&ch->pph->mutex_last_eat);
+		if (diff_time(ch->pph[i].last_eat, get_time()) >= ch->time_to_die)
 		{
-			pthread_mutex_lock(&ch->pph->mutex_last_eat);
-			if (diff_time(ch->pph[i].last_eat, get_time()) >= ch->time_to_die)
-			{
-				ph_msgs(&ch->pph[i], DIE);
-				pthread_mutex_lock(&ch->mutex_its_alive);
-				ch->its_alive = 0;
-				pthread_mutex_unlock(&ch->mutex_its_alive);
-				break ;
-			}
-			usleep(50);
-			pthread_mutex_unlock(&ch->pph->mutex_last_eat);
-			i++;
+			
+			printf("test\n");
+			ph_msgs(&ch->pph[i], DIE);
+			ch->its_alive = 0;
+			pthread_mutex_unlock(&ch->mutex_its_alive);
+			break ;
 		}
-		i = -1;
-		while (ch->its_alive && ch->pph[i].number_of_meals == ch->num_x_eat)
-		{
-			i++;
-			if (i == ch->q_philos)
-				return (1);
-		}
+		usleep(50);
+		pthread_mutex_unlock(&ch->pph->mutex_last_eat);
+		i++;
 	}
+	pthread_mutex_unlock(&ch->mutex_its_alive);
+	//printf("i: %d\n", i);
+	i = 0;
+	while (ch->its_alive && ch->pph[i].number_of_meals == ch->num_x_eat)
+	{
+		i++;
+		pthread_mutex_unlock(&ch->mutex_its_alive);
+		if (i == ch->q_philos)
+			return (0);
+	}
+	pthread_mutex_unlock(&ch->mutex_its_alive);
 	return (1);
 }
 
@@ -66,12 +68,12 @@ void	*philo(t_philo	*ph)//threads section
 		usleep(1500);
 	while (ph->pchrono_ph->its_alive)
 	{
-		pthread_mutex_lock(&ph->actions);
+		pthread_mutex_lock(&ph->mutex_actions);
 		ph_eats(ph);
 		if ((ph->pchrono_ph->num_x_eat && ph->number_of_meals == \
 		ph->pchrono_ph->num_x_eat) || !(ph->pchrono_ph->its_alive))
 			break ;
-		pthread_mutex_unlock(&ph->actions);
+		pthread_mutex_unlock(&ph->mutex_actions);
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:53:47 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/29 16:09:28 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/29 17:26:41 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ struct s_philo
 	long long		last_eat;
 	int				number_of_meals;
 	pthread_mutex_t	mutex_msgs;
-	pthread_mutex_t	actions;
+	pthread_mutex_t	mutex_actions;
 	pthread_mutex_t	mutex_last_eat;
 	pthread_mutex_t	mutex_nbr_of_meals;
 	pthread_mutex_t	*pmutex_left_fork;
@@ -69,14 +69,14 @@ long long	diff_time(long long start, long long current);
 long		ft_atol(const char *str);
 int			ft_atoi(const char *str);
 int			contains_digit(char *c);
-int			ft_free(t_chrono *ch);
+//int			ft_free(t_chrono *ch);
 void		print_struct(t_chrono *chrono);
 void		init_other_mutexes(t_chrono *ch);
 int			philos_creation(t_chrono *chrono);
-void		ph_eats(t_philo *ph);
+int			ph_eats(t_philo *ph);
 void		ph_msgs(t_philo *ph, int n);
 int			monitor(t_chrono *chrono);
-void		ph_sleep(t_philo *ph);
+void		ph_sleep_time(t_philo *ph);
 //void		set_number_of_meals(t_philo *ph);
 //void		set_last_eat(t_philo *ph);
 int			destroy(t_chrono *ch);
