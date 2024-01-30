@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:33:50 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/30 18:24:57 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/30 18:52:27 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@ int	monitor(t_chrono *ch)
 	int	i;
 
 	i = 0;
+	if (ch->q_philos == 1)
+	{
+		ph_msgs(ch->pph, FORK);
+		ph_msgs(ch->pph, DIE);
+		ch->its_alive = 0;
+		return (0);
+	}
 	while (get_its_alive(ch))
 	{
 		pthread_mutex_lock(&ch->pph->mutex_last_eat);
@@ -44,41 +51,6 @@ int	monitor(t_chrono *ch)
 	pthread_mutex_unlock(&ch->pph->mutex_last_eat);
 	return (0);
 }
-
-/*int	monitor(t_chrono *ch)//main thread access
-{
-	int	i;
-
-	i = 0;
-	pthread_mutex_lock(&ch->mutex_its_alive);
-	while (i < ch->q_philos && ch->its_alive)
-	{
-		pthread_mutex_lock(&ch->pph->mutex_last_eat);
-		if (diff_time(ch->pph[i].last_eat, get_time()) >= ch->time_to_die)
-		{
-			printf("test\n");
-			ph_msgs(&ch->pph[i], DIE);
-			ch->its_alive = 0;
-			pthread_mutex_unlock(&ch->mutex_its_alive);
-			break ;
-		}
-		usleep(50);
-		pthread_mutex_unlock(&ch->pph->mutex_last_eat);
-		i++;
-	}
-	pthread_mutex_unlock(&ch->mutex_its_alive);
-	//printf("i: %d\n", i);
-	i = 0;
-	while (ch->its_alive && ch->pph[i].number_of_meals == ch->num_x_eat)
-	{
-		i++;
-		pthread_mutex_unlock(&ch->mutex_its_alive);
-		if (i == ch->q_philos)
-			return (0);
-	}
-	pthread_mutex_unlock(&ch->mutex_its_alive);
-	return (1);
-}*/
 
 void	*philo(t_philo	*ph)//threads section
 {
@@ -113,12 +85,12 @@ int	philos_creation(t_chrono *ch)
 			free(ch->pph);
 			return (1);
 		}
-		//ch->pph[i].last_eat = get_time();
+		ch->pph[i].last_eat = get_time();
 		i++;
 	}
 	//----------contin. thread inicial----*** main thread  access ***
 	i = 0;
-	//monitor(ch);
+	monitor(ch);
 	while (i < ch->q_philos)
 	{
 		pthread_join(ch->pph[i].thread, NULL);

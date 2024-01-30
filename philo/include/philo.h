@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:53:47 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/30 15:56:14 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/30 18:53:05 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int			contains_digit(char *c);
 void		print_struct(t_chrono *chrono);
 void		init_other_mutexes(t_chrono *ch);
 int			philos_creation(t_chrono *chrono);
-int			ph_eats(t_philo *ph);
+void		ph_eats(t_philo *ph);
 void		ph_msgs(t_philo *ph, int n);
 int			monitor(t_chrono *chrono);
 void		ph_sleep_time(t_philo *ph);

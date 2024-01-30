@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 12:37:53 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/30 18:19:02 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/30 18:52:51 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,8 @@ void	set_number_of_meals(t_philo *ph)//threads access
 	pthread_mutex_unlock(&ph->mutex_nbr_of_meals);
 }
 
-int	ph_eats(t_philo *ph)//threads access
+void	ph_eats(t_philo *ph)//threads access
 {
-	if (ph->pchrono_ph->q_philos > 1)
-	{
 		pthread_mutex_lock(ph->pmutex_left_fork);
 		ph_msgs(ph, FORK);
 		pthread_mutex_lock(ph->pmutex_right_fork);
@@ -114,12 +112,4 @@ int	ph_eats(t_philo *ph)//threads access
 		ph_msgs(ph, SLEEP);
 		ph_sleep_time(ph);
 		ph_msgs(ph, THINK);
-	}
-	else
-	{
-		ph_msgs(ph, FORK);
-		ph_msgs(ph, DIE);
-		ph->pchrono_ph->its_alive = 0;
-	}
-	return (0);
 }
