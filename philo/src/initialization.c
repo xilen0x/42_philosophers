@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 18:59:15 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/29 17:03:50 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/30 15:11:20 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static int	init_ph(t_chrono *ch)
 		ch->pph[i].num_ph = i + 1;
 		ch->pph[i].last_eat = 0;
 		ch->pph[i].pmutex_left_fork = &ch->pforks[i];
-
 		if (i == (ch->q_philos) - 1)//si es el ultimo Ph
 			ch->pph[i].pmutex_right_fork = &ch->pforks[0];
 		else

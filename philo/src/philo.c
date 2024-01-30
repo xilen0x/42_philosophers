@@ -6,17 +6,16 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:33:50 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/29 19:42:01 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/30 18:24:57 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/philo.h"
 
-/*int	get_its_alive(t_chrono *ch)//main thread access
+int	get_its_alive(t_chrono *ch)//main thread access
 {
 	int	alive;
 
-	//printf("its_alive 1: %d\n", ch->its_alive);
 	pthread_mutex_lock(&ch->mutex_its_alive);
 	if (ch->its_alive)
 		alive = 1;
@@ -24,9 +23,29 @@
 		alive = 0;
 	pthread_mutex_unlock(&ch->mutex_its_alive);
 	return (alive);
-}*/
+}
 
-int	monitor(t_chrono *ch)//main thread access
+int	monitor(t_chrono *ch)
+{
+	int	i;
+
+	i = 0;
+	while (get_its_alive(ch))
+	{
+		pthread_mutex_lock(&ch->pph->mutex_last_eat);
+		if (diff_time(ch->pph[i].last_eat, get_time()) >= ch->time_to_die)
+		{
+			ch->its_alive = 0;
+			pthread_mutex_unlock(&ch->pph->mutex_last_eat);
+			return (0);
+		}
+		i++;
+	}
+	pthread_mutex_unlock(&ch->pph->mutex_last_eat);
+	return (0);
+}
+
+/*int	monitor(t_chrono *ch)//main thread access
 {
 	int	i;
 
@@ -37,7 +56,6 @@ int	monitor(t_chrono *ch)//main thread access
 		pthread_mutex_lock(&ch->pph->mutex_last_eat);
 		if (diff_time(ch->pph[i].last_eat, get_time()) >= ch->time_to_die)
 		{
-			
 			printf("test\n");
 			ph_msgs(&ch->pph[i], DIE);
 			ch->its_alive = 0;
@@ -60,21 +78,24 @@ int	monitor(t_chrono *ch)//main thread access
 	}
 	pthread_mutex_unlock(&ch->mutex_its_alive);
 	return (1);
-}
+}*/
 
 void	*philo(t_philo	*ph)//threads section
 {
 	if (ph->num_ph % 2)
 		usleep(1500);
+	//while (get_its_alive(ph->pchrono_ph))
 	while (ph->pchrono_ph->its_alive)
 	{
 		pthread_mutex_lock(&ph->mutex_actions);
 		ph_eats(ph);
-		if ((ph->pchrono_ph->num_x_eat && ph->number_of_meals == \
-		ph->pchrono_ph->num_x_eat) || !(ph->pchrono_ph->its_alive))
+		if ((ph->number_of_meals == ph->pchrono_ph->num_x_eat) || (ph->pchrono_ph->its_alive == 0))
+		{
+			pthread_mutex_unlock(&ph->mutex_actions);
 			break ;
-		pthread_mutex_unlock(&ph->mutex_actions);
+		}
 	}
+	pthread_mutex_unlock(&ph->mutex_actions);
 	return (NULL);
 }
 
@@ -88,16 +109,16 @@ int	philos_creation(t_chrono *ch)
 	{
 		if (pthread_create(&ch->pph[i].thread, NULL, (void *)philo, &ch->pph[i]))
 		{
-			dprintf(2, "Error creating thread\n");
+			printf("Error creating thread\n");
 			free(ch->pph);
 			return (1);
 		}
-		ch->pph[i].last_eat = get_time();
+		//ch->pph[i].last_eat = get_time();
 		i++;
 	}
 	//----------contin. thread inicial----*** main thread  access ***
 	i = 0;
-	monitor(ch);
+	//monitor(ch);
 	while (i < ch->q_philos)
 	{
 		pthread_join(ch->pph[i].thread, NULL);

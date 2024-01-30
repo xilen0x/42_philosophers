@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 12:37:53 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/29 19:28:39 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/30 18:19:02 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,41 @@
 
 void	ph_msgs(t_philo *ph, int n)//threads access
 {
-	pthread_mutex_lock(&ph->mutex_msgs);
 	if (n == FORK)
+	{
+		pthread_mutex_lock(&ph->mutex_msgs);
 		printf("%lld %u has taken a fork\n", \
 		diff_time(ph->pchrono_ph->start_time, get_time()), ph->num_ph);
+		pthread_mutex_unlock(&ph->mutex_msgs);
+	}
 	else if (n == EAT)
+	{
+		pthread_mutex_lock(&ph->mutex_msgs);
 		printf("%lld %u is eating\n", \
 		diff_time(ph->pchrono_ph->start_time, get_time()), ph->num_ph);
+		pthread_mutex_unlock(&ph->mutex_msgs);
+	}
 	else if (n == SLEEP)
+	{
+		pthread_mutex_lock(&ph->mutex_msgs);
 		printf("%lld %u is sleeping\n", \
 		diff_time(ph->pchrono_ph->start_time, get_time()), ph->num_ph);
+		pthread_mutex_unlock(&ph->mutex_msgs);
+	}
 	else if (n == THINK)
+	{
+		pthread_mutex_lock(&ph->mutex_msgs);
 		printf("%lld %u is thinking\n", \
 		diff_time(ph->pchrono_ph->start_time, get_time()), ph->num_ph);
+		pthread_mutex_unlock(&ph->mutex_msgs);
+	}
 	else if (n == DIE)
+	{
+		pthread_mutex_lock(&ph->mutex_msgs);
 		printf("%lld %u died\n", \
 		diff_time(ph->pchrono_ph->start_time, get_time()), ph->num_ph);
-	pthread_mutex_unlock(&ph->mutex_msgs);
+		pthread_mutex_unlock(&ph->mutex_msgs);
+	}
 }
 
 void	ph_sleep_time(t_philo *ph)//threads access
@@ -53,6 +71,7 @@ void	ph_eats_time(t_philo *ph)//threads access
 	long long	cu_time;
 	long long	tte;
 
+	pthread_mutex_lock(&ph->pchrono_ph->mutex_times);
 	tte = ph->pchrono_ph->time_to_eat;
 	cu_time = get_time();
 	while (1)
@@ -61,6 +80,7 @@ void	ph_eats_time(t_philo *ph)//threads access
 			break ;
 		//usleep(100);
 	}
+	pthread_mutex_unlock(&ph->pchrono_ph->mutex_times);
 }
 
 void	set_last_eat(t_philo *ph)//threads access
@@ -81,7 +101,6 @@ int	ph_eats(t_philo *ph)//threads access
 {
 	if (ph->pchrono_ph->q_philos > 1)
 	{
-		//pthread_mutex_lock(ph->pchrono_ph->pforks);
 		pthread_mutex_lock(ph->pmutex_left_fork);
 		ph_msgs(ph, FORK);
 		pthread_mutex_lock(ph->pmutex_right_fork);
@@ -95,19 +114,12 @@ int	ph_eats(t_philo *ph)//threads access
 		ph_msgs(ph, SLEEP);
 		ph_sleep_time(ph);
 		ph_msgs(ph, THINK);
-
-		pthread_mutex_unlock(ph->pchrono_ph->pforks);
 	}
 	else
 	{
-		pthread_mutex_lock(ph->pmutex_left_fork);
 		ph_msgs(ph, FORK);
-		pthread_mutex_unlock(ph->pmutex_left_fork);
 		ph_msgs(ph, DIE);
-		pthread_mutex_lock(&ph->pchrono_ph->mutex_its_alive);
 		ph->pchrono_ph->its_alive = 0;
-		pthread_mutex_unlock(&ph->pchrono_ph->mutex_its_alive);
-		return (0);
 	}
 	return (0);
 }

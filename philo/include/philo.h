@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:53:47 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/29 17:26:41 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/30 15:56:14 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_chrono
 	int				num_x_eat;//num por comer(arg. opcional)
 	int				its_alive;
 	int				q_philos;//cant.total phs
+	pthread_mutex_t	mutex_times;
 	pthread_mutex_t	mutex_its_alive;
 	pthread_mutex_t	*pforks;
 	t_philo			*pph;
