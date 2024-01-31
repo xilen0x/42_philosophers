@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 13:12:52 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/29 19:29:22 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/31 18:28:38 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,12 @@ long long	diff_time(long long start, long long current)
 }
 
 /*Return time in miliseconds*/
-long long	get_time(void)
+long long	get_time(t_chrono *ch)
 {
 	struct timeval	tv;
 
+	pthread_mutex_lock(&ch->mutex_times);
 	gettimeofday(&tv, NULL);
 	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+	pthread_mutex_unlock(&ch->mutex_times);
 }

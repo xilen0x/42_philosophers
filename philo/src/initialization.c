@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 18:59:15 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/31 15:03:35 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/31 18:49:42 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void	init_other_mutexes(t_chrono *ch)
 		pthread_mutex_init(&ch->pph->mutex_nbr_of_meals, NULL) && \
 		pthread_mutex_init(&ch->pph->mutex_msgs, NULL) && \
 		pthread_mutex_init(&ch->pph->mutex_actions, NULL) && \
+		pthread_mutex_init(&ch->mutex_times, NULL) && \
 		//pthread_mutex_init(ch->pph->pmutex_left_fork, NULL) &&
 		//pthread_mutex_init(ch->pph->pmutex_left_fork, NULL) &&
 		pthread_mutex_init(&ch->mutex_its_alive, NULL))
@@ -65,7 +66,7 @@ static int	init_ph(t_chrono *ch)
 /*Initialization of the chronogram structure(t_chrono)*/
 void	init_chrono(t_chrono *ch, char *av[])
 {
-	ch->start_time = get_time();
+	ch->start_time = get_time(ch);
 	ch->q_philos = ft_atoi(av[1]);
 	ch->time_to_die = ft_atoi(av[2]);
 	ch->time_to_eat = ft_atoi(av[3]);

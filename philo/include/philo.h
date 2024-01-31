@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:53:47 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/30 18:53:05 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/31 18:49:16 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ struct s_philo
 // ------------------------ Prototypes -------------------- //
 int			parsing(int ac, char *av[]);
 void		init_chrono(t_chrono *chrono, char *av[]);
-long long	get_time(void);
+long long	get_time(t_chrono *chrono);
 long long	diff_time(long long start, long long current);
 long		ft_atol(const char *str);
 int			ft_atoi(const char *str);
@@ -82,5 +82,6 @@ void		ph_sleep_time(t_philo *ph);
 //void		set_last_eat(t_philo *ph);
 int			destroy(t_chrono *ch);
 void		ph_eats_time(t_philo *ph);
-
+//int			ph_to_die_time(t_philo *ph);
+int			get_its_alive(t_chrono *ch);
 #endif

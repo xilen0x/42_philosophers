@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:33:50 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/31 15:20:11 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/31 18:59:17 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,21 @@ int	monitor(t_chrono *ch)
 	int	i;
 
 	i = 0;
-	if (ch->q_philos == 1)
-	{
-		ph_msgs(ch->pph, FORK);
-		ph_msgs(ch->pph, DIE);
-		ch->its_alive = 0;
-		return (0);
-	}
-	while (get_its_alive(ch))
+	while (i < ch->q_philos)
 	{
 		pthread_mutex_lock(&ch->pph->mutex_last_eat);
-		if (diff_time(ch->pph[i].last_eat, get_time()) >= ch->time_to_die)
+		if (diff_time(ch->pph[i].last_eat, get_time(ch)) >= ch->time_to_die)
 		{
+			ph_msgs(ch->pph, DIE);
 			ch->its_alive = 0;
-			pthread_mutex_unlock(&ch->pph->mutex_last_eat);
-			return (0);
+			destroy(ch);//aki voy!!!... falta ver pq sale el error en esta linea
+			return (1);
 		}
 		i++;
+		if (i == ch->q_philos)
+			i = 0;
+		pthread_mutex_unlock(&ch->pph->mutex_last_eat);
 	}
-	pthread_mutex_unlock(&ch->pph->mutex_last_eat);
 	return (0);
 }
 
@@ -58,15 +54,18 @@ void	*philo(t_philo	*ph)//threads section
 		usleep(1500);
 	while (get_its_alive(ph->pchrono_ph))
 	{
-		pthread_mutex_lock(&ph->mutex_actions);
+		//pthread_mutex_lock(&ph->mutex_actions);
 		ph_eats(ph);
-		if ((ph->number_of_meals == ph->pchrono_ph->num_x_eat) || !(get_its_alive(ph->pchrono_ph)))
+		if ((ph->pchrono_ph->num_x_eat && (ph->number_of_meals == ph->pchrono_ph->num_x_eat)) || !(get_its_alive(ph->pchrono_ph)))
 		{
-			pthread_mutex_unlock(&ph->mutex_actions);
+			//pthread_mutex_unlock(&ph->mutex_actions);
 			break ;
 		}
+		ph_msgs(ph, SLEEP);
+		ph_sleep_time(ph);
+		ph_msgs(ph, THINK);
 	}
-	pthread_mutex_unlock(&ph->mutex_actions);
+	//pthread_mutex_unlock(&ph->mutex_actions);
 	return (NULL);
 }
 
@@ -84,7 +83,7 @@ int	philos_creation(t_chrono *ch)
 			free(ch->pph);
 			return (1);
 		}
-		ch->pph[i].last_eat = get_time();
+		ch->pph[i].last_eat = get_time(ch);
 		i++;
 	}
 	//----------contin. thread inicial----*** main thread  access ***
