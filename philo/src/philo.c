@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:33:50 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/30 18:52:27 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/31 15:20:11 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,11 @@ void	*philo(t_philo	*ph)//threads section
 {
 	if (ph->num_ph % 2)
 		usleep(1500);
-	//while (get_its_alive(ph->pchrono_ph))
-	while (ph->pchrono_ph->its_alive)
+	while (get_its_alive(ph->pchrono_ph))
 	{
 		pthread_mutex_lock(&ph->mutex_actions);
 		ph_eats(ph);
-		if ((ph->number_of_meals == ph->pchrono_ph->num_x_eat) || (ph->pchrono_ph->its_alive == 0))
+		if ((ph->number_of_meals == ph->pchrono_ph->num_x_eat) || !(get_its_alive(ph->pchrono_ph)))
 		{
 			pthread_mutex_unlock(&ph->mutex_actions);
 			break ;

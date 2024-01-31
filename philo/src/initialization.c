@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 18:59:15 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/30 15:11:20 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/31 15:03:35 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ void	init_other_mutexes(t_chrono *ch)
 		pthread_mutex_init(&ch->pph->mutex_nbr_of_meals, NULL) && \
 		pthread_mutex_init(&ch->pph->mutex_msgs, NULL) && \
 		pthread_mutex_init(&ch->pph->mutex_actions, NULL) && \
+		//pthread_mutex_init(ch->pph->pmutex_left_fork, NULL) &&
+		//pthread_mutex_init(ch->pph->pmutex_left_fork, NULL) &&
 		pthread_mutex_init(&ch->mutex_its_alive, NULL))
 	{
 		printf("Error initializing mutex\n");

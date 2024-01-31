@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 12:37:53 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/30 18:52:51 by castorga         ###   ########.fr       */
+/*   Updated: 2024/01/31 13:43:58 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,17 +99,17 @@ void	set_number_of_meals(t_philo *ph)//threads access
 
 void	ph_eats(t_philo *ph)//threads access
 {
-		pthread_mutex_lock(ph->pmutex_left_fork);
-		ph_msgs(ph, FORK);
-		pthread_mutex_lock(ph->pmutex_right_fork);
-		ph_msgs(ph, FORK);
-		ph_msgs(ph, EAT);
-		ph_eats_time(ph);
-		set_last_eat(ph);
-		set_number_of_meals(ph);
-		pthread_mutex_unlock(ph->pmutex_right_fork);
-		pthread_mutex_unlock(ph->pmutex_left_fork);
-		ph_msgs(ph, SLEEP);
-		ph_sleep_time(ph);
-		ph_msgs(ph, THINK);
+	pthread_mutex_lock(ph->pmutex_left_fork);
+	ph_msgs(ph, FORK);
+	pthread_mutex_lock(ph->pmutex_right_fork);
+	ph_msgs(ph, FORK);
+	ph_msgs(ph, EAT);
+	ph_eats_time(ph);
+	set_last_eat(ph);
+	set_number_of_meals(ph);
+	pthread_mutex_unlock(ph->pmutex_right_fork);
+	pthread_mutex_unlock(ph->pmutex_left_fork);
+	ph_msgs(ph, SLEEP);
+	ph_sleep_time(ph);
+	ph_msgs(ph, THINK);
 }
