@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:53:47 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/31 18:49:16 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/01 18:05:22 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void		print_struct(t_chrono *chrono);
 void		init_other_mutexes(t_chrono *ch);
 int			philos_creation(t_chrono *chrono);
 void		ph_eats(t_philo *ph);
-void		ph_msgs(t_philo *ph, int n);
+void		ph_msgs(t_philo *ph, char *msg);
 int			monitor(t_chrono *chrono);
 void		ph_sleep_time(t_philo *ph);
 //void		set_number_of_meals(t_philo *ph);

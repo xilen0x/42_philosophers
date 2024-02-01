@@ -6,11 +6,11 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:47:45 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/24 16:30:52 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/01 18:25:34 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "philo.h"
 
 #include <limits.h>
 
@@ -18,55 +18,27 @@ int	destroy(t_chrono *ch)
 {
 	int	i;
 
-	if (ch->pph)
+	i = 0;
+	while (i < ch->q_philos)
 	{
-		i = 0;
-		while (i < ch->q_philos)
-		{
-			pthread_mutex_destroy(ch->pph[i].pmutex_right_fork);
-			pthread_mutex_destroy(ch->pph[i].pmutex_left_fork);
-			i++;
-		}
-		free(ch->pph);
+		pthread_mutex_destroy(&ch->pforks[i]);
+		i++;
 	}
+	while (i < ch->q_philos)
+	{
+		pthread_join(ch->pph[i].thread, NULL);
+		i++;
+	}
+	free(ch->pforks);
+	free(ch->pph);
 	pthread_mutex_destroy(&ch->pph->mutex_last_eat);
-	pthread_mutex_destroy(&ch->pph->mutex_msgs);
-	pthread_mutex_destroy(&ch->pph->mutex_nbr_of_meals);
-	free(ch);
+	printf("tftftftftf\n");
+	// pthread_mutex_destroy(&ch->mutex_its_alive);
+	// pthread_mutex_destroy(&ch->pph->mutex_msgs);
+	// pthread_mutex_destroy(&ch->pph->mutex_nbr_of_meals);
+	// pthread_mutex_destroy(&ch->pph->mutex_actions);
+	// pthread_mutex_destroy(&ch->mutex_times);
 	return (0);
-}
-
-static char	*ft_isspace(char *str)
-{
-	while ((*str >= 9 && *str <= 13) || *str == 32)
-		++str;
-	return (str);
-}
-
-int	ft_atoi(const char *str)
-{
-	short int	parity;
-	int			number;
-	char		*mystr;
-
-	parity = 0;
-	number = 0;
-	mystr = ft_isspace((char *)str);
-	if (*mystr == '+' || *mystr == '-')
-	{
-		if (*mystr == '-')
-			parity++;
-		mystr++;
-	}
-	while (*mystr >= '0' && *mystr <= '9')
-	{
-		number *= 10;
-		number += *mystr - '0';
-		mystr++;
-	}
-	if (parity % 2 == 0)
-		return (number);
-	return (-number);
 }
 
 long	ft_atol(const char *str)

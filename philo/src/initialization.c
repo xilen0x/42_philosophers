@@ -6,11 +6,11 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 18:59:15 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/31 18:49:42 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/01 16:48:11 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "philo.h"
 
 /*Initialization of all mutexes*/
 void	init_other_mutexes(t_chrono *ch)
@@ -20,8 +20,6 @@ void	init_other_mutexes(t_chrono *ch)
 		pthread_mutex_init(&ch->pph->mutex_msgs, NULL) && \
 		pthread_mutex_init(&ch->pph->mutex_actions, NULL) && \
 		pthread_mutex_init(&ch->mutex_times, NULL) && \
-		//pthread_mutex_init(ch->pph->pmutex_left_fork, NULL) &&
-		//pthread_mutex_init(ch->pph->pmutex_left_fork, NULL) &&
 		pthread_mutex_init(&ch->mutex_its_alive, NULL))
 	{
 		printf("Error initializing mutex\n");

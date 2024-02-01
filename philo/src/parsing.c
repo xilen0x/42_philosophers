@@ -6,11 +6,11 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 19:27:04 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/29 19:02:49 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/01 16:48:26 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "philo.h"
 
 /*---------- CHECK if DIGITS ----------*/
 static int	check_digits(int ac, char *av[])

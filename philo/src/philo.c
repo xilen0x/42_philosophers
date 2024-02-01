@@ -6,13 +6,13 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:33:50 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/01 11:39:09 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/01 18:32:33 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/philo.h"
+#include "philo.h"
 
-int	get_its_alive(t_chrono *ch)//main thread access
+int	get_its_alive(t_chrono *ch)//common access function
 {
 	int	alive;
 
@@ -21,6 +21,7 @@ int	get_its_alive(t_chrono *ch)//main thread access
 		alive = 1;
 	else
 		alive = 0;
+		//ch->its_alive = 0;
 	pthread_mutex_unlock(&ch->mutex_its_alive);
 	return (alive);
 }
@@ -35,9 +36,12 @@ int	monitor(t_chrono *ch)
 		pthread_mutex_lock(&ch->pph->mutex_last_eat);
 		if (diff_time(ch->pph[i].last_eat, get_time(ch)) >= ch->time_to_die)
 		{
-			ph_msgs(ch->pph, DIE);
+			ph_msgs(ch->pph, "died");
+			usleep(1000);
 			ch->its_alive = 0;
-			//destroy(ch);//aki voy!!!... falta ver pq sale el error en esta linea
+			//printf("teste\n");
+			destroy(ch);
+			pthread_mutex_unlock(&ch->pph->mutex_last_eat);
 			return (0);
 		}
 		i++;
@@ -52,7 +56,8 @@ void	*philo(t_philo	*ph)//threads section
 {
 	if (ph->num_ph % 2)
 		usleep(1000);
-	while (get_its_alive(ph->pchrono_ph))
+	//while (get_its_alive(ph->pchrono_ph))
+	while (ph->pchrono_ph->its_alive)
 	{
 		//pthread_mutex_lock(&ph->mutex_actions);
 		ph_eats(ph);
@@ -61,9 +66,9 @@ void	*philo(t_philo	*ph)//threads section
 			//pthread_mutex_unlock(&ph->mutex_actions);
 			break ;
 		}
-		ph_msgs(ph, SLEEP);
+		ph_msgs(ph, "is sleeping");
 		ph_sleep_time(ph);
-		ph_msgs(ph, THINK);
+		ph_msgs(ph, "is thinking");
 	}
 	//pthread_mutex_unlock(&ph->mutex_actions);
 	return (NULL);
@@ -89,10 +94,10 @@ int	philos_creation(t_chrono *ch)
 	//----------contin. thread inicial----*** main thread  access ***
 	i = 0;
 	monitor(ch);
-	while (i < ch->q_philos)
-	{
-		pthread_join(ch->pph[i].thread, NULL);
-		i++;
-	}
+	// while (i < ch->q_philos)
+	// {
+	// 	pthread_join(ch->pph[i].thread, NULL);
+	// 	i++;
+	// }
 	return (0);
 }
