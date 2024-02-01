@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:54:09 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/31 18:49:48 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/01 10:13:31 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ int	main(int ac, char *av[])
 	init_chrono(&chrono, av);
 	if (chrono.q_philos == 1)
 	{
+		ph_msgs(chrono.pph, FORK);
 		usleep(chrono.time_to_die * 1000);
+		ph_msgs(chrono.pph, DIE);
 		return (0);
 	}
 	//threads creation

@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:33:50 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/31 18:59:17 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/01 11:39:09 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ int	monitor(t_chrono *ch)
 		{
 			ph_msgs(ch->pph, DIE);
 			ch->its_alive = 0;
-			destroy(ch);//aki voy!!!... falta ver pq sale el error en esta linea
-			return (1);
+			//destroy(ch);//aki voy!!!... falta ver pq sale el error en esta linea
+			return (0);
 		}
 		i++;
 		if (i == ch->q_philos)
@@ -51,12 +51,12 @@ int	monitor(t_chrono *ch)
 void	*philo(t_philo	*ph)//threads section
 {
 	if (ph->num_ph % 2)
-		usleep(1500);
+		usleep(1000);
 	while (get_its_alive(ph->pchrono_ph))
 	{
 		//pthread_mutex_lock(&ph->mutex_actions);
 		ph_eats(ph);
-		if ((ph->pchrono_ph->num_x_eat && (ph->number_of_meals == ph->pchrono_ph->num_x_eat)) || !(get_its_alive(ph->pchrono_ph)))
+		if (((ph->number_of_meals == ph->pchrono_ph->num_x_eat)) || !(get_its_alive(ph->pchrono_ph)))
 		{
 			//pthread_mutex_unlock(&ph->mutex_actions);
 			break ;

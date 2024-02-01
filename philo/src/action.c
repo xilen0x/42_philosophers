@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 12:37:53 by castorga          #+#    #+#             */
-/*   Updated: 2024/01/31 18:30:48 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/01 11:45:57 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,14 +82,16 @@ void	ph_sleep_time(t_philo *ph)//threads access
 	long long	cu_time;
 	long long	tts;
 
+	pthread_mutex_lock(&ph->pchrono_ph->mutex_times);
 	tts = ph->pchrono_ph->time_to_sleep;
 	cu_time = get_time(ph->pchrono_ph);
 	while (1)
 	{
 		if (diff_time(cu_time, get_time(ph->pchrono_ph)) >= tts)
 			break ;
-		usleep(1000);
+		//usleep(1000);
 	}
+	pthread_mutex_unlock(&ph->pchrono_ph->mutex_times);
 }
 
 void	ph_eats_time(t_philo *ph)//threads access
@@ -104,7 +106,7 @@ void	ph_eats_time(t_philo *ph)//threads access
 	{
 		if (diff_time(cu_time, get_time(ph->pchrono_ph)) >= tte)
 			break ;
-		usleep(1000);
+		//usleep(1000);
 	}
 	pthread_mutex_unlock(&ph->pchrono_ph->mutex_times);
 }
@@ -137,5 +139,4 @@ void	ph_eats(t_philo *ph)//threads access
 	pthread_mutex_unlock(&ph->mutex_actions);
 	pthread_mutex_unlock(ph->pmutex_right_fork);
 	pthread_mutex_unlock(ph->pmutex_left_fork);
-	//ph_to_die_time(ph);
 }
