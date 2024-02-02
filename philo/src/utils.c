@@ -26,17 +26,17 @@ int	destroy(t_chrono *ch)
 	}
 	while (i < ch->q_philos)
 	{
-		pthread_join(ch->pph[i].thread, NULL);
+		pthread_join(ch->pph[i].thread, NULL);//JOIN
 		i++;
 	}
 	free(ch->pforks);
 	free(ch->pph);
 	pthread_mutex_destroy(&ch->pph->mutex_last_eat);
-	// pthread_mutex_destroy(&ch->mutex_its_alive);
-	// pthread_mutex_destroy(&ch->pph->mutex_msgs);
-	// pthread_mutex_destroy(&ch->pph->mutex_nbr_of_meals);
-	// pthread_mutex_destroy(&ch->pph->mutex_actions);
-	// pthread_mutex_destroy(&ch->mutex_times);
+	pthread_mutex_destroy(&ch->mutex_its_alive);
+	pthread_mutex_destroy(&ch->pph->mutex_msgs);
+	pthread_mutex_destroy(&ch->pph->mutex_nbr_of_meals);
+	pthread_mutex_destroy(&ch->pph->mutex_actions);
+	pthread_mutex_destroy(&ch->mutex_times);
 	return (0);
 }
 

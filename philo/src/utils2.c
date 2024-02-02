@@ -23,23 +23,47 @@ void	print_struct(t_chrono *chrono)
 	printf("num_x_eat: %d\n", chrono->num_x_eat);
 }
 
-long long	diff_time(long long start, long long current)
+int	check_digits(int ac, char *av[])
 {
-	return (current - start);
+	int	i;
+	int	j;
+
+	i = 1;
+	while (i < ac)
+	{
+		j = 0;
+		while (av[i][j])
+		{
+			if (!(av[i][j] >= '0' && av[i][j] <= '9'))
+			{
+				printf("Not valid digit!\n");
+				return (1);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (0);
 }
 
-/*Return time in miliseconds*/
-long long	get_time(t_chrono *ch)
+int	check_range(int ac, char *av[])
 {
-	struct timeval	tv;
+	int		i;
 
-	pthread_mutex_lock(&ch->mutex_times);
-	gettimeofday(&tv, NULL);
-	pthread_mutex_unlock(&ch->mutex_times);
-	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+	i = 1;
+	while (i < ac)
+	{
+		if (ft_atol(av[i]) > INT_MAX || ft_atol(av[i]) < 0)
+		{
+			printf("Out of range!\n");
+			return (1);
+		}
+		i++;
+	}
+	return (0);
 }
 
-static char	*ft_isspace(char *str)
+char	*ft_isspace(char *str)
 {
 	while ((*str >= 9 && *str <= 13) || *str == 32)
 		++str;

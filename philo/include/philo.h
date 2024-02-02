@@ -22,11 +22,11 @@
 # include <limits.h>
 
 // ------------------------ Macros ------------------------ //
-# define EAT 1
-# define SLEEP 2
-# define THINK 3
-# define DIE 4
-# define FORK 5
+//# define EAT 1
+//# define SLEEP 2
+//# define THINK 3
+//# define DIE 4
+//# define FORK 5
 
 typedef struct s_philo	t_philo;
 
@@ -84,4 +84,9 @@ int			destroy(t_chrono *ch);
 void		ph_eats_time(t_philo *ph);
 //int			ph_to_die_time(t_philo *ph);
 int			get_its_alive(t_chrono *ch);
+long long	get_last_eat(t_philo *ph);
+int			ph_to_die_time(t_philo *ph);
+int			check_digits(int ac, char *av[]);
+int			check_range(int ac, char *av[]);
+
 #endif

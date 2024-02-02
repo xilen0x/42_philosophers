@@ -12,48 +12,6 @@
 
 #include "philo.h"
 
-/*---------- CHECK if DIGITS ----------*/
-static int	check_digits(int ac, char *av[])
-{
-	int	i;
-	int	j;
-
-	i = 1;
-	while (i < ac)
-	{
-		j = 0;
-		while (av[i][j])
-		{
-			if (!(av[i][j] >= '0' && av[i][j] <= '9'))
-			{
-				printf("Not valid digit!\n");
-				return (1);
-			}
-			j++;
-		}
-		i++;
-	}
-	return (0);
-}
-
-//---------- CHECK RANGE ----------
-static int	check_range(int ac, char *av[])
-{
-	int		i;
-
-	i = 1;
-	while (i < ac)
-	{
-		if (ft_atol(av[i]) > INT_MAX || ft_atol(av[i]) < 0)
-		{
-			printf("Out of range!\n");
-			return (1);
-		}
-		i++;
-	}
-	return (0);
-}
-
 /*------------------ PARSING ------------------*/
 int	parsing(int ac, char *av[])
 {

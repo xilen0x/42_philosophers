@@ -32,8 +32,10 @@ int	main(int ac, char *av[])
 	//parsing args
 	if (parsing(ac, av))
 		return (1);
+
 	//initializing structs (chrono y ph)
 	init_chrono(&chrono, av);
+
 	//case 1 thread
 	if (chrono.q_philos == 1)
 	{
@@ -48,5 +50,6 @@ int	main(int ac, char *av[])
 	if (philos_creation(&chrono))
 		return (destroy(&chrono));
 
-	return (0);
+	printf("FIN!!\n");
+	return (destroy(&chrono));
 }
