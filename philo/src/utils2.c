@@ -35,8 +35,8 @@ long long	get_time(t_chrono *ch)
 
 	pthread_mutex_lock(&ch->mutex_times);
 	gettimeofday(&tv, NULL);
-	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 	pthread_mutex_unlock(&ch->mutex_times);
+	return (tv.tv_sec * 1000 + tv.tv_usec / 1000);
 }
 
 static char	*ft_isspace(char *str)

@@ -26,14 +26,14 @@ void	ph_msgs(t_philo *ph, char *msg)//threads access
 
 int	ph_to_die_time(t_philo *ph)//threads access
 {
-	long long	cu_time;
+	//long long	cu_time;
 	long long	ttd;
 	int			i;
 
 	i = 0;
 	pthread_mutex_lock(&ph->pchrono_ph->mutex_its_alive);
 	ttd = ph->pchrono_ph->time_to_die;
-	cu_time = get_time(ph->pchrono_ph);
+	//cu_time = get_time(ph->pchrono_ph);
 	while (ph->pchrono_ph->its_alive)
 	{
 		if (diff_time(ph[i].last_eat, get_time(ph->pchrono_ph)) >= ttd)
@@ -112,7 +112,7 @@ void	ph_eats(t_philo *ph)//threads access
 	ph_eats_time(ph);
 	set_last_eat(ph);
 	set_number_of_meals(ph);
-	ph_to_die_time(ph);
+	//ph_to_die_time(ph);
 	pthread_mutex_unlock(&ph->mutex_actions);
 	pthread_mutex_unlock(ph->pmutex_right_fork);
 	pthread_mutex_unlock(ph->pmutex_left_fork);

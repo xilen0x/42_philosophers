@@ -10,12 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-Turn in files 
+/*Turn in files
 Makefile, *.h, *.c, in directory philo/
-
-Makefile 
-NAME, all, clean, fclean, re
 
 Arguments 
 num_ph	 ttd   tte  tts  num_x_eat
@@ -24,17 +20,8 @@ num_ph	 ttd   tte  tts  num_x_eat
 External functs. 
 memset, printf, malloc, free, write, usleep, gettimeofday, 
 pthread_create, pthread_detach, pthread_join, 
-pthread_mutex_init, pthread_mutex_destroy, pthread_mutex_lock, pthread_mutex_unlock
-
-The specific rules for the mandatory part are:
-• Each philosopher should be a thread.
-• There is one fork between each pair of philosophers. Therefore, if there are several
-	philosophers, each philosopher has a fork on their left side and a fork on their right
-	side. If there is only one philosopher, there should be only one fork on the table.
-• To prevent philosophers from duplicating forks, you should protect the forks state
-with a mutex for each of them.
-https://www.figma.com/file/KG3b82Ss33nnkI1j3b5y4r/Untitled?type=whiteboard&node-id=11%3A8&t=cCpQ6EutW4RmbLa4-1
-*/
+pthread_mutex_init, pthread_mutex_destroy, pthread_mutex_lock, 
+pthread_mutex_unlock*/
 
 #include "philo.h"
 
@@ -45,16 +32,15 @@ int	main(int ac, char *av[])
 	//parsing args
 	if (parsing(ac, av))
 		return (1);
-
 	//initializing structs (chrono y ph)
 	init_chrono(&chrono, av);
-
 	//case 1 thread
 	if (chrono.q_philos == 1)
 	{
 		ph_msgs(chrono.pph, "has taken a fork");
 		usleep(chrono.time_to_die * 1000);
 		ph_msgs(chrono.pph, "died");
+		destroy(&chrono);
 		return (0);
 	}
 

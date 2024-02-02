@@ -32,7 +32,6 @@ int	destroy(t_chrono *ch)
 	free(ch->pforks);
 	free(ch->pph);
 	pthread_mutex_destroy(&ch->pph->mutex_last_eat);
-	printf("tftftftftf\n");
 	// pthread_mutex_destroy(&ch->mutex_its_alive);
 	// pthread_mutex_destroy(&ch->pph->mutex_msgs);
 	// pthread_mutex_destroy(&ch->pph->mutex_nbr_of_meals);

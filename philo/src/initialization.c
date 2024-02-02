@@ -19,7 +19,6 @@ void	init_other_mutexes(t_chrono *ch)
 		pthread_mutex_init(&ch->pph->mutex_nbr_of_meals, NULL) && \
 		pthread_mutex_init(&ch->pph->mutex_msgs, NULL) && \
 		pthread_mutex_init(&ch->pph->mutex_actions, NULL) && \
-		pthread_mutex_init(&ch->mutex_times, NULL) && \
 		pthread_mutex_init(&ch->mutex_its_alive, NULL))
 	{
 		printf("Error initializing mutex\n");
@@ -64,6 +63,7 @@ static int	init_ph(t_chrono *ch)
 /*Initialization of the chronogram structure(t_chrono)*/
 void	init_chrono(t_chrono *ch, char *av[])
 {
+	pthread_mutex_init(&ch->mutex_times, NULL);
 	ch->start_time = get_time(ch);
 	ch->q_philos = ft_atoi(av[1]);
 	ch->time_to_die = ft_atoi(av[2]);
