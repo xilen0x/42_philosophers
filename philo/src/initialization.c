@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 18:59:15 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/01 16:48:11 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/05 13:51:09 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	init_chrono(t_chrono *ch, char *av[])
 	ch->pph = NULL;
 
 	pthread_mutex_init(&ch->mutex_times, NULL);
-	ch->start_time = get_time(ch);
+	ch->start_time = get_time();
 	ch->q_philos = ft_atoi(av[1]);
 	ch->time_to_die = ft_atoi(av[2]);
 	ch->time_to_eat = ft_atoi(av[3]);
@@ -82,4 +82,5 @@ void	init_chrono(t_chrono *ch, char *av[])
 		return ;
 	}
 	init_ph(ch);
+	//print_struct(ch);
 }

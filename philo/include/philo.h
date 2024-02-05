@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:53:47 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/01 18:05:22 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/05 13:16:06 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,9 @@ struct s_philo
 // ------------------------ Prototypes -------------------- //
 int			parsing(int ac, char *av[]);
 void		init_chrono(t_chrono *chrono, char *av[]);
-long long	get_time(t_chrono *chrono);
-long long	diff_time(long long start, long long current);
+long long	get_time();
+long long	get_current_time(t_chrono *ch);
+//long long	diff_time(long long start, long long current);
 long		ft_atol(const char *str);
 int			ft_atoi(const char *str);
 int			contains_digit(char *c);
@@ -77,16 +78,17 @@ int			philos_creation(t_chrono *chrono);
 void		ph_eats(t_philo *ph);
 void		ph_msgs(t_philo *ph, char *msg);
 int			monitor(t_chrono *chrono);
-void		ph_sleep_time(t_philo *ph);
+//void		ph_sleep_time(t_philo *ph);
 //void		set_number_of_meals(t_philo *ph);
 //void		set_last_eat(t_philo *ph);
 int			destroy(t_chrono *ch);
-void		ph_eats_time(t_philo *ph);
+//void		ph_eats_time(t_philo *ph);
 //int			ph_to_die_time(t_philo *ph);
 int			get_its_alive(t_chrono *ch);
 long long	get_last_eat(t_philo *ph);
-int			ph_to_die_time(t_philo *ph);
+//int			ph_to_die_time(t_philo *ph);
 int			check_digits(int ac, char *av[]);
 int			check_range(int ac, char *av[]);
+int			ft_usleep(t_chrono *ch, size_t milliseconds);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:33:50 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/01 18:32:33 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/05 14:01:28 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	monitor(t_chrono *ch)
 	i = 0;
 	while (i < ch->q_philos)
 	{
-		if (diff_time(ch->pph->last_eat, get_time(ch)) >= ch->time_to_die)
+		if ((get_current_time(ch) - ch->pph->last_eat) >= ch->time_to_die)
 		{
 			ph_msgs(ch->pph, "died");
 			ch->its_alive = 0;
@@ -50,16 +50,19 @@ int	monitor(t_chrono *ch)
 void	*philo(t_philo	*ph)
 {
 	if (ph->num_ph % 2)
-		usleep(1000);
+		ft_usleep(ph->pchrono_ph, ph->pchrono_ph->time_to_eat * 0.9);
 	while (ph->pchrono_ph->its_alive)
 	{
 		ph_eats(ph);
-		if (((ph->number_of_meals == ph->pchrono_ph->num_x_eat)) || !(ph->pchrono_ph->its_alive))
-			break ;
+		//printf("%d sale de eats en %llums \n", ph->num_ph, get_current_time(ph->pchrono_ph));
+		// if (((ph->number_of_meals == ph->pchrono_ph->num_x_eat)) || !(ph->pchrono_ph->its_alive))
+		// 	break ;
 		ph_msgs(ph, "is sleeping");
-		ph_sleep_time(ph);
+		ft_usleep(ph->pchrono_ph, ph->pchrono_ph->time_to_sleep);
+		//ph_sleep_time(ph);
 		ph_msgs(ph, "is thinking");
 	}
+	//printf("%d sale del loop\n", ph->num_ph);
 	return (NULL);
 }
 
@@ -77,7 +80,7 @@ int	philos_creation(t_chrono *ch)
 			free(ch->pph);
 			return (1);
 		}
-		ch->pph[i].last_eat = get_time(ch);
+		ch->pph[i].last_eat = get_current_time(ch);
 		i++;
 	}
 	monitor(ch);

@@ -1,25 +1,43 @@
 
 #include "philo.h"
 
-long long	diff_time(long long start, long long current)
-{
-	return (current - start);
-}
+// long long	diff_time(long long start, long long current)
+// {
+// 	return (current - start);
+// }
 
 /*Return time in miliseconds*/
-long long	get_time(t_chrono *ch)
+long long	get_time()
 {
 	struct timeval	tv;
-	long long	res;
+	long long		res;
 
-	pthread_mutex_lock(&ch->mutex_times);
 	gettimeofday(&tv, NULL);
 	res = (tv.tv_sec * 1000 + tv.tv_usec / 1000);
-	pthread_mutex_unlock(&ch->mutex_times);
 	return (res);
 }
 
-int	ph_to_die_time(t_philo *ph)//threads access
+long long	get_current_time(t_chrono *ch)
+{
+	struct timeval	tv;
+	long long		res;
+
+	gettimeofday(&tv, NULL);
+	res = (tv.tv_sec * 1000 + tv.tv_usec / 1000);
+	return (res - ch->start_time);
+}
+
+int	ft_usleep(t_chrono *ch, size_t milliseconds)
+{
+	size_t	start;
+
+	start = get_current_time(ch);
+	while ((get_current_time(ch) - start) < milliseconds)
+		usleep(500);
+	return (0);
+}
+
+/*int	ph_to_die_time(t_philo *ph)//threads access
 {
 	long long	cu_time;
 	long long	ttd;
@@ -42,9 +60,9 @@ int	ph_to_die_time(t_philo *ph)//threads access
 		i++;
 	}
 	return (0);
-}
+}*/
 
-void	ph_sleep_time(t_philo *ph)//threads access
+/*void	ph_sleep_time(t_philo *ph)//threads access
 {
 	long long	cu_time;
 	long long	tts;
@@ -57,9 +75,9 @@ void	ph_sleep_time(t_philo *ph)//threads access
 			break ;
 		//usleep(1000);
 	}
-}
+}*/
 
-void	ph_eats_time(t_philo *ph)//threads access
+/*void	ph_eats_time(t_philo *ph)//threads access
 {
 	long long	cu_time;
 	long long	tte;
@@ -76,3 +94,4 @@ void	ph_eats_time(t_philo *ph)//threads access
 		//usleep(1000);
 	}
 }
+*/
