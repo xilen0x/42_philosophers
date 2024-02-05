@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:47:45 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/01 18:25:34 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/05 16:07:55 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,17 @@ int	destroy(t_chrono *ch)
 	}
 	while (i < ch->q_philos)
 	{
-		pthread_join(ch->pph[i].thread, NULL);//JOIN
+		pthread_join(ch->pph[i].thread, NULL);//JOIN<----
 		i++;
 	}
 	free(ch->pforks);
 	free(ch->pph);
 	pthread_mutex_destroy(&ch->pph->mutex_last_eat);
-	pthread_mutex_destroy(&ch->mutex_its_alive);
-	pthread_mutex_destroy(&ch->pph->mutex_msgs);
 	pthread_mutex_destroy(&ch->pph->mutex_nbr_of_meals);
-	pthread_mutex_destroy(&ch->pph->mutex_actions);
-	pthread_mutex_destroy(&ch->mutex_times);
+	pthread_mutex_destroy(&ch->pph->mutex_msgs);
+	//pthread_mutex_destroy(&ch->mutex_times);
+	//pthread_mutex_destroy(&ch->mutex_its_alive);
+	//pthread_mutex_destroy(&ch->pph->mutex_actions);
 	return (0);
 }
 

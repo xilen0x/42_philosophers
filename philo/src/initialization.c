@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 18:59:15 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/05 13:51:09 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/05 16:37:33 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	init_other_mutexes(t_chrono *ch)
 {
 	if (pthread_mutex_init(&ch->pph->mutex_last_eat, NULL) && \
 		pthread_mutex_init(&ch->pph->mutex_nbr_of_meals, NULL) && \
-		pthread_mutex_init(&ch->pph->mutex_msgs, NULL) && \
-		pthread_mutex_init(&ch->pph->mutex_actions, NULL) && \
-		pthread_mutex_init(&ch->mutex_its_alive, NULL))
+		pthread_mutex_init(&ch->pph->mutex_msgs, NULL))
+		//pthread_mutex_init(&ch->mutex_its_alive, NULL))
+		//pthread_mutex_init(&ch->pph->mutex_actions, NULL) &&
 	{
 		printf("Error initializing mutex\n");
 		return ;
@@ -64,7 +64,7 @@ void	init_chrono(t_chrono *ch, char *av[])
 {
 	ch->pph = NULL;
 
-	pthread_mutex_init(&ch->mutex_times, NULL);
+	//pthread_mutex_init(&ch->mutex_times, NULL);
 	ch->start_time = get_time();
 	ch->q_philos = ft_atoi(av[1]);
 	ch->time_to_die = ft_atoi(av[2]);
