@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:33:50 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/05 14:01:28 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/05 15:45:57 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@ void	*philo(t_philo	*ph)
 	{
 		ph_eats(ph);
 		//printf("%d sale de eats en %llums \n", ph->num_ph, get_current_time(ph->pchrono_ph));
-		// if (((ph->number_of_meals == ph->pchrono_ph->num_x_eat)) || !(ph->pchrono_ph->its_alive))
-		// 	break ;
 		ph_msgs(ph, "is sleeping");
 		ft_usleep(ph->pchrono_ph, ph->pchrono_ph->time_to_sleep);
 		//ph_sleep_time(ph);
 		ph_msgs(ph, "is thinking");
+		if (((ph->number_of_meals == ph->pchrono_ph->num_x_eat)) || !(ph->pchrono_ph->its_alive))
+			break ;
 	}
 	//printf("%d sale del loop\n", ph->num_ph);
 	return (NULL);
