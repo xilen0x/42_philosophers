@@ -20,7 +20,7 @@ all: $(NAME)
 
 # Regla para el ejecutable
 $(NAME): $(OBJ_FILES)
-	$(CC) $^ -o $@ #-fsanitize=thread -fsanitize=address
+	$(CC) $^ -o $@ -fsanitize=address #-fsanitize=thread
 
 # Regla para los archivos objeto
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c Makefile
