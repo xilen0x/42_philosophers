@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:33:50 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/06 15:23:08 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/06 15:32:24 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,24 +26,24 @@
 	return (alive);
 }*/
 
-int	monitor(t_chrono *ch)
+int monitor(t_chrono *ch)
 {
-	int	i;
+    int i;
 
-	i = 0;
-	while (i < ch->q_philos)
-	{
-		if (((ch->pph->number_of_meals == ch->num_x_eat)) || !(ch->its_alive))
-			break ;
-		if ((get_current_time(ch) - ch->pph->last_eat) >= ch->time_to_die)
-		{
-			ph_msgs(ch->pph, "died");
-			ch->its_alive = 0;
-			return (0);
-		}
-		i++;
-	}
-	return (0);
+    i = 0;
+    while (i < ch->q_philos)
+    {
+        if ((get_current_time(ch) - ch->pph->last_eat) >= ch->time_to_die)
+        {
+            ph_msgs(ch->pph, "died");
+            ch->its_alive = 0;
+            return (0);
+        }
+        i++;
+        if (i == ch->q_philos)
+            i = 0;
+    }
+    return (0);
 }
 
 //threads section - EATS, SLEEP, THINK
