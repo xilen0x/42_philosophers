@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:33:50 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/06 10:22:48 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/06 13:11:37 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	monitor(t_chrono *ch)
 	i = 0;
 	while (i < ch->q_philos)
 	{
+		if (((ch->pph->number_of_meals == ch->num_x_eat)) || !(ch->its_alive))
+			break ;
 		if ((get_current_time(ch) - ch->pph->last_eat) >= ch->time_to_die)
 		{
 			ph_msgs(ch->pph, "died");
@@ -40,8 +42,6 @@ int	monitor(t_chrono *ch)
 			return (0);
 		}
 		i++;
-		if (i == ch->q_philos)
-			i = 0;
 	}
 	return (0);
 }
