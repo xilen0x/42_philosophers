@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:47:45 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/06 10:34:43 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/06 15:59:44 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	destroy(t_chrono *ch)
 	//pthread_mutex_destroy(&ch->pph->mutex_nbr_of_meals);
 	//pthread_mutex_destroy(&ch->pph->mutex_msgs);
 	//printf("llega aqui!!\n");
-	//pthread_mutex_destroy(&ch->mutex_times);
+	pthread_mutex_destroy(&ch->mutex_times);
 	//pthread_mutex_destroy(&ch->mutex_its_alive);
 	//pthread_mutex_destroy(&ch->pph->mutex_actions);
 	return (0);
