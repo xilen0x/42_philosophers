@@ -2,41 +2,46 @@
 NAME = philo
 
 # Directorios
-SRC_DIR = src
-INC_DIR = include
-OBJ_DIR = objs
+SRC_DIR = src/
+SRC_FILES = main.c action.c initialization.c parsing.c philo.c times.c utils.c utils2.c
+SRCS += $(addprefix $(SRC_DIR), $(SRC_FILES))
 
-# Listas de archivos (*********************CAMBIAR ESTA PARTE POR Q LA NORMA NO LO PERMITE!!!!!!!!!!!!!!!!!)
-SRC_FILES = $(wildcard $(SRC_DIR)/*.c)
-OBJ_FILES = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC_FILES))
-DEP_FILES = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.d, $(SRC_FILES))
+OBJ_DIR = objs/
+OBJ_FILES = $(SRCS:.c=.o)
+
+OBJS = $(addprefix $(OBJ_DIR), $(OBJ_FILES))
+DEPS = $(OBJS:.o=.d)
 
 # Compilador y opciones
-CC = clang -g
-CFLAGS = -Wall -Wextra -Werror -I$(INC_DIR)
+CC = clang 
+CFLAGS = -g -Wall -Wextra -Werror -I$(INC_DIR) #-fsanitize=address -fsanitize=thread
+INC_DIR = include/
+
 
 # Regla por defecto
 all: $(NAME)
 
-# Regla para el ejecutable
-$(NAME): $(OBJ_FILES)
-	$(CC) $^ -o $@ -fsanitize=address #-fsanitize=thread
+$(NAME): $(OBJS) 
+	@$(CC) $(CFLAGS) $(OBJS) -o $@
 
-# Regla para los archivos objeto
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c Makefile
-	@mkdir -p $(OBJ_DIR)
+$(OBJ_DIR)%.o: %.c Makefile
+	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -MMD -c $< -o $@
 
-# Dependencias
--include $(DEP_FILES)
-
-# Reglas para limpieza
 clean:
-	@rm -rf $(OBJ_DIR) $(NAME)
+	@$(RM) -r $(OBJ_DIR)
 
-fclean:clean
-	@rm -f $(NAME)
+fclean: clean
+	@$(RM) $(NAME)
 
 re: fclean all
 
-.PHONY: all clean
+
+-include $(DEPS)
+
+.PHONY: all clean fclean re 
+
+
+
+
+
