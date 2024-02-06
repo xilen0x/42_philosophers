@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:33:50 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/05 16:37:57 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/06 10:22:48 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ int	philos_creation(t_chrono *ch)
 		if (pthread_create(&ch->pph[i].thread, NULL, (void *)philo, &ch->pph[i]))
 		{
 			printf("Error creating thread\n");
-			free(ch->pph);
+			//free(ch->pph);
+			destroy(ch);
 			return (1);
 		}
 		ch->pph[i].last_eat = get_current_time(ch);
