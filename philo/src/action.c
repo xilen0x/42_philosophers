@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 12:37:53 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/06 16:54:34 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/07 13:40:16 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,6 @@ int	get_its_alive(t_chrono *ch)//common access function
 		alive = 0;
 	pthread_mutex_unlock(&ch->mutex_its_alive);
 	return (alive);
-}
-
-void	ph_msgs(t_philo *ph, char *msg)//common access f
-{
-	//if (ph->pchrono_ph->its_alive)
-	if (get_its_alive(ph->pchrono_ph))
-	{
-		pthread_mutex_lock(&ph->mutex_msgs);
-		printf("%lld %u %s\n", get_current_time(ph->pchrono_ph), ph->num_ph, msg);
-		pthread_mutex_unlock(&ph->mutex_msgs);
-		return ;
-	}
 }
 
 long long	get_last_eat(t_philo *ph)

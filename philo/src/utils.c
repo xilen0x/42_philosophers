@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:47:45 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/06 15:59:44 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/07 14:58:10 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,53 +24,37 @@ int	destroy(t_chrono *ch)
 		pthread_mutex_destroy(&ch->pforks[i]);
 		i++;
 	}
-	/*while (i < ch->q_philos)
-	{
-		pthread_join(ch->pph[i].thread, NULL);//JOIN<----
-		i++;
-	}*/
 	free(ch->pforks);
 	free(ch->pph);
 	pthread_mutex_destroy(&ch->pph->mutex_last_eat);
-	//pthread_mutex_destroy(&ch->pph->mutex_nbr_of_meals);
-	//pthread_mutex_destroy(&ch->pph->mutex_msgs);
-	//printf("llega aqui!!\n");
 	pthread_mutex_destroy(&ch->mutex_times);
-	//pthread_mutex_destroy(&ch->mutex_its_alive);
-	//pthread_mutex_destroy(&ch->pph->mutex_actions);
 	return (0);
 }
 
 long	ft_atol(const char *str)
 {
-	int i;
-	long res;
-	int sign;
+	int		i;
+	int		neg;
+	long	res;
 
 	i = 0;
+	neg = 1;
 	res = 0;
-	sign = 1;
 	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
 		i++;
-	if (str[i] == '-')
-		sign = -1;
 	if (str[i] == '-' || str[i] == '+')
-		i++;
-	while (str[i] >= '0' && str[i] <= '9')
 	{
-		if (res > (LONG_MAX - (str[i] - '0')) / 10)
-		{
-			if (sign == 1)
-				return (LONG_MAX);
-			else
-				return (LONG_MIN);
-		}
-		res = (res * 10) + (str[i] - '0');
+		if (str[i] == '-')
+			neg *= -1;
 		i++;
 	}
-	return (res * sign);
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		res = (str[i] - '0') + (res * 10);
+		i++;
+	}
+	return (res * neg);
 }
-
 
 int	ft_isdigit(char num)
 {

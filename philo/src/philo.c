@@ -6,11 +6,22 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:33:50 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/06 17:50:22 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/07 13:41:10 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	ph_msgs(t_philo *ph, char *msg)//common access f
+{
+	if (get_its_alive(ph->pchrono_ph))
+	{
+		pthread_mutex_lock(&ph->mutex_msgs);
+		printf("%lld %u %s\n", get_current_time(ph->pchrono_ph), ph->num_ph, msg);
+		pthread_mutex_unlock(&ph->mutex_msgs);
+		return ;
+	}
+}
 
 int	monitor(t_chrono *ch)
 {

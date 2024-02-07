@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:54:09 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/06 16:36:08 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/07 13:44:16 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,4 @@ int	main(int ac, char *av[])
 		return (destroy(&chrono));
 
 	return (destroy(&chrono));
-	//printf("FIN!!\n");
 }

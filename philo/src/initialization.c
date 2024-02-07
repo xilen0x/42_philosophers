@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 18:59:15 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/06 15:59:28 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/07 13:47:48 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,14 @@ void	init_other_mutexes(t_chrono *ch)
 	if (pthread_mutex_init(&ch->pph->mutex_last_eat, NULL) && \
 		pthread_mutex_init(&ch->pph->mutex_nbr_of_meals, NULL) && \
 		pthread_mutex_init(&ch->pph->mutex_msgs, NULL))
-		//pthread_mutex_init(&ch->mutex_its_alive, NULL))
-		//pthread_mutex_init(&ch->pph->mutex_actions, NULL) &&
 	{
 		printf("Error initializing mutex\n");
 		return ;
 	}
 }
 
-/*Initialization of the philosophers structure(t_philo)*/
-static int	init_ph(t_chrono *ch)
+static int	init_ph2(t_chrono *ch)
 {
-	int	i;
-
 	ch->pforks = NULL;
 	ch->pforks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * ch->q_philos);
 	if (!(ch->pforks))
@@ -38,6 +33,15 @@ static int	init_ph(t_chrono *ch)
 		free(ch->pforks);
 		return (1);
 	}
+	return (0);
+}
+
+/*Initialization of the philosophers structure(t_philo)*/
+static int	init_ph(t_chrono *ch)
+{
+	int	i;
+
+	init_ph2(ch);
 	i = 0;
 	while (i < ch->q_philos)
 		pthread_mutex_init(&ch->pforks[i++], NULL);
@@ -82,5 +86,4 @@ void	init_chrono(t_chrono *ch, char *av[])
 		return ;
 	}
 	init_ph(ch);
-	//print_struct(ch);
 }
