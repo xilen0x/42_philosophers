@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:33:50 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/09 16:21:48 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/09 17:55:54 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,29 @@ void	ph_msgs(t_philo *ph, char *msg, int monitor)
 			ph->num_ph, msg);
 	}
 }
-
+/*
+habria problemas en esta funcion
+'es posible' q sea el problema del data race.
+Se debe posiblemente modificar estructura. Jose recomienda no utilizar array de mutexes.
+Solo mutex de 2 forks y variables externas.
+*/
 int	all_ate(t_chrono *ch)
 {
 	int	i;
 
-	i = 0;
-	while (i < ch->q_philos)
+	i = 1;
+	while (i <= ch->q_philos)
 	{
 		pthread_mutex_lock(&ch->pph[i].mutex_nbr_of_meals);
-		if (ch->num_x_eat < ch->pph[i].number_of_meals)
-		{
-			pthread_mutex_unlock(&ch->pph[i].mutex_nbr_of_meals);
-			return (1); // Al menos un filósofo no ha comido suficiente
-		}
+		// if (ch->num_x_eat == ch->pph[i].number_of_meals)//****data race
+		// {
+		// 	pthread_mutex_unlock(&ch->pph[i].mutex_nbr_of_meals);
+		// 	return (1); // Al menos un filósofo no ha comido suficiente
+		// }
 		pthread_mutex_unlock(&ch->pph[i].mutex_nbr_of_meals);
 		i++;
 	}
-	pthread_mutex_unlock(&ch->pph[i].mutex_nbr_of_meals);
+	//pthread_mutex_unlock(&ch->pph[i].mutex_nbr_of_meals);
 	return (0); // Todos los filósofos han comido suficiente
 }
 
