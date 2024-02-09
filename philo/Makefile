@@ -6,7 +6,7 @@
 #    By: castorga <castorga@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/07 15:39:38 by castorga          #+#    #+#              #
-#    Updated: 2024/02/08 19:59:04 by castorga         ###   ########.fr        #
+#    Updated: 2024/02/09 15:36:50 by castorga         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,8 @@ OBJS = $(addprefix $(OBJ_DIR), $(OBJ_FILES))
 DEPS = $(OBJS:.o=.d)
 
 CC = clang 
-#CFLAGS = -g -Wall -Wextra -Werror -I$(INC_DIR) -fsanitize=address
-CFLAGS = -g -Wall -Wextra -Werror -I$(INC_DIR) -fsanitize=thread
+CFLAGS = -g -Wall -Wextra -Werror -I$(INC_DIR) -fsanitize=address
+#CFLAGS = -g -Wall -Wextra -Werror -I$(INC_DIR) -fsanitize=thread
 #CFLAGS = -g -Wall -Wextra -Werror -I$(INC_DIR)
 
 INC_DIR = include/

@@ -6,16 +6,15 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:33:50 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/08 19:55:26 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/09 16:21:48 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 /*Messages fuction*/
-void ph_msgs(t_philo *ph, char *msg, int monitor)
+void	ph_msgs(t_philo *ph, char *msg, int monitor)
 {
-	//if (ph->pchrono_ph->its_alive)
 	if (get_its_alive(ph->pchrono_ph))
 	{
 		pthread_mutex_lock(&ph->pchrono_ph->mutex_msgs);
@@ -31,17 +30,26 @@ void ph_msgs(t_philo *ph, char *msg, int monitor)
 	}
 }
 
-/*int	all_ate(t_philo	*ph)
+int	all_ate(t_chrono *ch)
 {
-	pthread_mutex_lock(&ph->mutex_nbr_of_meals);
-	if (ph->pchrono_ph->num_x_eat == ph->number_of_meals)
+	int	i;
+
+	i = 0;
+	while (i < ch->q_philos)
 	{
-		pthread_mutex_unlock(&ph->mutex_nbr_of_meals);
-		return (0);
+		pthread_mutex_lock(&ch->pph[i].mutex_nbr_of_meals);
+		if (ch->num_x_eat < ch->pph[i].number_of_meals)
+		{
+			pthread_mutex_unlock(&ch->pph[i].mutex_nbr_of_meals);
+			return (1); // Al menos un filósofo no ha comido suficiente
+		}
+		pthread_mutex_unlock(&ch->pph[i].mutex_nbr_of_meals);
+		i++;
 	}
-	pthread_mutex_unlock(&ph->mutex_nbr_of_meals);
-	return (1);
-}*/
+	pthread_mutex_unlock(&ch->pph[i].mutex_nbr_of_meals);
+	return (0); // Todos los filósofos han comido suficiente
+}
+
 
 /*monitor function, checking TTD of each thread*/
 int	monitor(t_chrono *ch)
@@ -61,8 +69,10 @@ int	monitor(t_chrono *ch)
 			ph_msgs(&ch->pph[i], "died", 1);
 			return (0);
 		}
-		if (ch->opt && (ch->num_x_eat == ch->pph[i].number_of_meals))
-		{	
+		//if (ch->num_x_eat == ch->pph[i].number_of_meals)
+		//if (all_ate(ch))
+		if (ch->opt && (all_ate(ch)))
+		{
 			set_its_alive(ch);
 			ph_msgs(&ch->pph[i], "all philos have eaten enough!", 1);
 			break ;
@@ -82,7 +92,7 @@ void	*philo(t_philo	*ph)
 	while (get_its_alive(ph->pchrono_ph))
 	{
 		ph_eats(ph);
-		(ph_msgs(ph, "is sleeping", 0));
+		ph_msgs(ph, "is sleeping", 0);
 		ft_usleep(ph->pchrono_ph, ph->pchrono_ph->time_to_sleep);
 		ph_msgs(ph, "is thinking", 0);
 	}
@@ -104,9 +114,9 @@ int	philos_creation(t_chrono *ch)
 			destroy(ch);
 			return (1);
 		}
-		// pthread_mutex_lock(&ch->mutex_last_eat);
-		// ch->pph[i].last_eat = get_current_time(ch);
-		// pthread_mutex_unlock(&ch->mutex_last_eat);
+		// pthread_mutex_lock(&ch->pph->mutex_last_eat);
+		//ch->pph[i].last_eat = get_current_time(ch);
+		// pthread_mutex_unlock(&ch->pph->mutex_last_eat);
 		i++;
 	}
 	monitor(ch);
