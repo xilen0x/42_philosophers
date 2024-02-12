@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 18:59:15 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/09 15:40:22 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/12 16:58:41 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	init_other_mutexes(t_chrono *ch)
 		i++;
 	}
 	pthread_mutex_init(&ch->mutex_its_alive, NULL);
+	pthread_mutex_init(&ch->mutex_all_ate, NULL);
 }
 
 /*cont. init_ph function*/
@@ -86,6 +87,7 @@ static int	init_ph(t_chrono *ch)
 void	init_chrono(t_chrono *ch, char *av[])
 {
 	ch->pph = NULL;
+	ch->all_ate = 0;
 	ch->start_time = get_time();
 	ch->q_philos = ft_atoi(av[1]);
 	ch->time_to_die = ft_atoi(av[2]);

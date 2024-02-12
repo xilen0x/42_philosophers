@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 12:37:53 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/09 16:28:07 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/12 17:12:15 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,17 @@ void	set_number_of_meals(t_philo *ph)
 	pthread_mutex_lock(&ph->mutex_nbr_of_meals);
 	ph->number_of_meals++;//****data race
 	pthread_mutex_unlock(&ph->mutex_nbr_of_meals);
+}
+
+int	get_number_of_meals(t_philo *ph)
+{
+	int	n_o_m;
+
+	pthread_mutex_lock(&ph->mutex_nbr_of_meals);
+	ph->number_of_meals++;//****data race
+	n_o_m = ph->number_of_meals;
+	pthread_mutex_unlock(&ph->mutex_nbr_of_meals);
+	return (n_o_m);
 }
 
 /*eats function(take a fork and more)*/

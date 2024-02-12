@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:53:47 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/08 19:55:08 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/12 17:14:15 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,12 @@ typedef struct s_chrono
 	int				time_to_sleep;
 	int				num_x_eat;
 	int				its_alive;
+	int				all_ate;
 	int				q_philos;
 	int				opt;
-	//pthread_mutex_t	mutex_times;//no neces. - borrar
-	//pthread_mutex_t	mutex_num_x_eat;//no neces. - borrar
+
 	pthread_mutex_t	mutex_its_alive;
+	pthread_mutex_t	mutex_all_ate;
 	pthread_mutex_t	mutex_msgs;
 	pthread_mutex_t	*pforks;
 	t_philo			*pph;
@@ -78,5 +79,6 @@ int			check_range(int ac, char *av[]);
 int			ft_usleep(t_chrono *ch, size_t milliseconds);
 int			ft_isdigit(char num);
 char		*ft_isspace(char *str);
+int	get_number_of_meals(t_philo *ph);
 
 #endif
