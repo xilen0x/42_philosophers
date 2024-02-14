@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:33:50 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/12 17:18:17 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/14 13:00:38 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,17 @@ int	all_ate(t_chrono *ch)
 	int	i;
 	int	eaten;
 
-	i = 1;
-	//pthread_mutex_lock(&ch->mutex_all_ate);
-	eaten = get_number_of_meals(ch->pph);
-	//pthread_mutex_unlock(&ch->mutex_all_ate);
-	if (ch->num_x_eat == eaten)//****data race
+	eaten = 0;
+	i = 0;
+	while (i < ch->q_philos)
+	{
+		pthread_mutex_lock(&ch->mutex_all_ate);
+		//eaten = get_number_of_meals(ch->pph);
+		eaten += get_number_of_meals(&ch->pph[i]);//****data race
+		pthread_mutex_unlock(&ch->mutex_all_ate);
+		i++;
+	}
+	if (ch->num_x_eat <= eaten)//****data race
 	{
 		ch->all_ate++;
 		//pthread_mutex_unlock(&ch->pph[i].mutex_nbr_of_meals);
@@ -49,7 +55,7 @@ int	all_ate(t_chrono *ch)
 	if (ch->all_ate == ch->num_x_eat)
 		return (1);// Todos los filósofos han comido las n veces
 	//pthread_mutex_unlock(&ch->mutex_all_ate);
-	i++;
+	//i++;
 
 	return (0);
 }
