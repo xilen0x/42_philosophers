@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:53:47 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/12 17:14:15 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/14 14:14:53 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,15 +30,11 @@ typedef struct s_chrono
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
-	int				num_x_eat;
+	int				num_x_eat;//num por comer(arg. opcional)
 	int				its_alive;
-	int				all_ate;
-	int				q_philos;
-	int				opt;
-
+	int				q_philos;//cant.total phs
+	pthread_mutex_t	mutex_times;
 	pthread_mutex_t	mutex_its_alive;
-	pthread_mutex_t	mutex_all_ate;
-	pthread_mutex_t	mutex_msgs;
 	pthread_mutex_t	*pforks;
 	t_philo			*pph;
 }	t_chrono;
@@ -46,39 +42,46 @@ typedef struct s_chrono
 // ------------------------ PHILOSOPHER STRUCT ----------- //
 struct s_philo
 {
-	int				num_ph;
+	int				num_ph;//id del ph
 	long long		last_eat;
-	pthread_mutex_t	mutex_last_eat;
 	int				number_of_meals;
+	pthread_mutex_t	mutex_msgs;
+	//pthread_mutex_t	mutex_actions;
+	pthread_mutex_t	mutex_last_eat;
 	pthread_mutex_t	mutex_nbr_of_meals;
 	pthread_mutex_t	*pmutex_left_fork;
 	pthread_mutex_t	*pmutex_right_fork;
-	pthread_t		thread;
+	pthread_t		thread;//var q almacenará a c/hilo
 	t_chrono		*pchrono_ph;
 };
 
 // ------------------------ Prototypes -------------------- //
+int			parsing(int ac, char *av[]);
 void		init_chrono(t_chrono *chrono, char *av[]);
-void		init_other_mutexes(t_chrono *ch);
-void		ph_eats(t_philo *ph);
-void		ph_msgs(t_philo *ph, char *msg, int monitor);
-long long	get_time(void);
+long long	get_time();
 long long	get_current_time(t_chrono *ch);
-long long	get_last_eat(t_philo *ph);
+//long long	diff_time(long long start, long long current);
 long		ft_atol(const char *str);
 int			ft_atoi(const char *str);
-int			parsing(int ac, char *av[]);
 int			contains_digit(char *c);
+//int			ft_free(t_chrono *ch);
+void		print_struct(t_chrono *chrono);
+void		init_other_mutexes(t_chrono *ch);
 int			philos_creation(t_chrono *chrono);
+void		ph_eats(t_philo *ph);
+void		ph_msgs(t_philo *ph, char *msg);
 int			monitor(t_chrono *chrono);
+//void		ph_sleep_time(t_philo *ph);
+//void		set_number_of_meals(t_philo *ph);
+//void		set_last_eat(t_philo *ph);
 int			destroy(t_chrono *ch);
+//void		ph_eats_time(t_philo *ph);
+//int			ph_to_die_time(t_philo *ph);
 int			get_its_alive(t_chrono *ch);
-void		set_its_alive(t_chrono *ch);
+long long	get_last_eat(t_philo *ph);
+//int			ph_to_die_time(t_philo *ph);
 int			check_digits(int ac, char *av[]);
 int			check_range(int ac, char *av[]);
 int			ft_usleep(t_chrono *ch, size_t milliseconds);
-int			ft_isdigit(char num);
-char		*ft_isspace(char *str);
-int	get_number_of_meals(t_philo *ph);
 
 #endif

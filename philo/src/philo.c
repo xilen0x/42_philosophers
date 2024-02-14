@@ -6,86 +6,24 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:33:50 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/14 13:00:38 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/14 14:18:15 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-/*Messages fuction*/
-void	ph_msgs(t_philo *ph, char *msg, int monitor)
-{
-	if (get_its_alive(ph->pchrono_ph))
-	{
-		pthread_mutex_lock(&ph->pchrono_ph->mutex_msgs);
-		printf("%lld %u %s\n", get_current_time(ph->pchrono_ph), \
-			ph->num_ph, msg);
-		pthread_mutex_unlock(&ph->pchrono_ph->mutex_msgs);
-		return ;
-	}
-	else if (monitor)
-	{
-		printf("%lld %u %s\n", get_current_time(ph->pchrono_ph), \
-			ph->num_ph, msg);
-	}
-}
-
-int	all_ate(t_chrono *ch)
-{
-	int	i;
-	int	eaten;
-
-	eaten = 0;
-	i = 0;
-	while (i < ch->q_philos)
-	{
-		pthread_mutex_lock(&ch->mutex_all_ate);
-		//eaten = get_number_of_meals(ch->pph);
-		eaten += get_number_of_meals(&ch->pph[i]);//****data race
-		pthread_mutex_unlock(&ch->mutex_all_ate);
-		i++;
-	}
-	if (ch->num_x_eat <= eaten)//****data race
-	{
-		ch->all_ate++;
-		//pthread_mutex_unlock(&ch->pph[i].mutex_nbr_of_meals);
-		//break ;
-	}
-	//pthread_mutex_unlock(&ch->pph[i].mutex_nbr_of_meals);
-	if (ch->all_ate == ch->num_x_eat)
-		return (1);// Todos los filósofos han comido las n veces
-	//pthread_mutex_unlock(&ch->mutex_all_ate);
-	//i++;
-
-	return (0);
-}
-
-
-/*monitor function, checking TTD of each thread*/
 int	monitor(t_chrono *ch)
 {
-	int			i;
-	long long	res;
+	int	i;
 
 	i = 0;
 	while (i < ch->q_philos)
 	{
-		pthread_mutex_lock(&ch->pph[i].mutex_last_eat);
-		res = (get_current_time(ch) - ch->pph[i].last_eat);
-		pthread_mutex_unlock(&ch->pph[i].mutex_last_eat);
-		if (res >= ch->time_to_die)
+		if ((get_current_time(ch) - ch->pph->last_eat) >= ch->time_to_die)
 		{
-			set_its_alive(ch);
-			ph_msgs(&ch->pph[i], "died", 1);
+			ph_msgs(ch->pph, "died");
+			ch->its_alive = 0;
 			return (0);
-		}
-		//if (ch->num_x_eat == ch->pph[i].number_of_meals)
-		//if (all_ate(ch))
-		if (ch->opt && (all_ate(ch)))
-		{
-			set_its_alive(ch);
-			ph_msgs(&ch->pph[i], "all philos have eaten enough!", 1);
-			break ;
 		}
 		i++;
 		if (i == ch->q_philos)
@@ -94,22 +32,28 @@ int	monitor(t_chrono *ch)
 	return (0);
 }
 
-/*threads section - EATS, SLEEP, THINK*/
+//threads section - EATS, SLEEP, THINK
 void	*philo(t_philo	*ph)
 {
 	if (ph->num_ph % 2)
 		ft_usleep(ph->pchrono_ph, ph->pchrono_ph->time_to_eat * 0.9);
-	while (get_its_alive(ph->pchrono_ph))
+	while (ph->pchrono_ph->its_alive)
 	{
 		ph_eats(ph);
-		ph_msgs(ph, "is sleeping", 0);
+		ph_msgs(ph, "is sleeping");
 		ft_usleep(ph->pchrono_ph, ph->pchrono_ph->time_to_sleep);
-		ph_msgs(ph, "is thinking", 0);
+		ph_msgs(ph, "is thinking");
+		if (ph->number_of_meals == ph->pchrono_ph->num_x_eat)
+		{
+			//printf("Philo %d ha completado el N de comidas!\n", ph->num_ph);
+			ph->pchrono_ph->its_alive = 0;
+			break ;
+		}
 	}
 	return (NULL);
 }
 
-/*Function where the threads area created*/
+//Function where the threads area created
 int	philos_creation(t_chrono *ch)
 {
 	int	i;
@@ -117,16 +61,13 @@ int	philos_creation(t_chrono *ch)
 	i = 0;
 	while (i < ch->q_philos)
 	{
-		if (pthread_create(&ch->pph[i].thread, NULL, \
-			(void *)philo, &ch->pph[i]))
+		if (pthread_create(&ch->pph[i].thread, NULL, (void *)philo, &ch->pph[i]))
 		{
 			printf("Error creating thread\n");
 			destroy(ch);
 			return (1);
 		}
-		// pthread_mutex_lock(&ch->pph->mutex_last_eat);
-		//ch->pph[i].last_eat = get_current_time(ch);
-		// pthread_mutex_unlock(&ch->pph->mutex_last_eat);
+		ch->pph[i].last_eat = get_current_time(ch);
 		i++;
 	}
 	monitor(ch);

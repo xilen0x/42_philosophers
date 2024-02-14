@@ -6,13 +6,23 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 13:12:52 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/07 16:37:59 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/14 14:20:02 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-/*Checks if all command-line arguments are valid digits.*/
+/*print struct - borrar luego*/
+void	print_struct(t_chrono *chrono)
+{
+	printf("start_time: %lld\n", chrono->start_time);
+	printf("q_philos: %u\n", chrono->q_philos);
+	printf("time_to_die: %d\n", chrono->time_to_die);
+	printf("time_to_eat: %d\n", chrono->time_to_eat);
+	printf("time_to_sleep: %d\n", chrono->time_to_sleep);
+	printf("num_x_eat: %d\n", chrono->num_x_eat);
+}
+
 int	check_digits(int ac, char *av[])
 {
 	int	i;
@@ -36,7 +46,6 @@ int	check_digits(int ac, char *av[])
 	return (0);
 }
 
-/*Checks if the arguments are within the valid range.*/
 int	check_range(int ac, char *av[])
 {
 	int		i;
@@ -54,8 +63,6 @@ int	check_range(int ac, char *av[])
 	return (0);
 }
 
-/*Skips leading whitespace characters in a string and 
-returns the pointer to the first non-whitespace character.*/
 char	*ft_isspace(char *str)
 {
 	while ((*str >= 9 && *str <= 13) || *str == 32)
@@ -63,7 +70,6 @@ char	*ft_isspace(char *str)
 	return (str);
 }
 
-/*Converts a string to an integer, considering leading whitespace and signs.*/
 int	ft_atoi(const char *str)
 {
 	short int	parity;
