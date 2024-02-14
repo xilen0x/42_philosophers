@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 18:59:15 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/14 14:17:08 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/14 16:07:37 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,23 @@
 /*Initialization of all mutexes*/
 void	init_other_mutexes(t_chrono *ch)
 {
-	if (pthread_mutex_init(&ch->pph->mutex_last_eat, NULL) && \
-		pthread_mutex_init(&ch->pph->mutex_nbr_of_meals, NULL) && \
-		pthread_mutex_init(&ch->pph->mutex_msgs, NULL))
-		//pthread_mutex_init(&ch->mutex_its_alive, NULL))
-		//pthread_mutex_init(&ch->pph->mutex_actions, NULL) &&
+	int	i;
+
+	i = 0;
+	while (i < ch->q_philos)
 	{
-		printf("Error initializing mutex\n");
-		return ;
+		if (pthread_mutex_init(&ch->pph[i].mutex_last_eat, NULL) && \
+			pthread_mutex_init(&ch->pph[i].mutex_nbr_of_meals, NULL) && \
+			pthread_mutex_init(ch->pph[i].pmutex_left_fork, NULL) && \
+			pthread_mutex_init(ch->pph[i].pmutex_right_fork, NULL))
+			//pthread_mutex_init(&ch->pph->mutex_actions, NULL) &&
+		{
+			printf("Error initializing mutex\n");
+			return ;
+		}
+		i++;
 	}
+	pthread_mutex_init(&ch->mutex_its_alive, NULL);
 }
 
 /*Initialization of the philosophers structure(t_philo)*/

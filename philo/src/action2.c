@@ -6,13 +6,13 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 17:38:58 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/14 14:16:17 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/14 15:53:08 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//#include "philo.h"
+#include "philo.h"
 
-/*function GETTER that check the value of its_alive variable
+//function GETTER that check the value of its_alive variable
 int	get_its_alive(t_chrono *ch)
 {
 	int	alive;
@@ -30,4 +30,3 @@ void	set_its_alive(t_chrono *ch)
 	ch->its_alive = 0;
 	pthread_mutex_unlock(&ch->mutex_its_alive);
 }
-*/

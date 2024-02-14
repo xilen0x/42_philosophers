@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:33:50 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/14 14:18:15 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/14 16:17:18 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	monitor(t_chrono *ch)
 	i = 0;
 	while (i < ch->q_philos)
 	{
-		if ((get_current_time(ch) - ch->pph->last_eat) >= ch->time_to_die)
+		if ((get_current_time(ch) - get_last_eat(ch->pph)) >= ch->time_to_die)
 		{
 			ph_msgs(ch->pph, "died");
 			ch->its_alive = 0;
@@ -45,8 +45,8 @@ void	*philo(t_philo	*ph)
 		ph_msgs(ph, "is thinking");
 		if (ph->number_of_meals == ph->pchrono_ph->num_x_eat)
 		{
-			//printf("Philo %d ha completado el N de comidas!\n", ph->num_ph);
-			ph->pchrono_ph->its_alive = 0;
+			printf("Philo %d ha completado el N de comidas!\n", ph->num_ph);
+			set_its_alive(ph->pchrono_ph);
 			break ;
 		}
 	}
@@ -67,7 +67,7 @@ int	philos_creation(t_chrono *ch)
 			destroy(ch);
 			return (1);
 		}
-		ch->pph[i].last_eat = get_current_time(ch);
+		//ch->pph[i].last_eat = get_current_time(ch);
 		i++;
 	}
 	monitor(ch);
