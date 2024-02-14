@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:33:50 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/14 16:17:18 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/14 16:48:53 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ int	monitor(t_chrono *ch)
 		if ((get_current_time(ch) - get_last_eat(ch->pph)) >= ch->time_to_die)
 		{
 			ph_msgs(ch->pph, "died");
-			ch->its_alive = 0;
+			//ch->its_alive = 0;
+			set_its_alive(ch);
 			return (0);
 		}
 		i++;
@@ -37,7 +38,7 @@ void	*philo(t_philo	*ph)
 {
 	if (ph->num_ph % 2)
 		ft_usleep(ph->pchrono_ph, ph->pchrono_ph->time_to_eat * 0.9);
-	while (ph->pchrono_ph->its_alive)
+	while (get_its_alive(ph->pchrono_ph))
 	{
 		ph_eats(ph);
 		ph_msgs(ph, "is sleeping");
@@ -67,7 +68,6 @@ int	philos_creation(t_chrono *ch)
 			destroy(ch);
 			return (1);
 		}
-		//ch->pph[i].last_eat = get_current_time(ch);
 		i++;
 	}
 	monitor(ch);

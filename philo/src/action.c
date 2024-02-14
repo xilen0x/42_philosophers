@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 12:37:53 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/14 16:11:22 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/14 16:38:32 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,10 @@ void	ph_eats(t_philo *ph)
 	ph_msgs(ph, "has taken a fork");
 	pthread_mutex_lock(ph->pmutex_right_fork);
 	ph_msgs(ph, "has taken a fork");
-
 	ph_msgs(ph, "is eating");
 	set_number_of_meals(ph);
-	ft_usleep(ph->pchrono_ph, ph->pchrono_ph->time_to_eat);
 	set_last_eat(ph);
-
+	ft_usleep(ph->pchrono_ph, ph->pchrono_ph->time_to_eat);
 	pthread_mutex_unlock(ph->pmutex_right_fork);
 	pthread_mutex_unlock(ph->pmutex_left_fork);
-
 }
