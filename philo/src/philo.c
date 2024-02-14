@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 16:33:50 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/14 17:29:14 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/14 18:53:29 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	*philo(t_philo	*ph)
 		if ((ph->pchrono_ph->num_x_eat && ph->number_of_meals == ph->pchrono_ph->num_x_eat) )
 		{
 			printf("Philo %d ha completado el N de comidas!\n", ph->num_ph);
-			//set_its_alive(ph->pchrono_ph);//aqui esta casi bien...ver pq sale el 'die'
+			//set_its_alive(ph->pchrono_ph);//aki voy. Hasta aqui esta casi bien...ver pq sale el 'die' al descomentar esta linea
 			break ;
 		}
 		ph_msgs(ph, "is sleeping");
