@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 18:59:15 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/15 13:23:20 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/15 16:04:17 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,21 @@ void	init_chrono(t_chrono *ch, char *av[])
 	ch->pph = NULL;
 
 	pthread_mutex_init(&ch->mutex_times, NULL);
-	ch->start_time = get_time();//
+	ch->start_time = get_time();
 	ch->q_philos = ft_atoi(av[1]);
 	ch->time_to_die = ft_atoi(av[2]);
 	ch->time_to_eat = ft_atoi(av[3]);
 	ch->time_to_sleep = ft_atoi(av[4]);
 	if (av[5])
+	{
 		ch->num_x_eat = ft_atoi(av[5]);
+		ch->opt =1;
+	}
 	else
+	{
 		ch->num_x_eat = 0;
+		ch->opt = 0;
+	}
 	ch->its_alive = 1;
 	ch->pph = (t_philo *)malloc(sizeof(t_philo) * ch->q_philos);
 	if (!(ch->pph))

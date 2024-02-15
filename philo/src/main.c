@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:54:09 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/14 14:59:53 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/15 16:54:25 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,5 @@ int	main(int ac, char *av[])
 	}
 	if (philos_creation(&chrono))
 		return (destroy(&chrono));
-
 	return (destroy(&chrono));
 }

@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 12:47:45 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/14 15:32:06 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/15 16:17:46 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	ph_msgs(t_philo *ph, char *msg)
 {
-	//if (ph->pchrono_ph->its_alive)
 	if (get_its_alive(ph->pchrono_ph))
 	{
 		pthread_mutex_lock(&ph->mutex_msgs);

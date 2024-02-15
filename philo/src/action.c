@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 12:37:53 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/14 16:38:32 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/15 16:54:34 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ long long	get_last_eat(t_philo *ph)
 void	set_last_eat(t_philo *ph)
 {
 	pthread_mutex_lock(&ph->mutex_last_eat);
-	ph->last_eat = get_current_time(ph->pchrono_ph);//data race*****
+	ph->last_eat = get_current_time(ph->pchrono_ph);
 	pthread_mutex_unlock(&ph->mutex_last_eat);
 }
 
