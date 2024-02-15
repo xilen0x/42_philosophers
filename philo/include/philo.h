@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/03 16:53:47 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/14 16:07:45 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/15 14:16:28 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,6 @@ long long	get_last_eat(t_philo *ph);
 int			check_digits(int ac, char *av[]);
 int			check_range(int ac, char *av[]);
 int			ft_usleep(t_chrono *ch, size_t milliseconds);
+int	get_number_of_meals(t_philo *ph);
+
 #endif
