@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 17:38:58 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/16 15:15:52 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/14 15:53:08 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 int	get_its_alive(t_chrono *ch)
 {
 	int	alive;
-
 
 	pthread_mutex_lock(&ch->mutex_its_alive);
 	alive = ch->its_alive;
