@@ -6,21 +6,21 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 13:12:52 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/14 15:32:01 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/15 19:37:33 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-/*print struct - borrar luego*/
-void	print_struct(t_chrono *chrono)
+int	contains_digit(char *c)
 {
-	printf("start_time: %lld\n", chrono->start_time);
-	printf("q_philos: %u\n", chrono->q_philos);
-	printf("time_to_die: %d\n", chrono->time_to_die);
-	printf("time_to_eat: %d\n", chrono->time_to_eat);
-	printf("time_to_sleep: %d\n", chrono->time_to_sleep);
-	printf("num_x_eat: %d\n", chrono->num_x_eat);
+	while (*c)
+	{
+		if (ft_isdigit(*c) && *c != ' ' && *c != '\"')
+			return (1);
+		c++;
+	}
+	return (0);
 }
 
 int	check_digits(int ac, char *av[])

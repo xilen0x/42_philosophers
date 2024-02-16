@@ -6,7 +6,7 @@
 /*   By: castorga <castorga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/04 18:59:15 by castorga          #+#    #+#             */
-/*   Updated: 2024/02/15 16:04:17 by castorga         ###   ########.fr       */
+/*   Updated: 2024/02/15 19:25:32 by castorga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,27 @@ void	init_other_mutexes(t_chrono *ch)
 	i = 0;
 	while (i < ch->q_philos)
 	{
-		if (pthread_mutex_init(&ch->pph[i].mutex_last_eat, NULL) && \
-			pthread_mutex_init(&ch->pph[i].mutex_nbr_of_meals, NULL))
-			//pthread_mutex_init(ch->pph[i].pmutex_left_fork, NULL) && 
-			//pthread_mutex_init(ch->pph[i].pmutex_right_fork, NULL))
+		if (pthread_mutex_init(&ch->pph[i].mutex_last_eat, NULL))
 		{
 			printf("Error initializing mutex\n");
 			return ;
 		}
 		i++;
 	}
+	pthread_mutex_init(&ch->pph->mutex_nbr_of_meals, NULL);
 	pthread_mutex_init(&ch->mutex_its_alive, NULL);
+}
+
+static void	init_ph2(t_chrono *ch)
+{
+	ch->pforks = NULL;
+	ch->pforks = (pthread_mutex_t *)malloc(\
+		sizeof(pthread_mutex_t) * ch->q_philos);
+	if (!(ch->pforks))
+	{
+		free(ch->pforks);
+		return ;
+	}
 }
 
 /*Initialization of the philosophers structure(t_philo)*/
@@ -38,13 +48,7 @@ static int	init_ph(t_chrono *ch)
 {
 	int	i;
 
-	ch->pforks = NULL;
-	ch->pforks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * ch->q_philos);
-	if (!(ch->pforks))
-	{
-		free(ch->pforks);
-		return (1);
-	}
+	init_ph2(ch);
 	i = 0;
 	while (i < ch->q_philos)
 		pthread_mutex_init(&ch->pforks[i++], NULL);
@@ -55,7 +59,7 @@ static int	init_ph(t_chrono *ch)
 		ch->pph[i].num_ph = i + 1;
 		ch->pph[i].last_eat = 0;
 		ch->pph[i].pmutex_left_fork = &ch->pforks[i];
-		if (i == (ch->q_philos) - 1)//si es el ultimo Ph
+		if (i == (ch->q_philos) - 1)
 			ch->pph[i].pmutex_right_fork = &ch->pforks[0];
 		else
 			ch->pph[i].pmutex_right_fork = &ch->pforks[i + 1];
@@ -70,7 +74,6 @@ static int	init_ph(t_chrono *ch)
 void	init_chrono(t_chrono *ch, char *av[])
 {
 	ch->pph = NULL;
-
 	pthread_mutex_init(&ch->mutex_times, NULL);
 	ch->start_time = get_time();
 	ch->q_philos = ft_atoi(av[1]);
@@ -80,7 +83,7 @@ void	init_chrono(t_chrono *ch, char *av[])
 	if (av[5])
 	{
 		ch->num_x_eat = ft_atoi(av[5]);
-		ch->opt =1;
+		ch->opt = 1;
 	}
 	else
 	{
